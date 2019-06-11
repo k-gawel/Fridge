@@ -1,0 +1,49 @@
+5901696001324
+Profi
+/firm-pol-1308137393-Profi.html
+/pol_pm_Profi-Barszcz-ukrainski-z-koperkiem-450g-76279_1.jpg
+<div class="projector_longdescription cm " id="component_projector_longdescription_not">
+ <p class="tytul">Opis:</p>
+ <p>Polecamy również:<br>Zupę jarzynowa z mięsem wieprzowym<br>Fasolka po bretońsku z kiełbasa wieprzową<br></p>
+ <p class="tytul">Skład: </p>
+ <p>woda, warzywa 19% (buraki czerwone 8%, ziemniaki, fasola biała, kapusta biała, marchew, cebula), cukier, koncentrat z buraków 3%, skrobia modyfikowana, mąka pszenna, sól, olej roślinny rzepakowy, koncentrat pomidorowy, przyprawy, koper 0, 08%, aromaty (zawierają mleko), ekstrakt drożdżowy, przeciwutleniacz: askorbinian sodu, regulator kwasowości: kwas cytrynowy<br></p>
+ <p class="alergeny">Alergeny:</p>
+ <p>Zawiera: Pszenica<br>Zawiera: Mleko<br></p>
+ <p class="tytul">Wartości odżywcze: </p>
+ <p>w 100g<br>
+
+
+  Wartość energetyczna: 294kJ / 70kcal,
+  Tłuszcz: 1,1g,
+  - w tym kwasy tłuszczowe nasycone: &lt;0,1g,
+  Węglowodany: 13g,
+  - w tym cukry: 6,6g,
+  Błonnik: 1,3g,
+  Białko: 1,3g,
+  Sól: 1,3g
+
+rawValues = valuesString.split(",");
+Map<String,String> values = new HashMap<>();
+
+String previusValue;
+
+for(String rawValue : rawValues) {
+    rawValue = normalizeSpaces(rawValue);
+
+    if(rawValue.startsWith("-")) {
+        rawValue.
+    }
+}
+
+<br></p>
+
+ <p><span class="info">Przechowywanie:</span></p>
+ <p>Przechowywać w temperaturze otoczenia</p>
+ <p>Przechowywać w temperaturze pokojowej.</p>
+
+ <p class="tytul">Podmiot odpowiedzialny:</p>
+ <p><span class="info">Producent:</span></p>
+ <p>Wielkopolska Wytwórnia Żywności Profi spółka z ograniczoną odpowiedzialnością sp.k. ul. Kolejowa 3 63-520 Grabów n. Prosną</p>
+ <p><span class="info">Adres zwrotny:</span></p>
+ <p>Wielkopolska Wytwórnia Żywności Profi spółka z ograniczoną odpowiedzialnością sp.k. ul. Kolejowa 3 63-520 Grabów n. Prosną tel. +48 62 732 11 00 www.profi.com.pl</p>
+</div>

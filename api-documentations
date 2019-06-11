@@ -1,0 +1,24 @@
+POST: place/newPlace
+    HEADERS: token
+    BODY: placeName
+    RESPONSE: PlaceDetails
+PUT: place/{placeId}/changeAdmin/{newAdminId}
+    HEADERS: token
+    BODY: 
+    RESPONSE: boolean
+GET: place/byAccount/{accountId}
+    HEADERS: token
+    BODY:
+    RESPONSE: Set<KeyName>
+GET: place/{placeId}
+    HEADERS: token
+    BODY:
+    RESPONSE: Map<String,Object> (users, containers, placeDetails)
+PUT: place/{placeId}/addNewUser/{username}
+    HEADERS: token
+    BODY: 
+    RESPONSE: KeyName
+PUT: place/{placeId}/removeUser/{userId}
+    HEADERS: token
+    BODY: 
+    RESPONSE: boolean
