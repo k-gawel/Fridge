@@ -17,7 +17,7 @@
                     <version>3.2.2</version>
                     <configuration>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
-                        <warName>ROOT</warName>
+                        <warName>fridgeapi</warName>
                         <outputDirectory>/home/kamil/Prog/apache-tomcat-8.5.39/webapps</outputDirectory>
                     </configuration>
                 </plugin>
@@ -239,13 +239,6 @@
             <version>${logger.ver}</version>
         </dependency>
 
-
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.5</version>
-        </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
