@@ -34,7 +34,7 @@ public class CategoryController {
         HttpStatus httpStatus;
 
         try {
-            result = getterService.categories.getByKey(5L);
+            result = getterService.categories.getByKey(2L);
             httpStatus = HttpStatus.OK;
         } catch (Exception e) {
             e.printStackTrace();

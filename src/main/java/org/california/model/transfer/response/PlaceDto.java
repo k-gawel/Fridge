@@ -48,7 +48,7 @@ public class PlaceDto implements Serializable {
                 '}';
     }
 
-    
+
     public static class Builder {
         
         private PlaceDto result = new PlaceDto();

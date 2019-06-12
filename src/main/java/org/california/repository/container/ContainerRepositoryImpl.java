@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class ContainerRepositoryImpl extends AbstractRepositoryImpl<Container> implements ContainerRepository {
@@ -32,9 +34,9 @@ public class ContainerRepositoryImpl extends AbstractRepositoryImpl<Container> i
 
 
     @Override
-    public Collection<KeyValue<Account,Long>> getAddedInstancesStats(Collection<Account> accounts, Collection<Container> containers) {
+    public Map<Account,Long> getAddedInstancesStats(Collection<Account> accounts, Collection<Container> containers) {
         if(accounts == null || containers == null || accounts.isEmpty() || containers.isEmpty())
-            return Collections.emptySet();
+            return Collections.emptyMap();
 
         final String HQL = "SELECT new org.california.model.util.KeyValue(II.addedBy, COUNT(II.addedBy)) FROM ItemInstance II " +
                               "WHERE II.addedBy in (:accounts) AND II.container IN (:containers) GROUP BY II.addedBy";
@@ -44,30 +46,29 @@ public class ContainerRepositoryImpl extends AbstractRepositoryImpl<Container> i
         query.setParameterList("accounts", accounts);
         query.setParameterList("containers", containers);
 
-        return query.getResultList();
+        return query.getResultList().stream().collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue));
     }
 
 
     @Override
-    public Collection<KeyValue<Account, Long>> getOpenedInstancesStats(Collection<Account> accounts, Collection<Container> containers) {
+    public Map<Account, Long> getOpenedInstancesStats(Collection<Account> accounts, Collection<Container> containers) {
         if(accounts == null || containers == null || accounts.isEmpty() || containers.isEmpty())
-            return Collections.emptySet();
+            return Collections.emptyMap();
 
-        final String HQL = "SELECT new org.california.model.util.KeyValue(II.openBy, COUNT(II.openBy)) FROM ItemInstance II " +
-                "WHERE II.openBy in (:accounts) AND II.container IN (:containers) GROUP BY II.openBy";
+        final String HQL = "SELECT new org.california.model.util.KeyValue(II.openBy, COUNT(II.openBy)) FROM ItemInstance II WHERE II.openBy in (:accounts) AND II.container IN (:containers) GROUP BY II.openBy";
 
         Query<KeyValue<Account, Long>> query = getSession().createQuery(HQL);
         query.setParameterList("accounts", accounts);
         query.setParameterList("containers", containers);
 
-        return query.getResultList();
+        return query.getResultList().stream().collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue));
     }
 
 
     @Override
-    public Collection<KeyValue<Account, Long>> getDeletedInstancesStats(Collection<Account> accounts, Collection<Container> containers) {
+    public Map<Account, Long> getDeletedInstancesStats(Collection<Account> accounts, Collection<Container> containers) {
         if(accounts == null || containers == null || accounts.isEmpty() || containers.isEmpty())
-            return Collections.emptySet();
+            return Collections.emptyMap();
 
         final String HQL = "SELECT new org.california.model.util.KeyValue(II.deletedBy, COUNT(II.deletedBy)) FROM ItemInstance II " +
                 "WHERE II.deletedBy in (:accounts) AND II.container IN (:containers) GROUP BY II.deletedBy";
@@ -76,7 +77,7 @@ public class ContainerRepositoryImpl extends AbstractRepositoryImpl<Container> i
         query.setParameterList("accounts", accounts);
         query.setParameterList("containers", containers);
 
-        return query.getResultList();
+        return query.getResultList().stream().collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue));
     }
 
 }

@@ -5,14 +5,11 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.Place;
 import org.california.repository.place.PlaceRepository;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;

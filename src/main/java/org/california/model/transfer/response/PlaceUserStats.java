@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import java.io.Serializable;
+import java.util.function.Function;
 
 public class PlaceUserStats implements Serializable {
 
@@ -11,11 +12,13 @@ public class PlaceUserStats implements Serializable {
 
     public PlaceUserStats() {}
 
-    public PlaceUserStats(long userId, long instancesAdded, long instancesOpened, long instancesDeleted) {
+    public PlaceUserStats(long userId, Long instancesAdded, Long instancesOpened, Long instancesDeleted) {
+        Function<Long, Long> getLong = l -> l == null ? 0 : l;
+
         this.userId = userId;
-        this.instancesAdded = instancesAdded;
-        this.instancesOpened = instancesOpened;
-        this.instancesDeleted = instancesDeleted;
+        this.instancesAdded = getLong.apply(instancesAdded);
+        this.instancesOpened = getLong.apply(instancesOpened);
+        this.instancesDeleted = getLong.apply(instancesDeleted);
     }
 
     public long getUserId() {

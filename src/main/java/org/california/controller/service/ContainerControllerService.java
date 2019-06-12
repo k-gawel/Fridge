@@ -89,13 +89,13 @@ public class ContainerControllerService {
 
 
     public Collection<PlaceUserStats> getUserStats(String token, String userIdsString, String placeIdsString, String containerIdsString) {
-
         Account account = getterService.accounts.getByToken(token);
+
         if(account == null)
             throw new UnauthorizedException();
 
-        Collection<Long> userIds = Utils.collectionOf(userIdsString);
-        Collection<Long> placeIds = Utils.collectionOf(placeIdsString);
+        Collection<Long> userIds      = Utils.collectionOf(userIdsString);
+        Collection<Long> placeIds     = Utils.collectionOf(placeIdsString);
         Collection<Long> containerIds = Utils.collectionOf(containerIdsString);
 
 

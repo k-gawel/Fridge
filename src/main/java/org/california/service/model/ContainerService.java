@@ -5,7 +5,6 @@ import org.california.model.entity.Container;
 import org.california.model.entity.Place;
 import org.california.model.transfer.request.ContainerForm;
 import org.california.model.transfer.response.PlaceUserStats;
-import org.california.model.util.KeyValue;
 import org.california.repository.container.ContainerRepository;
 import org.california.service.getter.GetterService;
 import org.california.util.exceptions.ForbiddentException;
@@ -15,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,27 +73,15 @@ public class ContainerService {
         if(CollectionUtils.isEmpty(accounts) || CollectionUtils.isEmpty(containers))
             return Collections.emptySet();
 
-        List<PlaceUserStats> result = new ArrayList<>();
-        accounts.forEach(a -> result.add(new PlaceUserStats(a.getId(), 0, 0, 0)));
+        Map<Account, Long> added   = containerRepository.getAddedInstancesStats(accounts, containers);
+        Map<Account, Long> opened  = containerRepository.getOpenedInstancesStats(accounts, containers);
+        Map<Account, Long> deleted = containerRepository.getDeletedInstancesStats(accounts, containers);
 
-        Collection<KeyValue<Account, Long>> addStats    = containerRepository.getAddedInstancesStats(accounts, containers);
-        Collection<KeyValue<Account, Long>> openStats   = containerRepository.getOpenedInstancesStats(accounts, containers);
-        Collection<KeyValue<Account, Long>> deleteStats = containerRepository.getDeletedInstancesStats(accounts, containers);
-
-        result.forEach(e -> {
-            addStats.forEach(a -> { if(a.getKey().getId().equals(e.getUserId())) e.setInstancesAdded(a.getValue()); } );
-            openStats.forEach(a -> { if(a.getKey().getId().equals(e.getUserId())) e.setInstancesOpened(a.getValue()); } );
-            deleteStats.forEach(a -> { if(a.getKey().getId().equals(e.getUserId())) e.setInstancesDeleted(a.getValue()); } );
-        });
-
-        Map<Account, Long> added   = new HashMap<>();
-        Map<Account, Long> deleted = new HashMap<>();
-        Map<Account, Long> opened  = new HashMap<>();
 
         return accounts.stream()
                 .map(a -> new PlaceUserStats(a.getId(), added.get(a), opened.get(a), deleted.get(a)))
                 .collect(Collectors.toList());
-
     }
+
 
 }
