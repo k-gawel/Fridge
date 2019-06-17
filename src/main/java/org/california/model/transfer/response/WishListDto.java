@@ -1,5 +1,9 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Place;
+import org.california.repository.item.ItemSearchRepository;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -14,41 +18,63 @@ public class WishListDto implements Serializable {
 
     public Collection<WishListItemDto> items;
 
-
     public static class Builder {
 
-        private WishListDto result;
+        private WishListDto result = new WishListDto();
 
-        public void setId(Long id) {
-            result.id = id;
+        public Builder() {}
+
+        public NameSetter setId(Long id) {
+            this.result.id = id;
+            return new NameSetter();
         }
 
-        public void setItems(Collection<WishListItemDto> items) {
-            result.items = items;
+        class NameSetter {
+            DescriptionSetter setName(String name) {
+                Builder.this.result.name = name;
+                return new DescriptionSetter();
+            }
         }
 
-        public void setName(String name) {
-            result.name = name;
+        class DescriptionSetter {
+            PlaceIdSetter setDescription(String description) {
+                Builder.this.result.description = description;
+                return new PlaceIdSetter();
+            }
         }
 
-        public void setDescription(String description) {
-            result.description = description;
+        class PlaceIdSetter {
+            ItemsSetter setPlaceId(Long placeId) {
+                Builder.this.result.placeId = placeId;
+                return new ItemsSetter();
+            }
+
+            ItemsSetter setPlaceId(@NotNull Place place) {
+                return setPlaceId(place.getId());
+            }
         }
 
-        public void setPlaceId(Long placeId) {
-            result.placeId = placeId;
+        class ItemsSetter {
+            StatusSetter setItems(Collection<WishListItemDto> items) {
+                Builder.this.result.items = items;
+                return new StatusSetter();
+            }
         }
 
-        public void setStatus(boolean status) { result.status = status; }
+        class StatusSetter {
+            FinalBuilder setStatus(boolean status) {
+                Builder.this.result.status = status;
+                return new FinalBuilder();
+            }
+        }
 
-
-        public WishListDto build() {
-            if(result.id == null || result.items == null || result.description == null
-                    || result.placeId == null || result.name == null)
-                throw new IllegalStateException("params are null");
-
-            return result;
+        class FinalBuilder {
+            public WishListDto build() {
+                return Builder.this.result;
+            }
         }
 
     }
+
 }
+

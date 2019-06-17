@@ -1,5 +1,8 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Nutrition;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 public class NutritionDto implements Serializable {
@@ -18,48 +21,68 @@ public class NutritionDto implements Serializable {
         
         private NutritionDto result = new NutritionDto();
 
-        public Builder setEnergy(Integer energy) {
-            result.energy = energy;
-            return this;
+        public EnergySetter setId(Long id) {
+            Builder.this.result.id = id;
+            return new EnergySetter();
         }
 
-        public Builder setId(long id) {
-            result.id = id;
-            return this;
+        public EnergySetter setId(@NotNull Nutrition nutrition) {
+            return setId(nutrition.getId());
         }
 
-        public Builder setFat(Double fat) {
-            result.fat = fat;
-            return this;
+        class EnergySetter {
+            public FatSetter setEnergy(Integer energy) {
+                Builder.this.result.energy = energy;
+                return new FatSetter();
+            }
         }
 
-        public Builder setSaturatedFat(Double saturatedFat) {
-            result.saturatedFat = saturatedFat;
-            return this;
+        class FatSetter {
+            public SaturatedFatSetter setFat(Double fat) {
+                Builder.this.result.fat = fat;
+                return new SaturatedFatSetter();
+            }
         }
 
-        public Builder setCarbohydrate(Double carbohydrate) {
-            result.carbohydrate = carbohydrate;
-            return this;
+        class SaturatedFatSetter {
+            public CarbohydrateSetter setSaturatedFat(Double saturatedFat) {
+                Builder.this.result.saturatedFat = saturatedFat;
+                return new CarbohydrateSetter();
+            }
         }
 
-        public Builder setSugar(Double sugar) {
-            result.sugar = sugar;
-            return this;
+        class CarbohydrateSetter {
+            public SugarSetter setCarbohydrate(Double carbohydrate) {
+                Builder.this.result.carbohydrate = carbohydrate;
+                return new SugarSetter();
+            }
         }
 
-        public Builder setProtein(Double protein) {
-            result.protein = protein;
-            return this;
+        class SugarSetter {
+            public ProteinSetter setSugar(Double sugar) {
+                Builder.this.result.sugar = sugar;
+                return new ProteinSetter();
+            }
         }
 
-        public Builder setSalt(Double salt) {
-            result.salt = salt;
-            return this;
+        class ProteinSetter {
+            public SaltSetter setProtein(Double protein) {
+                Builder.this.result.protein = protein;
+                return new SaltSetter();
+            }
         }
 
-        public NutritionDto build() {
-            return result;
+        class SaltSetter {
+            public FinalBuilder setSalt(Double salt) {
+                Builder.this.result.salt = salt;
+                return new FinalBuilder();
+            }
+        }
+
+        class FinalBuilder {
+            public NutritionDto build() {
+                return Builder.this.result;
+            }
         }
 
     }

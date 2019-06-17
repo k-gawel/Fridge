@@ -2,6 +2,10 @@ package org.california.model.transfer.response;
 
 
 
+import org.california.model.entity.Container;
+import org.california.model.entity.Place;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 public class ContainerDto implements Serializable {
@@ -44,24 +48,37 @@ public class ContainerDto implements Serializable {
 
         private ContainerDto result = new ContainerDto();
 
-
-        public void setId(Long id) {
-            result.id = id;
+        public NameSetter setId(Long id) {
+            Builder.this.result.id = id;
+            return new NameSetter();
         }
 
-        public void setName(String name) {
-            result.name = name;
+        public NameSetter setId(@NotNull Container container) {
+            return setId(container.getId());
         }
 
-        public void setPlaceId(Long placeId) {
-            result.placeId = placeId;
+        class NameSetter {
+            PlaceIdSetter setName(String name) {
+                Builder.this.result.name = name;
+                return new PlaceIdSetter();
+            }
         }
 
+        class PlaceIdSetter {
+            FinalBuilder setPlaceId(Long placeId) {
+                Builder.this.result.placeId = placeId;
+                return new FinalBuilder();
+            }
 
-        public ContainerDto build() {
-            if(result.id == null || result.placeId == null || result.name == null)
-                throw new IllegalStateException("nullable_values");
-            return result;
+            FinalBuilder setPlaceId(@NotNull Place place)  {
+                return setPlaceId(place.getId());
+            }
+        }
+
+        class FinalBuilder {
+            ContainerDto build() {
+                return Builder.this.result;
+            }
         }
 
     }

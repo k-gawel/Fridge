@@ -1,5 +1,9 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Account;
+import org.jetbrains.annotations.NotNull;
+
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class PlaceUserDto implements Serializable {
@@ -42,22 +46,37 @@ public class PlaceUserDto implements Serializable {
 
         private PlaceUserDto result = new PlaceUserDto();
 
-        public void setId(Long id) {
-            result.id = id;
+        public NameSetter setId(@NotNull Long id) {
+            Builder.this.result.id = id;
+            return new NameSetter();
         }
 
-        public void setName(String name) {
-            result.name = name;
+        public NameSetter setId(@NotNull Account account) {
+            return setId(account.getId());
         }
 
-        public void setStatus(Boolean status) {
-            result.status = status;
+        class NameSetter {
+            StatusSetter setName(@NotEmpty String name) {
+                Builder.this.result.name = name;
+                return new StatusSetter();
+            }
+
+            StatusSetter setName(@NotNull Account account) {
+                return setName(account.getName());
+            }
         }
 
-        public PlaceUserDto build() {
-            if(result.id == null || result.name == null || result.status == null)
-                throw new IllegalStateException("parameters can't be null");
-            return result;
+        class StatusSetter {
+            FinalBuilder setStatus(boolean stauts) {
+                Builder.this.result.status = stauts;
+                return new FinalBuilder();
+            }
+        }
+
+        class FinalBuilder {
+            PlaceUserDto build() {
+                return Builder.this.result;
+            }
         }
 
     }

@@ -1,7 +1,17 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Account;
+import org.california.model.entity.Container;
+import org.california.model.entity.Item;
+import org.california.model.entity.ItemInstance;
+import org.california.model.util.ObjectUtils;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Objects;
 
 
 public class ItemInstanceDto implements Serializable {
@@ -90,76 +100,138 @@ public class ItemInstanceDto implements Serializable {
 
         private ItemInstanceDto result = new ItemInstanceDto();
 
-
-        public void setId(Long id) {
+        public CommentSetter setId(@NotNull Long id) {
             result.id = id;
+            return new CommentSetter();
         }
 
-        public void setItemId(Long itemId) {
-            result.itemId = itemId;
+        public CommentSetter setId(@NotNull ItemInstance itemInstance) {
+            return setId(itemInstance.getId());
         }
 
-        public void setContainerId(Long containerId) {
-            result.containerId = containerId;
+        class CommentSetter {
+            ExpireOnSetter setComment(String comment) {
+                Builder.this.result.comment = comment;
+                return new ExpireOnSetter();
+            }
         }
 
-        public void setComment(String comment) {
-            result.comment = comment;
+        class ExpireOnSetter {
+            public ItemIdSetter setExpireOn(LocalDate expireOn) {
+                Builder.this.result.expireOn = expireOn;
+                return new ItemIdSetter();
+            }
         }
 
-        public void setExpireOn(LocalDate expireOn) {
-            result.expireOn = expireOn;
+        class ItemIdSetter {
+            ContainerIdSetter setItemId(@NotNull Long itemId) {
+                Builder.this.result.itemId = itemId;
+                return new ContainerIdSetter();
+            }
+
+            ContainerIdSetter setItemId(@NotNull Item item) {
+                return setItemId(item.getId());
+            }
         }
 
-        public void setAddedById(Long addedById) {
-            result.addedById = addedById;
+        class ContainerIdSetter {
+            AddedByIdSetter setContainerId(@NotNull Long containerId) {
+                Builder.this.result.containerId = containerId;
+                return new AddedByIdSetter();
+            }
+
+            AddedByIdSetter setContainerId(@NotNull Container container) {
+                return setContainerId(container.getId());
+            }
         }
 
-        public void setAddedOn(LocalDate addedOn) {
-            result.addedOn = addedOn;
+        class AddedByIdSetter {
+            AddedOnSetter setAddedById(@NotNull Long addedById) {
+                Builder.this.result.addedById = addedById;
+                return new AddedOnSetter();
+            }
+
+            AddedOnSetter setAddedById(@NotNull Account addedBy) {
+                return setAddedById(addedBy.getId());
+            }
         }
 
-        public void setOpenById(Long openById) {
-            result.openById = openById;
+        class AddedOnSetter {
+            OpenByIdSetter setAddedOn(@NotNull LocalDate date) {
+                Builder.this.result.addedOn = date;
+                return new OpenByIdSetter();
+            }
         }
 
-        public void setOpenOn(LocalDate openOn) {
-            result.openOn = openOn;
+        class OpenByIdSetter {
+            OpenOnSetter setOpenById(Long openById) {
+                Builder.this.result.openById = openById;
+                return new OpenOnSetter();
+            }
+
+            OpenOnSetter setOpenById(Account openBy) {
+                return setOpenById(openBy != null ? openBy.getId() : null);
+            }
         }
 
-        public void setFrozenById(Long frozenById) {
-            result.frozenById = frozenById;
+        class OpenOnSetter {
+            FrozenByIdSetter setOpenOn(LocalDate date) {
+                ObjectUtils.allAreNullOrNoneIs(date, Builder.this.result.openById);
+
+                Builder.this.result.openOn = date;
+                return new FrozenByIdSetter();
+            }
         }
 
-        public void setFrozenOn(LocalDate frozenOn) {
-            result.frozenOn = frozenOn;
+        class FrozenByIdSetter {
+            FrozenOnSetter setFrozenById(Long frozenById) {
+                Builder.this.result.frozenById = frozenById;
+                return new FrozenOnSetter();
+            }
+
+            FrozenOnSetter setFrozenById(Account frozenBy) {
+                return setFrozenById(frozenBy != null ? frozenBy.getId() : null);
+            }
         }
 
-        public void setDeletedById(Long deletedById) {
-            result.deletedById = deletedById;
+        class FrozenOnSetter {
+            DeletedByIdSetter setFrozenOn(LocalDate localDate) {
+                ObjectUtils.allAreNullOrNoneIs(localDate, Builder.this.result.frozenById);
+                Builder.this.result.frozenOn = localDate;
+
+                return new DeletedByIdSetter();
+            }
         }
 
-        public void setDeletedOn(LocalDate deletedOn) {
-            result.deletedOn = deletedOn;
+        class DeletedByIdSetter {
+            DeletedOnSetter setDeletedById(Long deletedById) {
+                Builder.this.result.deletedById = deletedById;
+                return new DeletedOnSetter();
+            }
+
+            DeletedOnSetter setDeletedById(Account account) {
+                return setDeletedById(account != null ? account.getId() : null);
+            }
         }
-        
-        
-        public ItemInstanceDto build() {
-            if(result.id == null)
-                throw new IllegalStateException("id");
-            if(result.containerId == null)
-                throw new IllegalStateException("container_id");
-            if(result.addedOn == null || result.addedById == null)
-                throw new IllegalStateException("added_properties");
-            if((result.openById == null) != (result.openOn == null))
-                throw new IllegalStateException("open_properties");
-            if((result.frozenById == null) != (result.frozenOn == null))
-                throw new IllegalStateException("frozen_properties");
-            if((result.deletedById == null) != (result.deletedOn == null))
-                throw new IllegalStateException("delete_properties");
-            return result;
+
+        class DeletedOnSetter {
+            FinalBuilder setDeletedOn(LocalDate deletedOn) {
+                ObjectUtils.allAreNullOrNoneIs(deletedOn, Builder.this.result.deletedById);
+
+                Builder.this.result.deletedOn = deletedOn;
+
+                return new FinalBuilder();
+            }
         }
-        
+
+        class FinalBuilder {
+            ItemInstanceDto build() {
+                return Builder.this.result;
+            }
+        }
+
+
+
     }
 
 

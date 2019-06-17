@@ -1,5 +1,9 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.BaseNamedEntity;
+import org.jetbrains.annotations.NotNull;
+
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class NamedEntityDto implements Serializable {
@@ -11,21 +15,26 @@ public class NamedEntityDto implements Serializable {
 
         private NamedEntityDto result = new NamedEntityDto();
 
-        public Builder setId(Serializable id) {
-            result.id = id;
-            return this;
+        public NameSetter setId(@NotNull Serializable id) {
+            Builder.this.result.id = id;
+            return new NameSetter();
         }
 
-        public Builder setName(String name) {
-            result.name = name;
-            return this;
+        public NameSetter setId(@NotNull BaseNamedEntity entity) {
+            return setId(entity.getId());
         }
 
-        public NamedEntityDto build() {
-            if(result.id == null || result.name == null)
-                throw new IllegalStateException("name.null|id.null");
+        class NameSetter {
+            FinalBuilder setName(@NotEmpty String name) {
+                Builder.this.result.name = name;
+                return new FinalBuilder();
+            }
+        }
 
-            return result;
+        class FinalBuilder {
+            NamedEntityDto build() {
+                return Builder.this.result;
+            }
         }
 
     }

@@ -1,5 +1,8 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Ingredient;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 public class IngredientDto implements Serializable {
@@ -38,31 +41,28 @@ public class IngredientDto implements Serializable {
 
         private IngredientDto result = new IngredientDto();
 
-        public Builder() {}
-
-        public Builder(long id, String name) {
-            result.id = id;
-            result.name = name;
+        public NameSetter setId(Long id) {
+            Builder.this.result.id = id;
+            return new NameSetter();
         }
 
-        public Builder setId(long id) {
-            result.id = id;
-            return this;
+        public NameSetter setId(@NotNull Ingredient ingredient) {
+            return setId(ingredient.getId());
         }
 
-        public Builder setName(String name) {
-            result.name = name;
-            return this;
+        class NameSetter {
+            FinalBuilder setName(String name) {
+                Builder.this.result.name = name;
+                return new FinalBuilder();
+            }
         }
 
-        public IngredientDto build() {
-            if(result.id == 0 || result.name == null)
-                throw new IllegalStateException("id.zero|name.null");
-
-            return result;
+        class FinalBuilder {
+            IngredientDto build() {
+                return Builder.this.result;
+            }
         }
 
-
-    }
+     }
 
 }

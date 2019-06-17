@@ -1,5 +1,12 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Category;
+import org.california.model.entity.Item;
+import org.california.model.entity.Place;
+import org.jetbrains.annotations.NotNull;
+
+import javax.naming.Name;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -24,72 +31,114 @@ public class ItemDto implements Serializable {
     public static class Builder {
         
         private ItemDto result = new ItemDto();
-        
-        public Builder setId(Long id) {
-            result.id = id;
-             return this;
+
+        public NameSetter setId(@NotNull Long id) {
+            Builder.this.result.id = id;
+            return new NameSetter();
         }
 
-        public Builder setName(String name) {
-            result.name = name;
-            return this;
+        public NameSetter setId(@NotNull Item item) {
+            return setId(item.getId());
         }
 
-        public Builder setBarcode(Long barcode) {
-            result.barcode = barcode;
-            return this;
+        class NameSetter {
+            public BarcodeSetter setName(@NotEmpty String name) {
+                Builder.this.result.name = name;
+                return new BarcodeSetter();
+            }
+
+            public BarcodeSetter setName(@NotNull Item item) {
+                return setName(item.getName());
+            }
         }
 
-        public Builder setPlaceId(Long placeId) {
-            result.placeId = placeId;
-            return this;
+        class BarcodeSetter {
+            PlaceIdSetter setBarcode(Long barcode) {
+                Builder.this.result.barcode = barcode;
+                return new PlaceIdSetter();
+            }
+
+            PlaceIdSetter setBarcode(@NotNull Item item) {
+                return setBarcode(item.getBarcode());
+            }
         }
 
-        public Builder setCategoryId(Long categoryId) {
-            result.categoryId = categoryId;
-            return this;
+        class PlaceIdSetter {
+            private CategoryIdSetter setPlaceId(Long placeId) {
+                Builder.this.result.placeId = placeId;
+                return new CategoryIdSetter();
+            }
+
+            CategoryIdSetter setPlaceId(Place place) {
+                return setPlaceId(place != null ? place.getId() : null);
+            }
         }
 
-        public Builder setProducer(ProducerDto producer) {
-            result.producer = producer;
-            return this;
+        class CategoryIdSetter {
+            ProducerSetter setCategoryId(@NotNull Long categoryId) {
+                Builder.this.result.categoryId = categoryId;
+                return new ProducerSetter();
+            }
+            ProducerSetter setCategoryId(@NotNull Category category) {
+                return setCategoryId(category.getId());
+            }
         }
 
-        public Builder setDescription(String description) {
-            result.description = description;
-            return this;
+        class ProducerSetter {
+            DescriptionSetter setProducer(ProducerDto producerDto) {
+                Builder.this.result.producer = producerDto;
+                return new DescriptionSetter();
+            }
         }
 
-        public Builder setStorage(String storage) {
-            result.storage = storage;
-            return this;
+        class DescriptionSetter {
+            StorageSetter setDescription(String description) {
+                Builder.this.result.description = description;
+                return new StorageSetter();
+            }
+
+            StorageSetter setDescription(Item item) {
+                return setDescription(item.getDescription());
+            }
         }
 
-        public Builder setAllergens(Collection<AllergenDto> allergens) {
-            result.allergens = allergens;
-            return this;
+        class StorageSetter {
+            AllergensSetter setStorage(String storage) {
+                Builder.this.result.storage = storage;
+                return new AllergensSetter();
+            }
+
+            AllergensSetter setStorage(@NotNull Item item) {
+                return setStorage(item.getStorage());
+            }
         }
 
-        public Builder setIngredients(Collection<IngredientDto> ingredients) {
-            result.ingredients = ingredients;
-            return this;
+        class AllergensSetter {
+            IngredientsSetter setAllergens(Collection<AllergenDto> allergenDtos) {
+                Builder.this.result.allergens = allergenDtos;
+                return new IngredientsSetter();
+            }
         }
 
-        public Builder setNutrition(NutritionDto nutrition) {
-            result.nutrition = nutrition;
-            return this;
+        class IngredientsSetter {
+            NutritionSetter setIngredients(Collection<IngredientDto> ingredients) {
+                Builder.this.result.ingredients = ingredients;
+                return new NutritionSetter();
+            }
         }
 
-        
-        public ItemDto build() {
-            if(result.id == null)
-                throw new IllegalStateException("id");
-            if(result.name == null)
-                throw new IllegalStateException("name");
-            if(result.categoryId == null)
-                throw new IllegalStateException("category_id");
-            return result;
+        class NutritionSetter {
+            FinalBuilder setNutrition(NutritionDto nutritionDto) {
+                Builder.this.result.nutrition = nutritionDto;
+                return new FinalBuilder();
+            }
         }
-        
+
+        class FinalBuilder {
+            ItemDto build() {
+                return Builder.this.result;
+            }
+        }
+
     }
 }

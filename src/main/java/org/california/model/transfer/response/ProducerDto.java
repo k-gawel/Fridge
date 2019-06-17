@@ -1,5 +1,8 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Producent;
+import org.california.model.util.ObjectUtils;
+
 import java.io.Serializable;
 
 public class ProducerDto implements Serializable{
@@ -38,19 +41,28 @@ public class ProducerDto implements Serializable{
 
         private ProducerDto result = new ProducerDto();
 
-        public void setId(Long id) {
-            result.id = id;
+        public NameSetter setId(Long id) {
+            Builder.this.result.id = id;
+            return new NameSetter();
         }
 
-        public void setName(String name) {
-            result.name = name;
+        public NameSetter setId(Producent producent) {
+            return setId(producent != null ? producent.getId() : null);
         }
 
+        class NameSetter {
+            FinalBuilder setName(String name) {
+                ObjectUtils.allAreNullOrNoneIs(name, Builder.this.result.id);
 
-        public ProducerDto build() {
-            if((result.id == null) != (result.name == null))
-                throw new IllegalStateException("both id and null must not be null or must be null");
-            return this.result;
+                Builder.this.result.name = name;
+                return new FinalBuilder();
+            }
+        }
+
+        class FinalBuilder {
+            ProducerDto build() {
+                return Builder.this.result;
+            }
         }
 
     }

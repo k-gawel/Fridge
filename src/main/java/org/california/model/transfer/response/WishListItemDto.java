@@ -1,5 +1,7 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.*;
+
 import java.util.Date;
 
 public class WishListItemDto {
@@ -22,64 +24,111 @@ public class WishListItemDto {
         
         private WishListItemDto result = new WishListItemDto();
 
-        public void setId(Long id) {
-            result.id = id;
+        public WishListIdSetter setId(Long id) {
+            Builder.this.result.id = id;
+            return new WishListIdSetter();
         }
 
-        public void setWishListId(Long wishListId) {
-            result.wishListId = wishListId;
+        public WishListIdSetter setId(WishListItem wishListItem) {
+            if(wishListItem == null)
+                throw new NullPointerException("WishList Item is null");
+
+            return setId(wishListItem.getId());
         }
 
-        public void setAuthorId(Long authorId) {
-            result.authorId = authorId;
+        class WishListIdSetter {
+            AuthorIdSetter setWishListId(Long wishListId) {
+                Builder.this.result.wishListId = wishListId;
+                return new AuthorIdSetter();
+            }
+
+            AuthorIdSetter setWishListId(WishList wishList) {
+                return setWishListId(wishList != null ? wishList.getId() : null);
+            }
         }
 
-        public void setCreatedOn(Date createdOn) {
-            result.createdOn = createdOn;
+        class AuthorIdSetter {
+            CreatedOnSetter setAuthorId(Long authorId) {
+                Builder.this.result.authorId = authorId;
+                return new CreatedOnSetter();
+            }
+
+            CreatedOnSetter setAuthorId(Account author) {
+                return setAuthorId(author != null ? author.getId() : null);
+            }
         }
 
-        public void setAddedById(Long addedById) {
-            result.addedById = addedById;
+        class CreatedOnSetter {
+            public AddedByIdSetter setCreatedOn(Date createdOn) {
+                Builder.this.result.createdOn = createdOn;
+                return new AddedByIdSetter();
+            }
         }
 
-        public void setAddedOn(Date addedOn) {
-            result.addedOn = addedOn;
+        class AddedByIdSetter {
+            AddedOnSetter setAddedById(Long addedById) {
+                Builder.this.result.addedById = addedById;
+                return new AddedOnSetter();
+            }
+
+            AddedOnSetter setAddedById(Account addedBy) {
+                return setAddedById(addedBy != null ? addedBy.getId() : null);
+            }
         }
 
-        public void setAddedInstanceId(Long addedInstanceId) {
-            result.addedInstanceId = addedInstanceId;
+        class AddedOnSetter {
+            AddedInstanceIdSetter setAddedOn(Date addedOn) {
+                Builder.this.result.addedOn = addedOn;
+                return new AddedInstanceIdSetter();
+            }
         }
 
-        public void setCategoryId(Long categoryId) {
-            result.categoryId = categoryId;
+        class AddedInstanceIdSetter {
+            CategoryIdSetter setAddedInstanceId(Long addedInstanceId) {
+                Builder.this.result.addedInstanceId = addedInstanceId;
+                return new CategoryIdSetter();
+            }
+
+            CategoryIdSetter setAddedInstanceId(ItemInstance itemInstance) {
+                return setAddedInstanceId(itemInstance != null ? itemInstance.getId() : null);
+            }
         }
 
-        public void setItemId(Long itemId) {
-            result.itemId = itemId;
+        class CategoryIdSetter {
+            ItemIdSetter setCategoryId(Long categoryId) {
+                Builder.this.result.categoryId = categoryId;
+                return new ItemIdSetter();
+            }
+
+            ItemIdSetter setCategoryId(Category category) {
+                return setCategoryId(category != null ? category.getId() : null);
+            }
         }
 
-        public void setComment(String comment) {
-            result.comment = comment;
+        class ItemIdSetter {
+            CommentSetter setItemId(Long itemId) {
+                Builder.this.result.itemId = itemId;
+                return new CommentSetter();
+            }
+
+            CommentSetter setItemId(Item item) {
+                return setItemId(item != null ? item.getId() : null);
+            }
         }
 
+        class CommentSetter {
+            public FinalBuilder setComment(String comment) {
+                Builder.this.result.comment = comment;
+                return new FinalBuilder();
+            }
+        }
 
-        public WishListItemDto build() {
-            if(result.id == null || result.wishListId == null ||
-                    result.authorId == null || result.createdOn == null)
-                throw new IllegalStateException("id, wishlist, author or createdon are null");
-
-            if((result.addedOn != null) == (result.addedById != null) == (result.addedInstanceId != null))
-                throw new IllegalStateException("added instance paremeters must be all null or all not null");
-
-            if(result.categoryId == null && result.itemId == null && result.comment == null)
-                throw new IllegalStateException("item, category or comment - one of it must not be null");
-
-            return result;
+        class FinalBuilder {
+            public WishListItemDto build() {
+                return Builder.this.result;
+            }
         }
 
     }
-    
-    
-    
 
 }

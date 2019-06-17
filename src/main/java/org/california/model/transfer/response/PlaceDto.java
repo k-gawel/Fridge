@@ -1,5 +1,10 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Account;
+import org.california.model.entity.Place;
+import org.jetbrains.annotations.NotNull;
+
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -53,35 +58,51 @@ public class PlaceDto implements Serializable {
         
         private PlaceDto result = new PlaceDto();
 
-        public void setId(Long id) {
-            result.id = id;
+        public NameSetter setId(@NotNull Long id) {
+            Builder.this.result.id = id;
+            return new NameSetter();
         }
 
-        public void setName(String name) {
-            result.name = name;
+        public NameSetter setId(@NotNull Place place) {
+            return setId(place.getId());
         }
 
-        public void setAdminId(Long adminId) {
-            result.adminId = adminId;
+        class NameSetter {
+            public AdminIdSetter setName(@NotNull String name) {
+                Builder.this.result.name = name;
+                return new AdminIdSetter();
+            }
         }
 
-        public void setContainers(Collection<ContainerDto> containers) {
-            result.containers = containers;
+        class AdminIdSetter {
+            ContainersSetter setAdminId(@NotNull Long adminId) {
+                Builder.this.result.adminId = adminId;
+                return new ContainersSetter();
+            }
+
+            ContainersSetter setAdminId(@NotNull Account admin) {
+                return setAdminId(admin.getId());
+            }
         }
 
-        public void setUsers(Collection<PlaceUserDto> users) {
-            result.users = users;
+        class ContainersSetter {
+            UsersSetter setContainers(@NotEmpty Collection<ContainerDto> containers) {
+                Builder.this.result.containers = containers;
+                return new UsersSetter();
+            }
         }
 
-        public PlaceDto build() {
-            if(result.id == null || result.name == null || result.adminId == null
-                    || result.users == null || result.containers == null)
-                throw new IllegalStateException("params must not be null");
+        class UsersSetter {
+            FinalBuilder setUsers(@NotEmpty Collection<PlaceUserDto> users) {
+                Builder.this.result.users = users;
+                return new FinalBuilder();
+            }
+        }
 
-            if(result.containers.isEmpty() || result.users.isEmpty())
-                throw new IllegalStateException("containers and users must not be null");
-
-            return result;
+        class FinalBuilder {
+            PlaceDto build() {
+                return Builder.this.result;
+            }
         }
 
     }

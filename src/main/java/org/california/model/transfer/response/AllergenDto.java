@@ -1,5 +1,8 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Allergen;
+import org.jetbrains.annotations.NotNull;
+
 public class AllergenDto {
 
     public long id;
@@ -10,35 +13,34 @@ public class AllergenDto {
 
         private AllergenDto result = new AllergenDto();
 
-        public Builder() {}
-
-        public Builder(long id, String name) {
-            result.id = id;
-            result.name = name;
+        public NameSetter setId(Long id) {
+            Builder.this.result.id = id;
+            return new NameSetter();
         }
 
-        public Builder setId(long id) {
-            result.id = id;
-            return this;
+        public NameSetter setId(@NotNull Allergen allergen) {
+            return setId(allergen.getId());
         }
 
-        public Builder setName(String name) {
-            result.name = name;
-            return this;
+        class NameSetter {
+            ContainsSetter setName(String name) {
+                Builder.this.result.name = name;
+                return new ContainsSetter();
+            }
         }
 
-        public Builder setContains(boolean contains) {
-            result.contains = contains;
-            return this;
+        class ContainsSetter {
+            FinalBuilder doContains(boolean contains) {
+                Builder.this.result.contains = contains;
+                return new FinalBuilder();
+            }
         }
 
-        public AllergenDto build() {
-            if(result.id == 0 || result.name == null)
-                throw new IllegalStateException("id.zero|name.null");
-
-            return result;
+        class FinalBuilder {
+            AllergenDto build() {
+                return Builder.this.result;
+            }
         }
-
 
     }
 
