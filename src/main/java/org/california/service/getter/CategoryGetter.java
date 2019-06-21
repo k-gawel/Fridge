@@ -1,7 +1,7 @@
 package org.california.service.getter;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.california.model.entity.Category;
+import org.california.model.entity.item.Category;
 import org.california.repository.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,6 @@ public class CategoryGetter {
 
         return categoryRepository.getByIds(ids);
     }
-
 
 
     public Collection<Category> getFinalCategories(Category category) {

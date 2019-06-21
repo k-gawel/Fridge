@@ -1,6 +1,6 @@
 package org.california.repository.category;
 
-import org.california.model.entity.Category;
+import org.california.model.entity.item.Category;
 import org.california.repository.AbstractNamedEntityRepositoryImpl;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
