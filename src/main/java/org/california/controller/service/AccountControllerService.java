@@ -53,30 +53,26 @@ public class AccountControllerService {
 
         if(!account.getPassword().equals(password))
             throw new UnauthorizedException();
-
-        if(!form.getPassword1().equals("password"))
+        else if(!form.getPassword1().equals("password"))
             return accountManagementService.changePassword(account, form.getPassword1());
-
-        if(!form.getEmail().equals("mail@mail.mail"))
+        else if(!form.getEmail().equals("mail@mail.mail"))
             return accountManagementService.changeEmail(account, form.getEmail());
-
-        if(!form.getName().equals("username"))
+        else if(!form.getName().equals("username"))
             return accountManagementService.changeName(account, form.getName());
-
-        return false;
+        else
+            return false;
     }
 
 
     public Collection<NamedEntityDto> searchByName(String token, String name) {
         Account account = getterService.accounts.getByToken(token);
-
         if(account == null)
             throw new UnauthorizedException();
         if(name == null)
             throw new NotValidException("name.null");
 
         return getterService.accounts.searchByName(name).stream()
-                .map(mapper::namedEntityToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 

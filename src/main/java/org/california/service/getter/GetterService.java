@@ -1,5 +1,6 @@
 package org.california.service.getter;
 
+import org.california.service.model.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,7 @@ public class GetterService {
 
     public final AccountGetter accounts;
     public final PlaceGetter places;
+    public final TokenService tokens;
     public final ContainerGetter containers;
     public final ItemGetter items;
     public final ItemInstanceGetter itemInstances;
@@ -19,10 +21,11 @@ public class GetterService {
     public final ProducerGetter producers;
 
     @Autowired
-    public GetterService(AccountGetter accounts, PlaceGetter places, ContainerGetter containers, ItemGetter items, ItemInstanceGetter itemInstances, CategoryGetter categories, WishListGetter wishLists,
+    public GetterService(AccountGetter accounts, PlaceGetter places, TokenService tokens, ContainerGetter containers, ItemGetter items, ItemInstanceGetter itemInstances, CategoryGetter categories, WishListGetter wishLists,
                          WishListItemGetter wishListItems, AllergenGetter allergens, IngredientGetter ingredients, ProducerGetter producers) {
         this.accounts = accounts;
         this.places = places;
+        this.tokens = tokens;
         this.containers = containers;
         this.items = items;
         this.itemInstances = itemInstances;

@@ -1,6 +1,6 @@
 package org.california.controller.service;
 
-import org.california.model.transfer.response.AccountDatas;
+import org.california.model.transfer.response.InitialResponse;
 import org.california.service.model.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,9 @@ public class AuthorizationControllerService {
     }
 
 
-    public AccountDatas login(String token, String username, String password) {
-        return token.equals("") ? authorizationService.login(username, password) : authorizationService.login(token);
+    public InitialResponse login(String token, String username, String password) {
+        return token.equals("") ?
+                authorizationService.login(username, password) : authorizationService.login(token);
     }
 
 

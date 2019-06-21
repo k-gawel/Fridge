@@ -1,7 +1,7 @@
 package org.california.service.getter;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.california.model.entity.Producent;
+import org.california.model.entity.item.Producer;
 import org.california.repository.item.ProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,15 +9,16 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class ProducerGetter {
 
-    private final ProducerRepository producerRepository;
+    private final ProducerRepository repository;
 
     @Autowired
     ProducerGetter(ProducerRepository producerRepository) {
-        this.producerRepository = producerRepository;
+        this.repository = producerRepository;
     }
 
 
@@ -27,24 +28,37 @@ public class ProducerGetter {
     }
 
 
-    public Collection<Producent> getByIds(Collection<Long> ids) {
+    public Collection<Producer> getByIds(Collection<Long> ids) {
         return CollectionUtils.isEmpty(ids) ?
-                Collections.emptyList() : producerRepository.getByKeys(ids);
+                Collections.emptyList() : repository.getByKeys(ids);
     }
 
 
-    public Producent getByName(String name) {
-        return producerRepository.getByName(name);
+    public Optional<Producer> getByName(String name) {
+        Producer result =  repository.getByName(name);
+        return result != null ? Optional.of(result) : Optional.empty();
     }
 
 
-    public Collection<Producent> searchByName(String name) {
-        return producerRepository.searchByName(name);
+    public Producer getByNameOrCreate(String name) {
+        Producer currentProducer = getByName(name).orElse(null);
+        if(currentProducer != null)
+            return currentProducer;
+        else {
+            Producer ingredient = new Producer();
+            ingredient.setName(name);
+            return repository.save(ingredient);
+        }
     }
 
 
-    public Collection<Producent> getWhereNameStartsWith(String nameStart) {
-        return producerRepository.getWhereNameStartsWith(nameStart);
+    public Collection<Producer> searchByName(String name) {
+        return repository.searchByName(name);
+    }
+
+
+    public Collection<Producer> getWhereNameStartsWith(String nameStart) {
+        return repository.getWhereNameStartsWith(nameStart);
     }
 
 

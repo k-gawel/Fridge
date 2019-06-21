@@ -1,12 +1,12 @@
 package org.california.repository.item;
 
-import org.california.model.entity.Producent;
+import org.california.model.entity.item.Producer;
 import org.california.repository.AbstractNamedEntityRepositoryImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProducerRepositoryImpl extends AbstractNamedEntityRepositoryImpl<Producent> implements ProducerRepository {
+public class ProducerRepositoryImpl extends AbstractNamedEntityRepositoryImpl<Producer> implements ProducerRepository {
 
-    public ProducerRepositoryImpl() { setClazz(Producent.class); }
+    public ProducerRepositoryImpl() { setClazz(Producer.class); }
 
 }
