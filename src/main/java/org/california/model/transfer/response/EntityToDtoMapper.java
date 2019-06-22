@@ -1,9 +1,13 @@
 package org.california.model.transfer.response;
 
 import org.california.model.entity.*;
+import org.california.model.entity.item.*;
+import org.california.service.getter.GetterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -126,50 +130,51 @@ public class EntityToDtoMapper {
     }
 
 
-
     public ItemDto toDto(Item item) {
         return new ItemDto.Builder()
                 .setId(item)
                 .setName(item)
                 .setBarcode(item)
-                .setPlaceId(item.getPlace())
-                .setCategoryId(item.getCategory())
-                .setProducer(toDto(item.getProducent()))
+                .setPlaceId(item.place)
+                .setCategoryId(item.category)
+                .setProducer(toDto(item.producer))
                 .setDescription(item)
                 .setStorage(item)
-                .setAllergens(item.getAllergens().stream().map(this::toDto).collect(Collectors.toList()))
-                .setIngredients(item.getIngredients().stream().map(this::toDto).collect(Collectors.toList()))
-                .setNutrition(toDto(item.getNutrition()))
+                .setCapacity(item)
+                .setAllergens(item.allergens.entrySet().stream().map(this::toDto).collect(Collectors.toList()))
+                .setIngredients(item.ingredients.stream().map(this::toDto).collect(Collectors.toList()))
+                .setNutrition(toDto(item.nutrition))
                 .build();
     }
 
 
     public ProducerDto toDto(Producer producer) {
         return new ProducerDto.Builder()
-                .setId(producent)
-                .setName(producent.getName())
+                .setId(producer)
+                .setName(producer.getName())
                 .build();
     }
 
 
     public NutritionDto toDto(Nutrition N) {
         return new NutritionDto.Builder()
-                .setId(nutrition)
-                .setEnergy(nutrition.getEnergy())
-                .setFat(nutrition.getFat())
-                .setSaturatedFat(nutrition.getSaturatedFat())
-                .setCarbohydrate(nutrition.getCarbohydrate())
-                .setSugar(nutrition.getSugar())
-                .setProtein(nutrition.getProtein())
-                .setSalt(nutrition.getSalt())
+                .setId(N)
+                .setEnergy(N.getEnergy_kj(), N.getEnergy_kcal())
+                .setFat(N.getFat())
+                .setSaturatedFat(N.getSaturatedFat())
+                .setCarbohydrate(N.getCarbohydrate())
+                .setSugar(N.getSugar())
+                .setProtein(N.getProtein())
+                .setSalt(N.getSalt())
                 .build();
     }
 
-    public AllergenDto toDto(Allergen allergen) {
+
+    public AllergenDto toDto(Map.Entry<Allergen, Boolean> a) {
         return new AllergenDto.Builder()
-                .setId(allergen)
-                .setName(allergen.getName())
-                .doContains(allergen.isContains())
+                .setId(a.getKey().getId())
+                .setName(a.getKey().getName())
+                .doContains(a.getValue())
                 .build();
     }
 
