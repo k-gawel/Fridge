@@ -1,6 +1,9 @@
 package org.california.model.transfer.response;
 
+import org.california.model.entity.Account;
+
 import java.io.Serializable;
+import java.nio.channels.AcceptPendingException;
 import java.util.function.Function;
 
 public class PlaceUserStats implements Serializable {
@@ -11,6 +14,10 @@ public class PlaceUserStats implements Serializable {
     private long instancesDeleted;
 
     public PlaceUserStats() {}
+
+    public PlaceUserStats(Account a) {
+        this(a.getId(), null, null, null);
+    }
 
     public PlaceUserStats(long userId, Long instancesAdded, Long instancesOpened, Long instancesDeleted) {
         Function<Long, Long> getLong = l -> l == null ? 0 : l;
