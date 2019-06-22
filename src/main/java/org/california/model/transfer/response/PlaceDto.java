@@ -34,40 +34,40 @@ public class PlaceDto implements Serializable {
             return setId(place.getId());
         }
 
-        class NameSetter {
+        public class NameSetter {
             public AdminIdSetter setName(@NotNull String name) {
                 Builder.this.result.name = name;
                 return new AdminIdSetter();
             }
         }
 
-        class AdminIdSetter {
-            ContainersSetter setAdminId(@NotNull Long adminId) {
+        public class AdminIdSetter {
+            public ContainersSetter setAdminId(@NotNull Long adminId) {
                 Builder.this.result.adminId = adminId;
                 return new ContainersSetter();
             }
 
-            ContainersSetter setAdminId(@NotNull Account admin) {
+            public ContainersSetter setAdminId(@NotNull Account admin) {
                 return setAdminId(admin.getId());
             }
         }
 
-        class ContainersSetter {
-            UsersSetter setContainers(@NotEmpty Collection<ContainerDto> containers) {
+        public class ContainersSetter {
+            public UsersSetter setContainers(@NotEmpty Collection<ContainerDto> containers) {
                 Builder.this.result.containers = containers;
                 return new UsersSetter();
             }
         }
 
-        class UsersSetter {
-            FinalBuilder setUsers(@NotEmpty Collection<PlaceUserDto> users) {
+        public class UsersSetter {
+            public FinalBuilder setUsers(@NotEmpty Collection<PlaceUserDto> users) {
                 Builder.this.result.users = users;
                 return new FinalBuilder();
             }
         }
 
-        class FinalBuilder {
-            PlaceDto build() {
+        public class FinalBuilder {
+            public PlaceDto build() {
                 return Builder.this.result;
             }
         }

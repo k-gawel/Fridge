@@ -19,8 +19,7 @@ public class WishListDto implements Serializable {
     private String description;
 
     private Collection<WishListItemDto> items;
-
-
+    
     public static class Builder {
 
         private WishListDto result = new WishListDto();
@@ -32,46 +31,46 @@ public class WishListDto implements Serializable {
             return new NameSetter();
         }
 
-        class NameSetter {
-            DescriptionSetter setName(String name) {
+        public class NameSetter {
+            public DescriptionSetter setName(String name) {
                 Builder.this.result.name = name;
                 return new DescriptionSetter();
             }
         }
 
-        class DescriptionSetter {
-            PlaceIdSetter setDescription(String description) {
+        public class DescriptionSetter {
+            public PlaceIdSetter setDescription(String description) {
                 Builder.this.result.description = description;
                 return new PlaceIdSetter();
             }
         }
 
-        class PlaceIdSetter {
-            ItemsSetter setPlaceId(Long placeId) {
+        public class PlaceIdSetter {
+            public ItemsSetter setPlaceId(Long placeId) {
                 Builder.this.result.placeId = placeId;
                 return new ItemsSetter();
             }
 
-            ItemsSetter setPlaceId(@NotNull Place place) {
+            public ItemsSetter setPlaceId(@NotNull Place place) {
                 return setPlaceId(place.getId());
             }
         }
 
-        class ItemsSetter {
-            StatusSetter setItems(Collection<WishListItemDto> items) {
+        public class ItemsSetter {
+            public StatusSetter setItems(Collection<WishListItemDto> items) {
                 Builder.this.result.items = items;
                 return new StatusSetter();
             }
         }
 
-        class StatusSetter {
-            FinalBuilder setStatus(boolean status) {
+        public class StatusSetter {
+            public FinalBuilder setStatus(boolean status) {
                 Builder.this.result.status = status;
                 return new FinalBuilder();
             }
         }
 
-        class FinalBuilder {
+        public class FinalBuilder {
             public WishListDto build() {
                 return Builder.this.result;
             }

@@ -49,73 +49,73 @@ public class ItemInstanceDto implements Serializable {
             return setId(itemInstance.getId());
         }
 
-        class CommentSetter {
-            ExpireOnSetter setComment(String comment) {
+        public class CommentSetter {
+            public ExpireOnSetter setComment(String comment) {
                 Builder.this.result.comment = comment;
                 return new ExpireOnSetter();
             }
         }
 
-        class ExpireOnSetter {
+        public class ExpireOnSetter {
             public ItemIdSetter setExpireOn(LocalDate expireOn) {
                 Builder.this.result.expireOn = expireOn;
                 return new ItemIdSetter();
             }
         }
 
-        class ItemIdSetter {
-            ContainerIdSetter setItemId(@NotNull Long itemId) {
+        public class ItemIdSetter {
+            public ContainerIdSetter setItemId(@NotNull Long itemId) {
                 Builder.this.result.itemId = itemId;
                 return new ContainerIdSetter();
             }
 
-            ContainerIdSetter setItemId(@NotNull Item item) {
+            public ContainerIdSetter setItemId(@NotNull Item item) {
                 return setItemId(item.getId());
             }
         }
 
-        class ContainerIdSetter {
-            AddedByIdSetter setContainerId(@NotNull Long containerId) {
+        public class ContainerIdSetter {
+            public AddedByIdSetter setContainerId(@NotNull Long containerId) {
                 Builder.this.result.containerId = containerId;
                 return new AddedByIdSetter();
             }
 
-            AddedByIdSetter setContainerId(@NotNull Container container) {
+            public AddedByIdSetter setContainerId(@NotNull Container container) {
                 return setContainerId(container.getId());
             }
         }
 
-        class AddedByIdSetter {
+        public class AddedByIdSetter {
             AddedOnSetter setAddedById(@NotNull Long addedById) {
                 Builder.this.result.addedById = addedById;
                 return new AddedOnSetter();
             }
 
-            AddedOnSetter setAddedById(@NotNull Account addedBy) {
+            public AddedOnSetter setAddedById(@NotNull Account addedBy) {
                 return setAddedById(addedBy.getId());
             }
         }
 
-        class AddedOnSetter {
-            OpenByIdSetter setAddedOn(@NotNull LocalDate date) {
+        public class AddedOnSetter {
+            public OpenByIdSetter setAddedOn(@NotNull LocalDate date) {
                 Builder.this.result.addedOn = date;
                 return new OpenByIdSetter();
             }
         }
 
-        class OpenByIdSetter {
-            OpenOnSetter setOpenById(Long openById) {
+        public class OpenByIdSetter {
+            public OpenOnSetter setOpenById(Long openById) {
                 Builder.this.result.openById = openById;
                 return new OpenOnSetter();
             }
 
-            OpenOnSetter setOpenById(Account openBy) {
+            public OpenOnSetter setOpenById(Account openBy) {
                 return setOpenById(openBy != null ? openBy.getId() : null);
             }
         }
 
-        class OpenOnSetter {
-            FrozenByIdSetter setOpenOn(LocalDate date) {
+        public class OpenOnSetter {
+            public FrozenByIdSetter setOpenOn(LocalDate date) {
                 ObjectUtils.allAreNullOrNoneIs(date, Builder.this.result.openById);
 
                 Builder.this.result.openOn = date;
@@ -123,19 +123,19 @@ public class ItemInstanceDto implements Serializable {
             }
         }
 
-        class FrozenByIdSetter {
-            FrozenOnSetter setFrozenById(Long frozenById) {
+        public class FrozenByIdSetter {
+            public FrozenOnSetter setFrozenById(Long frozenById) {
                 Builder.this.result.frozenById = frozenById;
                 return new FrozenOnSetter();
             }
 
-            FrozenOnSetter setFrozenById(Account frozenBy) {
+            public FrozenOnSetter setFrozenById(Account frozenBy) {
                 return setFrozenById(frozenBy != null ? frozenBy.getId() : null);
             }
         }
 
-        class FrozenOnSetter {
-            DeletedByIdSetter setFrozenOn(LocalDate localDate) {
+        public class FrozenOnSetter {
+            public DeletedByIdSetter setFrozenOn(LocalDate localDate) {
                 ObjectUtils.allAreNullOrNoneIs(localDate, Builder.this.result.frozenById);
                 Builder.this.result.frozenOn = localDate;
 
@@ -143,19 +143,19 @@ public class ItemInstanceDto implements Serializable {
             }
         }
 
-        class DeletedByIdSetter {
-            DeletedOnSetter setDeletedById(Long deletedById) {
+        public class DeletedByIdSetter {
+            public DeletedOnSetter setDeletedById(Long deletedById) {
                 Builder.this.result.deletedById = deletedById;
                 return new DeletedOnSetter();
             }
 
-            DeletedOnSetter setDeletedById(Account account) {
+            public DeletedOnSetter setDeletedById(Account account) {
                 return setDeletedById(account != null ? account.getId() : null);
             }
         }
 
-        class DeletedOnSetter {
-            FinalBuilder setDeletedOn(LocalDate deletedOn) {
+        public class DeletedOnSetter {
+            public FinalBuilder setDeletedOn(LocalDate deletedOn) {
                 ObjectUtils.allAreNullOrNoneIs(deletedOn, Builder.this.result.deletedById);
 
                 Builder.this.result.deletedOn = deletedOn;
@@ -164,14 +164,12 @@ public class ItemInstanceDto implements Serializable {
             }
         }
 
-        class FinalBuilder {
-            ItemInstanceDto build() {
+        public class FinalBuilder {
+            public ItemInstanceDto build() {
                 return Builder.this.result;
             }
         }
-
-
-
+        
     }
 
 

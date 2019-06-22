@@ -26,8 +26,8 @@ public class ProducerDto implements Serializable{
             return setId(producer != null ? producer.getId() : null);
         }
 
-        class NameSetter {
-            FinalBuilder setName(String name) {
+        public class NameSetter {
+            public FinalBuilder setName(String name) {
                 ObjectUtils.allAreNullOrNoneIs(name, Builder.this.result.id);
 
                 Builder.this.result.name = name;
@@ -35,8 +35,8 @@ public class ProducerDto implements Serializable{
             }
         }
 
-        class FinalBuilder {
-            ProducerDto build() {
+        public class FinalBuilder {
+            public ProducerDto build() {
                 return Builder.this.result;
             }
         }

@@ -26,15 +26,15 @@ public class IngredientDto implements Serializable {
             return setId(ingredient.getId());
         }
 
-        class NameSetter {
-            FinalBuilder setName(String name) {
+        public class NameSetter {
+            public FinalBuilder setName(String name) {
                 Builder.this.result.name = name;
                 return new FinalBuilder();
             }
         }
 
-        class FinalBuilder {
-            IngredientDto build() {
+        public class FinalBuilder {
+            public IngredientDto build() {
                 return Builder.this.result;
             }
         }

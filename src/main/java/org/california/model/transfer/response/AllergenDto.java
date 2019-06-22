@@ -24,22 +24,22 @@ public class AllergenDto {
             return setId(allergen.getId());
         }
 
-        class NameSetter {
-            ContainsSetter setName(String name) {
+        public class NameSetter {
+            public ContainsSetter setName(String name) {
                 Builder.this.result.name = name;
                 return new ContainsSetter();
             }
         }
 
-        class ContainsSetter {
-            FinalBuilder doContains(boolean contains) {
+        public class ContainsSetter {
+            public FinalBuilder doContains(boolean contains) {
                 Builder.this.result.contains = contains;
                 return new FinalBuilder();
             }
         }
 
-        class FinalBuilder {
-            AllergenDto build() {
+        public class FinalBuilder {
+            public AllergenDto build() {
                 return Builder.this.result;
             }
         }

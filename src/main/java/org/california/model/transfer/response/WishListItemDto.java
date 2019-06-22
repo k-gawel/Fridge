@@ -44,94 +44,94 @@ public class WishListItemDto {
             return setId(wishListItem.getId());
         }
 
-        class WishListIdSetter {
-            AuthorIdSetter setWishListId(Long wishListId) {
+        public class WishListIdSetter {
+            public AuthorIdSetter setWishListId(Long wishListId) {
                 Builder.this.result.wishListId = wishListId;
                 return new AuthorIdSetter();
             }
 
-            AuthorIdSetter setWishListId(WishList wishList) {
+            public AuthorIdSetter setWishListId(WishList wishList) {
                 return setWishListId(wishList != null ? wishList.getId() : null);
             }
         }
 
-        class AuthorIdSetter {
-            CreatedOnSetter setAuthorId(Long authorId) {
+        public class AuthorIdSetter {
+            public CreatedOnSetter setAuthorId(Long authorId) {
                 Builder.this.result.authorId = authorId;
                 return new CreatedOnSetter();
             }
 
-            CreatedOnSetter setAuthorId(Account author) {
+            public CreatedOnSetter setAuthorId(Account author) {
                 return setAuthorId(author != null ? author.getId() : null);
             }
         }
 
-        class CreatedOnSetter {
+        public class CreatedOnSetter {
             public AddedByIdSetter setCreatedOn(Date createdOn) {
                 Builder.this.result.createdOn = createdOn;
                 return new AddedByIdSetter();
             }
         }
 
-        class AddedByIdSetter {
-            AddedOnSetter setAddedById(Long addedById) {
+        public class AddedByIdSetter {
+            public AddedOnSetter setAddedById(Long addedById) {
                 Builder.this.result.addedById = addedById;
                 return new AddedOnSetter();
             }
 
-            AddedOnSetter setAddedById(Account addedBy) {
+            public AddedOnSetter setAddedById(Account addedBy) {
                 return setAddedById(addedBy != null ? addedBy.getId() : null);
             }
         }
 
-        class AddedOnSetter {
-            AddedInstanceIdSetter setAddedOn(Date addedOn) {
+        public class AddedOnSetter {
+            public AddedInstanceIdSetter setAddedOn(Date addedOn) {
                 Builder.this.result.addedOn = addedOn;
                 return new AddedInstanceIdSetter();
             }
         }
 
-        class AddedInstanceIdSetter {
-            CategoryIdSetter setAddedInstanceId(Long addedInstanceId) {
+        public class AddedInstanceIdSetter {
+            public CategoryIdSetter setAddedInstanceId(Long addedInstanceId) {
                 Builder.this.result.addedInstanceId = addedInstanceId;
                 return new CategoryIdSetter();
             }
 
-            CategoryIdSetter setAddedInstanceId(ItemInstance itemInstance) {
+            public CategoryIdSetter setAddedInstanceId(ItemInstance itemInstance) {
                 return setAddedInstanceId(itemInstance != null ? itemInstance.getId() : null);
             }
         }
 
-        class CategoryIdSetter {
-            ItemIdSetter setCategoryId(Long categoryId) {
+        public class CategoryIdSetter {
+            public ItemIdSetter setCategoryId(Long categoryId) {
                 Builder.this.result.categoryId = categoryId;
                 return new ItemIdSetter();
             }
 
-            ItemIdSetter setCategoryId(Category category) {
+            public ItemIdSetter setCategoryId(Category category) {
                 return setCategoryId(category != null ? category.getId() : null);
             }
         }
 
-        class ItemIdSetter {
-            CommentSetter setItemId(Long itemId) {
+        public class ItemIdSetter {
+            public CommentSetter setItemId(Long itemId) {
                 Builder.this.result.itemId = itemId;
                 return new CommentSetter();
             }
 
-            CommentSetter setItemId(Item item) {
+            public CommentSetter setItemId(Item item) {
                 return setItemId(item != null ? item.getId() : null);
             }
         }
 
-        class CommentSetter {
+        public class CommentSetter {
             public FinalBuilder setComment(String comment) {
                 Builder.this.result.comment = comment;
                 return new FinalBuilder();
             }
         }
 
-        class FinalBuilder {
+        public class FinalBuilder {
             public WishListItemDto build() {
                 return Builder.this.result;
             }

@@ -30,35 +30,33 @@ public class PlaceUserDto implements Serializable {
             return setId(account.getId());
         }
 
-        class NameSetter {
-            StatusSetter setName(@NotEmpty String name) {
+        public class NameSetter {
+            public StatusSetter setName(@NotEmpty String name) {
                 Builder.this.result.name = name;
                 return new StatusSetter();
             }
 
-            StatusSetter setName(@NotNull Account account) {
+            public StatusSetter setName(@NotNull Account account) {
                 return setName(account.getName());
             }
         }
 
-        class StatusSetter {
-            StatsSetter setStatus(boolean stauts) {
+        public class StatusSetter {
+            public StatsSetter setStatus(boolean stauts) {
                 Builder.this.result.status = stauts;
                 return new StatsSetter();
             }
         }
 
-        class StatsSetter {
-
-            FinalBuilder setStats(PlaceUserStats stats) {
+        public class StatsSetter {
+            public FinalBuilder setStats(PlaceUserStats stats) {
                 Builder.this.result.stats = stats;
                 return new FinalBuilder();
             }
-
         }
 
-        class FinalBuilder {
-            PlaceUserDto build() {
+        public class FinalBuilder {
+            public PlaceUserDto build() {
                 return Builder.this.result;
             }
         }

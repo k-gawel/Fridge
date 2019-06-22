@@ -27,15 +27,15 @@ public class NamedEntityDto implements Serializable {
             return setId(entity.getId());
         }
 
-        class NameSetter {
-            FinalBuilder setName(@NotEmpty String name) {
+        public class NameSetter {
+            public FinalBuilder setName(@NotEmpty String name) {
                 Builder.this.result.name = name;
                 return new FinalBuilder();
             }
         }
 
-        class FinalBuilder {
-            NamedEntityDto build() {
+        public class FinalBuilder {
+            public NamedEntityDto build() {
                 return Builder.this.result;
             }
         }

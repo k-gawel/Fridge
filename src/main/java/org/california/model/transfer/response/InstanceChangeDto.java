@@ -29,40 +29,40 @@ public class InstanceChangeDto implements Serializable {
             return setId(instanceChange.getId());
         }
 
-        class ItemInstanceDtoSetter {
-            AccountIdSetter setItemInstanceDto(@NotNull ItemInstanceDto itemInstanceDto) {
+        public class ItemInstanceDtoSetter {
+            public AccountIdSetter setItemInstanceDto(@NotNull ItemInstanceDto itemInstanceDto) {
                 Builder.this.result.instance = itemInstanceDto;
                 return new AccountIdSetter();
             }
         }
 
-        class AccountIdSetter {
-            ChangeDateSetter setAccountId(Long accountId) {
+        public class AccountIdSetter {
+            public ChangeDateSetter setAccountId(Long accountId) {
                 Builder.this.result.accountId = accountId;
                 return new ChangeDateSetter();
             }
 
-            ChangeDateSetter setAccountId(@NotNull Account account) {
+            public ChangeDateSetter setAccountId(@NotNull Account account) {
                 return setAccountId(account.getId());
             }
         }
 
-        class ChangeDateSetter {
-            ChangeTypeSetter setChangeDate(@NotNull LocalDate localDate) {
+        public class ChangeDateSetter {
+            public ChangeTypeSetter setChangeDate(@NotNull LocalDate localDate) {
                 Builder.this.result.changeDate = localDate;
                 return new ChangeTypeSetter();
             }
         }
 
-        class ChangeTypeSetter {
-            FinalBuilder setChangeOnInstance(ChangeOnInstance changeType) {
+        public class ChangeTypeSetter {
+            public FinalBuilder setChangeOnInstance(ChangeOnInstance changeType) {
                 Builder.this.result.changeType = changeType;
                 return new FinalBuilder();
             }
         }
 
-        class FinalBuilder {
-            InstanceChangeDto build() {
+        public class FinalBuilder {
+            public InstanceChangeDto build() {
                 return Builder.this.result;
             }
         }

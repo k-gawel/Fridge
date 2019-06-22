@@ -30,26 +30,26 @@ public class ContainerDto implements Serializable {
             return setId(container.getId());
         }
 
-        class NameSetter {
-            PlaceIdSetter setName(String name) {
+        public class NameSetter {
+            public PlaceIdSetter setName(String name) {
                 Builder.this.result.name = name;
                 return new PlaceIdSetter();
             }
         }
 
-        class PlaceIdSetter {
-            FinalBuilder setPlaceId(Long placeId) {
+        public class PlaceIdSetter {
+            public FinalBuilder setPlaceId(Long placeId) {
                 Builder.this.result.placeId = placeId;
                 return new FinalBuilder();
             }
 
-            FinalBuilder setPlaceId(@NotNull Place place)  {
+            public FinalBuilder setPlaceId(@NotNull Place place)  {
                 return setPlaceId(place.getId());
             }
         }
 
-        class FinalBuilder {
-            ContainerDto build() {
+        public class FinalBuilder {
+            public ContainerDto build() {
                 return Builder.this.result;
             }
         }

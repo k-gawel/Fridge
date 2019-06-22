@@ -45,7 +45,7 @@ public class ItemDto implements Serializable {
             return setId(item.getId());
         }
 
-        class NameSetter {
+        public class NameSetter {
             public BarcodeSetter setName(@NotEmpty String name) {
                 Builder.this.result.name = name;
                 return new BarcodeSetter();
@@ -56,104 +56,105 @@ public class ItemDto implements Serializable {
             }
         }
 
-        class BarcodeSetter {
-            PlaceIdSetter setBarcode(Long barcode) {
+        public class BarcodeSetter {
+            public PlaceIdSetter setBarcode(Long barcode) {
                 Builder.this.result.barcode = barcode;
                 return new PlaceIdSetter();
             }
 
-            PlaceIdSetter setBarcode(@NotNull Item item) {
+            public PlaceIdSetter setBarcode(@NotNull Item item) {
                 return setBarcode(item.getBarcode());
             }
         }
 
-        class PlaceIdSetter {
-            private CategoryIdSetter setPlaceId(Long placeId) {
+        public class PlaceIdSetter {
+            public CategoryIdSetter setPlaceId(Long placeId) {
                 Builder.this.result.placeId = placeId;
                 return new CategoryIdSetter();
             }
 
-            CategoryIdSetter setPlaceId(Place place) {
+            public CategoryIdSetter setPlaceId(Place place) {
                 return setPlaceId(place != null ? place.getId() : null);
             }
         }
 
-        class CategoryIdSetter {
-            ProducerSetter setCategoryId(@NotNull Long categoryId) {
+        public class CategoryIdSetter {
+            public ProducerSetter setCategoryId(@NotNull Long categoryId) {
                 Builder.this.result.categoryId = categoryId;
                 return new ProducerSetter();
             }
-            ProducerSetter setCategoryId(@NotNull Category category) {
+            
+            public ProducerSetter setCategoryId(@NotNull Category category) {
                 return setCategoryId(category.getId());
             }
         }
 
-        class ProducerSetter {
-            DescriptionSetter setProducer(ProducerDto producerDto) {
+        public class ProducerSetter {
+            public DescriptionSetter setProducer(ProducerDto producerDto) {
                 Builder.this.result.producer = producerDto;
                 return new DescriptionSetter();
             }
         }
 
-        class DescriptionSetter {
-            StorageSetter setDescription(String description) {
+        public class DescriptionSetter {
+            public StorageSetter setDescription(String description) {
                 Builder.this.result.description = description;
                 return new StorageSetter();
             }
 
-            StorageSetter setDescription(Item item) {
+            public StorageSetter setDescription(Item item) {
                 return setDescription(item.getDescription());
             }
         }
 
-        class StorageSetter {
-            CapacitySetter setStorage(String storage) {
+        public class StorageSetter {
+            public CapacitySetter setStorage(String storage) {
                 Builder.this.result.storage = storage;
                 return new CapacitySetter();
             }
 
-            CapacitySetter setStorage(@NotNull Item item) {
+            public CapacitySetter setStorage(@NotNull Item item) {
                 return setStorage(item.getStorage());
             }
         }
 
-        class CapacitySetter {
+        public class CapacitySetter {
 
-            AllergensSetter setCapacity(Capacity capacity) {
+            public AllergensSetter setCapacity(Capacity capacity) {
                 String capacityString = capacity != null ? capacity.toString() : null;
                 Builder.this.result.capacity = capacityString;
                 return new AllergensSetter();
             }
 
-            AllergensSetter setCapacity(Item item) {
+            public AllergensSetter setCapacity(Item item) {
                 return setCapacity(item.getCapacity());
             }
 
         }
 
-        class AllergensSetter {
-            IngredientsSetter setAllergens(Collection<AllergenDto> allergenDtos) {
+        public class AllergensSetter {
+            public IngredientsSetter setAllergens(Collection<AllergenDto> allergenDtos) {
                 Builder.this.result.allergens = allergenDtos;
                 return new IngredientsSetter();
             }
         }
 
-        class IngredientsSetter {
-            NutritionSetter setIngredients(Collection<IngredientDto> ingredients) {
+        public class IngredientsSetter {
+            public NutritionSetter setIngredients(Collection<IngredientDto> ingredients) {
                 Builder.this.result.ingredients = ingredients;
                 return new NutritionSetter();
             }
         }
 
-        class NutritionSetter {
-            FinalBuilder setNutrition(NutritionDto nutritionDto) {
+        public class NutritionSetter {
+            public FinalBuilder setNutrition(NutritionDto nutritionDto) {
                 Builder.this.result.nutrition = nutritionDto;
                 return new FinalBuilder();
             }
         }
 
-        class FinalBuilder {
-            ItemDto build() {
+        public class FinalBuilder {
+            public ItemDto build() {
                 return Builder.this.result;
             }
         }
