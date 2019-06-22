@@ -1,5 +1,7 @@
 package org.california.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -7,6 +9,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Getter @Setter
 public class Place extends BaseEntity {
 
 
@@ -46,67 +49,4 @@ public class Place extends BaseEntity {
         return "ID: [" + id + "] name: [" + name + "]";
     }
 
-
-
-    public String getName() {
-        return name;
-    }
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public Collection<Container> getContainers() {
-        if (containers == null) containers = Collections.emptySet();
-        return containers;
-    }
-
-
-    public void setContainers(Collection<Container> containers) {
-        this.containers = containers;
-    }
-
-
-    public Set<Account> getAccounts() {
-        if (accounts == null) accounts = new HashSet<>();
-        return accounts;
-    }
-
-
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-
-    public Set<Account> getUnaactiveAccounts() {
-        if (unaactiveAccounts == null) unaactiveAccounts = new HashSet<>();
-        return unaactiveAccounts;
-    }
-
-
-    public void setUnaactiveAccounts(Set<Account> unactiveAccounts) {
-        this.unaactiveAccounts = unactiveAccounts;
-    }
-
-
-    public Account getAdmin() {
-        return admin;
-    }
-
-
-    public void setAdmin(Account admin) {
-        this.admin = admin;
-    }
-
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
 }

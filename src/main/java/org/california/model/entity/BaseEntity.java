@@ -1,10 +1,14 @@
 package org.california.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
 @MappedSuperclass
+@Getter @Setter
 public class BaseEntity implements Serializable {
 
     @Id
@@ -36,21 +40,4 @@ public class BaseEntity implements Serializable {
                 '}';
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        if(this.uuid != null)
-            return;
-        this.uuid = uuid;
-    }
 }

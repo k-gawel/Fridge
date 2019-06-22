@@ -1,5 +1,7 @@
 package org.california.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.california.model.util.ChangeOnInstance;
 
 import javax.persistence.Entity;
@@ -8,14 +10,13 @@ import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
+@Getter @Setter
 public class InstanceChange extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne @JoinColumn
     private ItemInstance instance;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne @JoinColumn
     private Account account;
 
     private Date changeDate;

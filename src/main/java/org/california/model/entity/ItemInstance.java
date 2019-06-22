@@ -7,40 +7,36 @@ import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
+@Getter @Setter
 public class ItemInstance extends BaseEntity {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn
     private Item item;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne @JoinColumn
     private Container container;
 
     private String comment;
 
     private Date expireOn;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn
+    @ManyToOne @JoinColumn
     private Account addedBy;
     private Date addedOn;
 
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne @JoinColumn
     private Account openBy;
     private Date openOn;
 
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne @JoinColumn
     private Account frozenBy;
     private Date frozenOn;
     private boolean frozen;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne @JoinColumn
     private Account deletedBy;
     private Date deletedOn;
 

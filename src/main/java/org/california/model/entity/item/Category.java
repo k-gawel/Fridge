@@ -3,6 +3,8 @@ package org.california.model.entity.item;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Getter;
+import lombok.Setter;
 import org.california.model.entity.BaseNamedEntity;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -18,10 +20,10 @@ import java.util.List;
 
 
 @Entity
+@Getter @Setter
 public class Category extends BaseNamedEntity {
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne @JoinColumn
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private Category parent;
@@ -30,35 +32,18 @@ public class Category extends BaseNamedEntity {
     @OneToMany(mappedBy = "parent")
     private Collection<Category> children = new HashSet<>();
 
-    @Override
-    public String toString() {
-        return "ID: [" + id + " ] name: [" + name + " ] final: [" + children.isEmpty() + " ]";
-    }
-
     public Category() { }
 
     public Category(String name, Category parent) {
         this.name = name;
         this.parent = parent;
-
     }
 
-    public Category getParent() {
-        return parent;
+    @Override
+    public String toString() {
+        return "ID: [" + id + " ] name: [" + name + " ] final: [" + children.isEmpty() + " ]";
     }
 
-    public void setParent(Category parent) {
-        this.parent = parent;
-    }
-
-    public Collection<Category> getChildren() {
-        if(children == null) children = Collections.emptySet();
-        return children;
-    }
-
-    public void setChildren(List<Category> children) {
-        this.children = children;
-    }
 
 }
 

@@ -1,5 +1,7 @@
 package org.california.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
@@ -9,6 +11,7 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
+@Getter @Setter
 public class Token extends BaseEntity {
 
     @OneToOne
@@ -21,27 +24,4 @@ public class Token extends BaseEntity {
     @Column
     private Date expirationDate;
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public Date getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }
