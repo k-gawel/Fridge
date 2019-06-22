@@ -2,13 +2,14 @@ package org.california.model.entity.item;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.california.model.entity.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class Nutrition extends BaseEntity {
 
     @OneToOne
@@ -22,8 +23,5 @@ public class Nutrition extends BaseEntity {
     private Double sugar;
     private Double protein;
     private Double salt;
-
-    public Nutrition() {
-    }
 
 }

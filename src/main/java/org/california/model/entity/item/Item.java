@@ -3,6 +3,7 @@ package org.california.model.entity.item;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.california.model.entity.BaseNamedEntity;
 import org.california.model.entity.Place;
 import org.hibernate.annotations.LazyCollection;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class Item extends BaseNamedEntity {
 
     @Column(length = 100000)
@@ -53,12 +54,6 @@ public class Item extends BaseNamedEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     public Capacity capacity;
-
-
-    @Override
-    public String toString() {
-        return  "ITEM: " + super.toString() + " " + (capacity != null ? capacity.toString() : "");
-    }
 
 
 }

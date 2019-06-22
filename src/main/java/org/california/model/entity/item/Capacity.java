@@ -2,6 +2,7 @@ package org.california.model.entity.item;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.california.model.entity.BaseEntity;
 
@@ -10,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class Capacity extends BaseEntity {
 
     @Column
@@ -31,6 +32,8 @@ public class Capacity extends BaseEntity {
             throw new IllegalArgumentException("Invalid string. Expected \"\\\\d+.?\\\\d*(G|KG|L|ML), found " + string);
 
         this.unit = Unit.getUnit(pString);
+        assert unit != null;
+
         String nString = pString.replace(unit.toString(), "");
         this.value = Double.valueOf(nString);
     }
@@ -66,8 +69,4 @@ public class Capacity extends BaseEntity {
         }
     }
 
-    @Override
-    public String toString() {
-        return "[ " + value +  unit.toString() + " ]";
-    }
 }
