@@ -1,7 +1,6 @@
 package org.california.model.transfer.response;
 
 import org.california.model.entity.Place;
-import org.california.repository.item.ItemSearchRepository;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;

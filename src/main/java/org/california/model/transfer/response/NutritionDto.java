@@ -1,6 +1,6 @@
 package org.california.model.transfer.response;
 
-import org.california.model.entity.Nutrition;
+import org.california.model.entity.item.Nutrition;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -8,7 +8,8 @@ import java.io.Serializable;
 public class NutritionDto implements Serializable {
 
     public long id;
-    public Integer energy;
+    public Double energyKj;
+    public Double energyKcal;
     public Double fat;
     public Double saturatedFat;
     public Double carbohydrate;
@@ -31,8 +32,9 @@ public class NutritionDto implements Serializable {
         }
 
         class EnergySetter {
-            public FatSetter setEnergy(Integer energy) {
-                Builder.this.result.energy = energy;
+            public FatSetter setEnergy(Double kj, Double kcal) {
+                Builder.this.result.energyKj = kj;
+                Builder.this.result.energyKcal = kcal;
                 return new FatSetter();
             }
         }

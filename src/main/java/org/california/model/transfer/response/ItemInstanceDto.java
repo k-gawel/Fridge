@@ -2,16 +2,13 @@ package org.california.model.transfer.response;
 
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
-import org.california.model.entity.Item;
 import org.california.model.entity.ItemInstance;
+import org.california.model.entity.item.Item;
 import org.california.model.util.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
 
 
 public class ItemInstanceDto implements Serializable {

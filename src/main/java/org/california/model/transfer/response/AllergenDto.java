@@ -1,6 +1,6 @@
 package org.california.model.transfer.response;
 
-import org.california.model.entity.Allergen;
+import org.california.model.entity.item.Allergen;
 import org.jetbrains.annotations.NotNull;
 
 public class AllergenDto {

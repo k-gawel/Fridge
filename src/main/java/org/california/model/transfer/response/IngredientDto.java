@@ -1,6 +1,6 @@
 package org.california.model.transfer.response;
 
-import org.california.model.entity.Ingredient;
+import org.california.model.entity.item.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;

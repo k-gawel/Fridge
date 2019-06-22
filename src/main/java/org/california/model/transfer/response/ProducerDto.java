@@ -1,6 +1,6 @@
 package org.california.model.transfer.response;
 
-import org.california.model.entity.Producent;
+import org.california.model.entity.item.Producer;
 import org.california.model.util.ObjectUtils;
 
 import java.io.Serializable;
@@ -46,8 +46,8 @@ public class ProducerDto implements Serializable{
             return new NameSetter();
         }
 
-        public NameSetter setId(Producent producent) {
-            return setId(producent != null ? producent.getId() : null);
+        public NameSetter setId(Producer producer) {
+            return setId(producer != null ? producer.getId() : null);
         }
 
         class NameSetter {

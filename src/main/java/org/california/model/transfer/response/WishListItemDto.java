@@ -1,6 +1,11 @@
 package org.california.model.transfer.response;
 
-import org.california.model.entity.*;
+import org.california.model.entity.Account;
+import org.california.model.entity.ItemInstance;
+import org.california.model.entity.WishList;
+import org.california.model.entity.WishListItem;
+import org.california.model.entity.item.Category;
+import org.california.model.entity.item.Item;
 
 import java.util.Date;
 
