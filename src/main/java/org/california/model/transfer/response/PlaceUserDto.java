@@ -11,6 +11,7 @@ public class PlaceUserDto implements Serializable {
     public Long id;
     public String name;
     public Boolean status;
+    public PlaceUserStats stats;
 
     @Override
     public boolean equals(Object o) {
@@ -67,10 +68,19 @@ public class PlaceUserDto implements Serializable {
         }
 
         class StatusSetter {
-            FinalBuilder setStatus(boolean stauts) {
+            StatsSetter setStatus(boolean stauts) {
                 Builder.this.result.status = stauts;
+                return new StatsSetter();
+            }
+        }
+
+        class StatsSetter {
+
+            FinalBuilder setStats(PlaceUserStats stats) {
+                Builder.this.result.stats = stats;
                 return new FinalBuilder();
             }
+
         }
 
         class FinalBuilder {
