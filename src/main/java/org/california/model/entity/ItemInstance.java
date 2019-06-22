@@ -1,10 +1,15 @@
 package org.california.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.california.model.entity.item.Item;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter @Setter @ToString
@@ -19,21 +24,21 @@ public class ItemInstance extends BaseEntity {
 
     private String comment;
 
-    private Date expireOn;
+    private LocalDate expireOn;
 
     @ManyToOne @JoinColumn
     private Account addedBy;
-    private Date addedOn;
+    private LocalDate addedOn;
 
 
     @ManyToOne @JoinColumn
     private Account openBy;
-    private Date openOn;
+    private LocalDate openOn;
 
 
     @ManyToOne @JoinColumn
     private Account frozenBy;
-    private Date frozenOn;
+    private LocalDate frozenOn;
     private boolean frozen;
 
     @ManyToOne @JoinColumn

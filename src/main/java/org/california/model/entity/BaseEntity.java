@@ -12,12 +12,13 @@ import java.util.UUID;
 @Getter @Setter @ToString
 public class BaseEntity implements Serializable {
 
+    @Column
+    protected String uuid = UUID.randomUUID().toString();
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    protected Long id;
 
-    @Column
-    String uuid = UUID.randomUUID().toString();
 
     @Override
     public boolean equals(Object o) {
@@ -34,11 +35,6 @@ public class BaseEntity implements Serializable {
         return uuid != null ? uuid.hashCode() : 0;
     }
 
-    @Override
-    public String toString() {
-        return "Entity {" +
-                "id=" + id +
-                '}';
-    }
+
 
 }
