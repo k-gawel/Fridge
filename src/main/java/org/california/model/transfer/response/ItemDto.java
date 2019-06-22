@@ -1,11 +1,11 @@
 package org.california.model.transfer.response;
 
-import org.california.model.entity.Category;
-import org.california.model.entity.Item;
 import org.california.model.entity.Place;
+import org.california.model.entity.item.Capacity;
+import org.california.model.entity.item.Category;
+import org.california.model.entity.item.Item;
 import org.jetbrains.annotations.NotNull;
 
-import javax.naming.Name;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Collection;
@@ -22,6 +22,7 @@ public class ItemDto implements Serializable {
 
     public String description;
     public String storage;
+    public String capacity;
 
     public Collection<AllergenDto> allergens;
     public Collection<IngredientDto> ingredients;
@@ -103,14 +104,28 @@ public class ItemDto implements Serializable {
         }
 
         class StorageSetter {
-            AllergensSetter setStorage(String storage) {
+            CapacitySetter setStorage(String storage) {
                 Builder.this.result.storage = storage;
+                return new CapacitySetter();
+            }
+
+            CapacitySetter setStorage(@NotNull Item item) {
+                return setStorage(item.getStorage());
+            }
+        }
+
+        class CapacitySetter {
+
+            AllergensSetter setCapacity(Capacity capacity) {
+                String capacityString = capacity != null ? capacity.toString() : null;
+                Builder.this.result.capacity = capacityString;
                 return new AllergensSetter();
             }
 
-            AllergensSetter setStorage(@NotNull Item item) {
-                return setStorage(item.getStorage());
+            AllergensSetter setCapacity(Item item) {
+                return setCapacity(item.getCapacity());
             }
+
         }
 
         class AllergensSetter {
