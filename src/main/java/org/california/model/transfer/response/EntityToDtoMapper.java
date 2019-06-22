@@ -10,6 +10,13 @@ import java.util.stream.Stream;
 @Service
 public class EntityToDtoMapper {
 
+    private final GetterService getter;
+
+    @Autowired
+    public EntityToDtoMapper(GetterService getter) {
+        this.getter = getter;
+    }
+
     public NamedEntityDto toDto(BaseNamedEntity namedEntity) {
         return new NamedEntityDto.Builder()
                 .setId(namedEntity)
@@ -20,7 +27,7 @@ public class EntityToDtoMapper {
 
     public PlaceDto toDto(Place place) {
         Collection<ContainerDto> containers = place.getContainers().stream().map(this::toDto).collect(Collectors.toList());;
-        Collection<PlaceUserDto> placeUsers = placeUsersToDto(place.getAccounts(), place.getUnaactiveAccounts());
+        Collection<PlaceUserDto> placeUsers = placeUsersToDto(place);
 
         return new PlaceDto.Builder()
                 .setId(place)
@@ -31,16 +38,17 @@ public class EntityToDtoMapper {
                 .build();
     }
 
-    public Collection<PlaceUserDto> placeUsersToDto(Collection<Account> active, Collection<Account> unactive) {
-        Collection<PlaceUserDto> activeDto = active.stream()
-                .map(this::activeAccountToDto)
+    private Collection<PlaceUserDto> placeUsersToDto(Place p) {
+        Collection<PlaceUserDto> activeDto = p.getAccounts().stream()
+                .map(a -> this.placeUserToDto(a, p, true))
                 .collect(Collectors.toList());;
-        Collection<PlaceUserDto> unactiveDto = unactive.stream()
-                .map(this::unactiveAcountToDto)
+        Collection<PlaceUserDto> unactiveDto = p.getUnaactiveAccounts().stream()
+                .map(a -> this.placeUserToDto(a, p, false))
                 .collect(Collectors.toList());
 
         return Stream.concat(activeDto.stream(), unactiveDto.stream()).collect(Collectors.toList());
     }
+
 
     public ContainerDto toDto(Container container) {
         return new ContainerDto.Builder()
@@ -50,21 +58,12 @@ public class EntityToDtoMapper {
                 .build();
     }
 
-
-
-    public PlaceUserDto activeAccountToDto(Account account) {
-        return placeUserToDto(account, true);
-    }
-
-    public PlaceUserDto unactiveAcountToDto(Account account) {
-        return placeUserToDto(account, false);
-    }
-
-    private PlaceUserDto placeUserToDto(Account account, boolean status) {
+    private PlaceUserDto placeUserToDto(Account account, Place place, boolean status) {
         return new PlaceUserDto.Builder()
                 .setId(account)
                 .setName(account)
                 .setStatus(status)
+                .setStats(getter.placeUserStats.getStats(account, place))
                 .build();
     }
 
@@ -87,6 +86,7 @@ public class EntityToDtoMapper {
                 .build();
     }
 
+
     public InstanceChangeDto toDto(InstanceChange instanceChange) {
         return new InstanceChangeDto.Builder()
                 .setId(instanceChange)
@@ -108,6 +108,7 @@ public class EntityToDtoMapper {
                 .setStatus(WL.getStatus())
                 .build();
     }
+
 
     public WishListItemDto toDto(WishListItem WLI) {
         return new WishListItemDto.Builder()
@@ -142,14 +143,16 @@ public class EntityToDtoMapper {
                 .build();
     }
 
-    public ProducerDto toDto(Producent producent) {
+
+    public ProducerDto toDto(Producer producer) {
         return new ProducerDto.Builder()
                 .setId(producent)
                 .setName(producent.getName())
                 .build();
     }
 
-    public NutritionDto toDto(Nutrition nutrition) {
+
+    public NutritionDto toDto(Nutrition N) {
         return new NutritionDto.Builder()
                 .setId(nutrition)
                 .setEnergy(nutrition.getEnergy())
@@ -169,6 +172,7 @@ public class EntityToDtoMapper {
                 .doContains(allergen.isContains())
                 .build();
     }
+
 
     public IngredientDto toDto(Ingredient ingredient) {
         return new IngredientDto.Builder()
