@@ -1,20 +1,18 @@
 package org.california.model.transfer.request;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.io.Serializable;
 
 public class ContainerForm implements Serializable {
 
-    private Long placeId;
-    private String name;
+    public final Long placeId;
+    public final String name;
 
-    public ContainerForm() {}
-
-    public ContainerForm(String jsonString) {
-        JSONObject json = new JSONObject(jsonString);
-        this.placeId = json.getLong("placeId");
-        this.name = json.getString("name");
+    @JsonCreator
+    public ContainerForm(Long placeId, String name) {
+        this.placeId = placeId;
+        this.name = name;
     }
 
     public boolean validate() {
@@ -23,19 +21,4 @@ public class ContainerForm implements Serializable {
         return true;
     }
 
-    public Long getPlaceId() {
-        return placeId;
-    }
-
-    public void setPlaceId(Long placeId) {
-        this.placeId = placeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

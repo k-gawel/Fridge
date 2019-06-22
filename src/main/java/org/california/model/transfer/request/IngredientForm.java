@@ -1,16 +1,16 @@
 package org.california.model.transfer.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.io.Serializable;
 
 public class IngredientForm implements Serializable {
 
-    private String name;
+    public final String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    @JsonCreator
+    public IngredientForm(String name) {
         this.name = name;
     }
+
 }

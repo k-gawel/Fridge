@@ -4,13 +4,9 @@ import java.io.Serializable;
 
 public class ProducerForm implements Serializable {
 
-    private String name;
+    public final String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public ProducerForm(String name) {
         this.name = name;
     }
 }

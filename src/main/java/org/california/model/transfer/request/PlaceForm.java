@@ -1,22 +1,16 @@
 package org.california.model.transfer.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.io.Serializable;
 
 public class PlaceForm implements Serializable {
 
-    private String name;
+    public final String name;
 
-    public PlaceForm() {}
-
+    @JsonCreator
     public PlaceForm(String name) {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
