@@ -1,16 +1,18 @@
 package org.california.model.transfer.response;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.california.model.entity.item.Allergen;
 import org.jetbrains.annotations.NotNull;
 
+@EqualsAndHashCode @ToString
 public class AllergenDto {
 
-    public long id;
-    public String name;
-    public boolean contains;
+    private long id;
+    private String name;
+    private boolean contains;
 
     public static class Builder {
-
         private AllergenDto result = new AllergenDto();
 
         public NameSetter setId(Long id) {
@@ -41,7 +43,6 @@ public class AllergenDto {
                 return Builder.this.result;
             }
         }
-
     }
 
 }

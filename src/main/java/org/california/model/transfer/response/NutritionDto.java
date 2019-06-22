@@ -1,21 +1,24 @@
 package org.california.model.transfer.response;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.california.model.entity.item.Nutrition;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
+@EqualsAndHashCode @ToString
 public class NutritionDto implements Serializable {
 
-    public long id;
-    public Double energyKj;
-    public Double energyKcal;
-    public Double fat;
-    public Double saturatedFat;
-    public Double carbohydrate;
-    public Double sugar;
-    public Double protein;
-    public Double salt;
+    private long id;
+    private Double energyKj;
+    private Double energyKcal;
+    private Double fat;
+    private Double saturatedFat;
+    private Double carbohydrate;
+    private Double sugar;
+    private Double protein;
+    private Double salt;
 
 
     public static class Builder {

@@ -10,15 +10,12 @@ import java.time.LocalDate;
 
 public class InstanceChangeDto implements Serializable {
 
-
-    public Long id;
-    public ItemInstanceDto instance;
-    public Long accountId;
-    public LocalDate changeDate;
-    public ChangeOnInstance changeType;
-
-
-
+    private Long id;
+    private ItemInstanceDto instance;
+    private Long accountId;
+    private LocalDate changeDate;
+    private ChangeOnInstance changeType;
+    
     public static class Builder {
 
         private InstanceChangeDto result = new InstanceChangeDto();

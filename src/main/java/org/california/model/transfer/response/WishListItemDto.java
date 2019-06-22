@@ -1,5 +1,7 @@
 package org.california.model.transfer.response;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.ItemInstance;
 import org.california.model.entity.WishList;
@@ -9,20 +11,21 @@ import org.california.model.entity.item.Item;
 
 import java.util.Date;
 
+@EqualsAndHashCode @ToString
 public class WishListItemDto {
     
-    public Long id;
-    public Long wishListId;
-    public Long authorId;
-    public Date createdOn;
+    private Long id;
+    private Long wishListId;
+    private Long authorId;
+    private Date createdOn;
 
-    public Long addedById;
-    public Date addedOn;
-    public Long addedInstanceId;
+    private Long addedById;
+    private Date addedOn;
+    private Long addedInstanceId;
 
-    public Long categoryId;
-    public Long itemId;
-    public String comment;
+    private Long categoryId;
+    private Long itemId;
+    private String comment;
 
 
     public static class Builder {

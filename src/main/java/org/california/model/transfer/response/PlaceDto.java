@@ -1,5 +1,7 @@
 package org.california.model.transfer.response;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
 import org.jetbrains.annotations.NotNull;
@@ -8,50 +10,15 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Collection;
 
+@EqualsAndHashCode @ToString
 public class PlaceDto implements Serializable {
 
-    public Long id;
-    public String name;
-    public Long adminId;
+    private Long id;
+    private String name;
+    private Long adminId;
 
-    public Collection<ContainerDto> containers;
-    public Collection<PlaceUserDto> users;
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PlaceDto placeDto = (PlaceDto) o;
-
-        if (id != null ? !id.equals(placeDto.id) : placeDto.id != null) return false;
-        if (name != null ? !name.equals(placeDto.name) : placeDto.name != null) return false;
-        if (adminId != null ? !adminId.equals(placeDto.adminId) : placeDto.adminId != null) return false;
-        if (containers != null ? !containers.equals(placeDto.containers) : placeDto.containers != null) return false;
-        return users != null ? users.equals(placeDto.users) : placeDto.users == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (adminId != null ? adminId.hashCode() : 0);
-        result = 31 * result + (containers != null ? containers.hashCode() : 0);
-        result = 31 * result + (users != null ? users.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "PlaceDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", adminId=" + adminId +
-                ", containers=" + containers +
-                ", users=" + users +
-                '}';
-    }
+    private Collection<ContainerDto> containers;
+    private Collection<PlaceUserDto> users;
 
 
     public static class Builder {

@@ -1,15 +1,18 @@
 package org.california.model.transfer.response;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.california.model.entity.BaseNamedEntity;
 import org.jetbrains.annotations.NotNull;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+@EqualsAndHashCode @ToString
 public class NamedEntityDto implements Serializable {
 
-    public Serializable id;
-    public String name;
+    private Serializable id;
+    private String name;
 
     public static class Builder {
 

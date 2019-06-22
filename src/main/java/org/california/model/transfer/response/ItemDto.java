@@ -1,5 +1,7 @@
 package org.california.model.transfer.response;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.california.model.entity.Place;
 import org.california.model.entity.item.Capacity;
 import org.california.model.entity.item.Category;
@@ -10,23 +12,24 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Collection;
 
+@EqualsAndHashCode @ToString
 public class ItemDto implements Serializable {
 
-    public Long id;
-    public String name;
-    public Long barcode;
+    private Long id;
+    private String name;
+    private Long barcode;
 
-    public Long placeId;
-    public Long categoryId;
-    public ProducerDto producer;
+    private Long placeId;
+    private Long categoryId;
+    private ProducerDto producer;
 
-    public String description;
-    public String storage;
-    public String capacity;
+    private String description;
+    private String storage;
+    private String capacity;
 
-    public Collection<AllergenDto> allergens;
-    public Collection<IngredientDto> ingredients;
-    public NutritionDto nutrition;
+    private Collection<AllergenDto> allergens;
+    private Collection<IngredientDto> ingredients;
+    private NutritionDto nutrition;
 
 
     public static class Builder {
