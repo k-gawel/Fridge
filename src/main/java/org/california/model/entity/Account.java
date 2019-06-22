@@ -2,6 +2,7 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -11,10 +12,9 @@ import javax.persistence.ManyToMany;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class Account extends BaseNamedEntity {
 
     @Column(nullable = false)
@@ -30,11 +30,6 @@ public class Account extends BaseNamedEntity {
     @Column(nullable = false)
     private Date createdOn = new Date();
 
-
-    @Override
-    public String toString() {
-        return "ID: [" + id + " ] name: [" + name + " ]";
-    }
 
 
 }

@@ -2,6 +2,7 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.california.model.util.ChangeOnInstance;
 
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class InstanceChange extends BaseEntity {
 
     @ManyToOne @JoinColumn

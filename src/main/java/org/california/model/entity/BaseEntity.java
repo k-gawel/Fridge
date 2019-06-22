@@ -2,13 +2,14 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
 @MappedSuperclass
-@Getter @Setter
+@Getter @Setter @ToString
 public class BaseEntity implements Serializable {
 
     @Id

@@ -2,6 +2,7 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class Token extends BaseEntity {
 
     @OneToOne

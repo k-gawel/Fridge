@@ -2,17 +2,17 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class Container extends BaseNamedEntity {
 
     @LazyCollection(value = LazyCollectionOption.FALSE)

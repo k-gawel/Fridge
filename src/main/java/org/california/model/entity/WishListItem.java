@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class WishListItem extends BaseEntity {
 
     private Date createdOn;

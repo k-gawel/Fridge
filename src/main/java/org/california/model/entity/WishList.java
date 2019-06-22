@@ -2,6 +2,7 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -13,7 +14,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class WishList extends BaseNamedEntity {
 
     private String description;
