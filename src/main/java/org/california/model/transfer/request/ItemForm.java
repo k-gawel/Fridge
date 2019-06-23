@@ -1,12 +1,13 @@
 package org.california.model.transfer.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ItemForm implements Serializable {
 
     public final String name;
