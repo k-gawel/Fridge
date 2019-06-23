@@ -2,10 +2,11 @@ package org.california.model.transfer.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.california.model.entity.Container;
 
 import java.io.Serializable;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ContainerForm implements Serializable {
 
     public final Long placeId;
@@ -16,6 +17,7 @@ public class ContainerForm implements Serializable {
         this.placeId = placeId;
         this.name = name;
     }
+
 
     public boolean validate() {
         if (placeId == null || name == null) return false;

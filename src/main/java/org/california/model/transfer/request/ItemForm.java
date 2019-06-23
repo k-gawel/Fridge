@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ItemForm implements Serializable {
 
     public final String name;

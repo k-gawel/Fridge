@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountForm implements Serializable {
 
     public final String name;

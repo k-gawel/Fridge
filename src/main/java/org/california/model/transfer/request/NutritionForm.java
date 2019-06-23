@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class NutritionForm implements Serializable {
 
     public final Double energy_kj;
