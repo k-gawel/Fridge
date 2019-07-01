@@ -43,4 +43,12 @@ public class AllergenGetter {
         return allergenRepository.getWhereNameStartsWith(nameStart);
     }
 
+    public Allergen getOrCreateByName(String name) {
+        Allergen result = getByName(name);
+
+        if(result != null)
+            return result;
+        else
+            return allergenRepository.save(new Allergen(name));
+    }
 }
