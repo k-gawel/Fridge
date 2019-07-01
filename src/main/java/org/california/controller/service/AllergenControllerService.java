@@ -2,9 +2,9 @@ package org.california.controller.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.california.controller.service.utils.Utils;
-import org.california.model.entity.Allergen;
-import org.california.model.transfer.response.AllergenDto;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.model.entity.item.Allergen;
+import org.california.service.builders.EntityToDtoMapper;
+import org.california.model.transfer.response.NamedEntityDto;
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class AllergenControllerService {
     }
 
 
-    public Collection<AllergenDto> search(String idsString, String name, String nameStart) {
+    public Collection<NamedEntityDto> search(String idsString, String name, String nameStart) {
         Collection<Long> ids = Utils.collectionOf(idsString);
 
         Collection<Allergen> resultList;
@@ -41,12 +41,12 @@ public class AllergenControllerService {
         else
             return Collections.emptySet();
 
-        return resultList.stream().map(mapper::allergenToDto).collect(Collectors.toList());
+        return resultList.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
 
-    public AllergenDto get(String name) {
-        return mapper.allergenToDto(getter.allergens.getByName(name));
+    public NamedEntityDto get(String name) {
+        return mapper.toDto(getter.allergens.getByName(name).orElse(null));
     }
 
 }

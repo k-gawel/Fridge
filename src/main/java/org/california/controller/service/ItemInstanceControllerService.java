@@ -3,21 +3,20 @@ package org.california.controller.service;
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
-import org.california.model.entity.Item;
 import org.california.model.entity.ItemInstance;
+import org.california.model.entity.item.Item;
 import org.california.model.transfer.request.ItemInstanceForm;
-import org.california.model.transfer.response.EntityToDtoMapper;
 import org.california.model.transfer.response.ItemInstanceDto;
-import org.california.model.validator.ItemInstanceFormValidator;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.AccountService;
 import org.california.service.model.ItemInstanceService;
-import org.california.util.exceptions.NotValidException;
 import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -42,23 +41,17 @@ public class ItemInstanceControllerService {
         this.mapper = mapper;
     }
 
-    public ItemInstanceDto addItemInstance(String token, ItemInstanceForm form) {
-
-        ItemInstanceFormValidator validator = new ItemInstanceFormValidator();
-        if(!validator.validate(form)) {
-            throw new NotValidException(validator.getMessagesAsString());
-        }
-
+    public ItemInstanceDto addItemInstance(String token, @Valid ItemInstanceForm form) {
         Account account = getterService.accounts.getByToken(token);
 
-        Container container = getterService.containers.getById(form.getContainerId());
-        Item item = getterService.items.getByKey(form.getItemId());
+        Container container = getterService.containers.getById(form.containerId);
+        Item item = getterService.items.getByKey(form.itemId);
 
         if(!accountPermissionsService.hasAccessToContainer(account, container)
             || !accountPermissionsService.hasAccessToItem(account, item))
             throw new UnauthorizedException("item.accessdenied|container.accessdenied");
 
-        return mapper.itemInstanceToDto(itemInstanceService.create(account, form));
+        return mapper.toDto(itemInstanceService.create(account, form));
     }
 
 
@@ -94,7 +87,7 @@ public class ItemInstanceControllerService {
     private Collection<ItemInstanceDto> filterInstancesThenMapToDto(Collection<ItemInstance> instances, Account account) {
         return instances.stream()
                 .filter(ii -> accountPermissionsService.hasAccessToItemInstance(account, ii))
-                .map(mapper::itemInstanceToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 

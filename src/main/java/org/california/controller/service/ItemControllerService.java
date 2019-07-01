@@ -2,13 +2,12 @@ package org.california.controller.service;
 
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
-import org.california.model.entity.Category;
-import org.california.model.entity.Item;
 import org.california.model.entity.Place;
+import org.california.model.entity.item.Category;
+import org.california.model.entity.item.Item;
 import org.california.model.transfer.request.ItemForm;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.ItemDto;
-import org.california.model.validator.ItemFormValidator;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.ItemService;
@@ -62,24 +61,19 @@ public class ItemControllerService {
 
         return items.stream()
                 .filter(i -> accountPermissionsService.hasAccessToItem(account, i))
-                .map(mapper::itemToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 
 
     public ItemDto addItem(String token, ItemForm itemForm) {
-
-        ItemFormValidator validator = new ItemFormValidator();
-        if(!validator.validate(itemForm))
-            throw new NotValidException(validator.getMessagesAsString());
-
         Account account = getterService.accounts.getByToken(token);
-        Place place = getterService.places.getByKey(itemForm.getPlaceId());
+        Place place = getterService.places.getByKey(itemForm.placeId);
 
         if(!accountPermissionsService.hasAccessToPlace(account, place))
             throw new UnauthorizedException();
 
-        return mapper.itemToDto(itemService.create(itemForm));
+        return mapper.toDto(itemService.create(itemForm));
     }
 
 }

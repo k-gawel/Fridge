@@ -3,7 +3,7 @@ package org.california.controller.service;
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.InstanceChangeDto;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
@@ -51,7 +51,7 @@ public class LoggerControllerService {
 
         return instanceLoggerService.getByContainers(containers, 50).stream()
                 .filter(ic -> accountPermissionsService.hasAccessToItemInstance(account, ic.getInstance()))
-                .map(mapper::instanceChangeToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 

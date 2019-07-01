@@ -2,10 +2,10 @@ package org.california.controller.service;
 
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
-import org.california.model.entity.Category;
-import org.california.model.entity.Item;
 import org.california.model.entity.Place;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.model.entity.item.Category;
+import org.california.model.entity.item.Item;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.ItemDto;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
@@ -53,7 +53,7 @@ public class RelatedItemsControllerService {
 
         return result.stream()
                 .filter(i -> accountPermissionsService.hasAccessToItem(account, i))
-                .map(mapper::itemToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 

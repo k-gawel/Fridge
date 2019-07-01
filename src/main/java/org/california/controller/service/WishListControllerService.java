@@ -5,8 +5,8 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Place;
 import org.california.model.entity.WishList;
 import org.california.model.transfer.request.WishListForm;
-import org.california.model.validator.Validator;
-import org.california.model.validator.WishListFormValidator;
+import org.california.service.builders.EntityToDtoMapper;
+import org.california.model.transfer.response.WishListDto;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.WishListService;
@@ -25,33 +25,31 @@ public class WishListControllerService {
     private GetterService getterService;
     private AccountPermissionsService accountPermissionsService;
     private WishListService wishListService;
+    private final EntityToDtoMapper mapper;
 
 
     @Autowired
-    public WishListControllerService(GetterService getterService, AccountPermissionsService accountPermissionsService, WishListService wishListService) {
+    public WishListControllerService(GetterService getterService, AccountPermissionsService accountPermissionsService, WishListService wishListService, EntityToDtoMapper mapper) {
         this.getterService = getterService;
         this.accountPermissionsService = accountPermissionsService;
         this.wishListService = wishListService;
+        this.mapper = mapper;
     }
 
 
-    public WishList newWishList(String token, WishListForm form) {
-
-        Validator validator = new WishListFormValidator();
-        if(!validator.validate(form))
-            throw new NotValidException(validator.getMessagesAsString());
-
-        Place place = getterService.places.getByKey(form.getPlace());
+    public WishListDto newWishList(String token, WishListForm form) {
+        Place place = getterService.places.getByKey(form.place);
         Account account = getterService.accounts.getByToken(token);
 
         if(!accountPermissionsService.hasAccessToPlace(account, place))
             throw new UnauthorizedException();
 
-        return wishListService.create(form);
+        WishList result = wishListService.create(form);
+        return mapper.toDto(result);
     }
 
 
-    public Collection<WishList> get(String token, String placeIdsString, String wishListIdsString, boolean active) {
+    public Collection<WishListDto> get(String token, String placeIdsString, String wishListIdsString, boolean active) {
 
         Collection<Long> wishListIds = wishListIdsString.equals("") ? null : Utils.collectionOf(wishListIdsString);
         Collection<Long> placeIds = placeIdsString.equals("") ? null : Utils.collectionOf(placeIdsString);
@@ -72,6 +70,7 @@ public class WishListControllerService {
 
         return result.stream()
                 .filter(w -> accountPermissionsService.hasAccessToWishList(account, w))
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 

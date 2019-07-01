@@ -6,10 +6,8 @@ import org.california.model.entity.Container;
 import org.california.model.entity.Place;
 import org.california.model.transfer.request.ContainerForm;
 import org.california.model.transfer.response.ContainerDto;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.PlaceUserStats;
-import org.california.model.validator.ContainerFormValidator;
-import org.california.model.validator.Validator;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.ContainerService;
@@ -23,7 +21,8 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
-public class ContainerControllerService {
+public class
+ContainerControllerService {
 
     private EntityToDtoMapper mapper;
     private GetterService getterService;
@@ -39,20 +38,15 @@ public class ContainerControllerService {
     }
 
     public ContainerDto newContainer(String token, ContainerForm containerForm) {
-
-        Validator validator = new ContainerFormValidator();
-        if(!validator.validate(containerForm))
-            throw new NotValidException(validator.getMessagesAsString());
-
         Account account = getterService.accounts.getByToken(token);
-        Place place = getterService.places.getByKey(containerForm.getPlaceId());
+        Place place = getterService.places.getByKey(containerForm.placeId);
 
         if(!accountPermissionsService.hasAccessToPlace(account, place))
             throw new UnauthorizedException("containeraccess.denied");
 
         Container container = containerService.createNewContainer(account, containerForm);
 
-        return mapper.containerToDto(container);
+        return mapper.toDto(container);
     }
 
 
@@ -66,7 +60,7 @@ public class ContainerControllerService {
 
         return result.stream()
                 .filter(c -> accountPermissionsService.hasAccessToContainer(account, c))
-                .map(mapper::containerToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
 
     }

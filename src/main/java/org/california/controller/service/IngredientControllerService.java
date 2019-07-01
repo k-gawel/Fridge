@@ -2,8 +2,8 @@ package org.california.controller.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.california.controller.service.utils.Utils;
-import org.california.model.entity.Ingredient;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.model.entity.item.Ingredient;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.IngredientDto;
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +40,12 @@ public class IngredientControllerService {
         else
             return Collections.emptySet();
 
-        return resultList.stream().map(mapper::ingredientToDto).collect(Collectors.toList());
+        return resultList.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
 
     public IngredientDto get(String name) {
-        return mapper.ingredientToDto(getter.ingredients.getByName(name));
+        return mapper.toDto(getter.ingredients.getByName(name));
     }
     
 }

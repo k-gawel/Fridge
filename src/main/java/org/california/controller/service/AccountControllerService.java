@@ -2,10 +2,8 @@ package org.california.controller.service;
 
 import org.california.model.entity.Account;
 import org.california.model.transfer.request.AccountForm;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.NamedEntityDto;
-import org.california.model.validator.AccountFormValidator;
-import org.california.model.validator.Validator;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountManagementService;
 import org.california.service.model.AccountService;
@@ -35,30 +33,25 @@ public class AccountControllerService {
     }
 
 
-    public boolean newAccount(AccountForm form) {
-        Validator validator = new AccountFormValidator();
-        if(!validator.validate(form))
-            throw new NotValidException(validator.getMessagesAsString());
+    public String newAccount(AccountForm form) {
+        Account result = accountService.addNewAccount(form);
 
-        return this.accountService.addNewAccount(form) == null;
+        return result == null ?
+                null : getterService.tokens.getByAccount(result).getToken();
     }
 
 
     public boolean changeAccountDetails(String token, String password, AccountForm form) {
-        Validator validator = new AccountFormValidator();
-        if(!validator.validate(form))
-            throw new NotValidException(validator.getMessagesAsString());
-
         Account account = getterService.accounts.getByToken(token);
 
         if(!account.getPassword().equals(password))
             throw new UnauthorizedException();
-        else if(!form.getPassword1().equals("password"))
-            return accountManagementService.changePassword(account, form.getPassword1());
-        else if(!form.getEmail().equals("mail@mail.mail"))
-            return accountManagementService.changeEmail(account, form.getEmail());
-        else if(!form.getName().equals("username"))
-            return accountManagementService.changeName(account, form.getName());
+        else if(!form.password1.equals("password"))
+            return accountManagementService.changePassword(account, form.password1);
+        else if(!form.email.equals("mail@mail.mail"))
+            return accountManagementService.changeEmail(account, form.email);
+        else if(!form.name.equals("username"))
+            return accountManagementService.changeName(account, form.name);
         else
             return false;
     }

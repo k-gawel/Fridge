@@ -2,8 +2,8 @@ package org.california.controller.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.california.controller.service.utils.Utils;
-import org.california.model.entity.Producent;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.model.entity.item.Producer;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.ProducerDto;
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class ProducerControllerService {
     public Collection<ProducerDto> search(String idsString, String name, String nameStart) {
         Collection<Long> ids = Utils.collectionOf(idsString);
 
-        Collection<Producent> resultList;
+        Collection<Producer> resultList;
 
         if(!ids.isEmpty())
             resultList = getter.producers.getByIds(ids);
@@ -40,12 +40,12 @@ public class ProducerControllerService {
         else
             return Collections.emptySet();
 
-        return resultList.stream().map(mapper::producerToDto).collect(Collectors.toList());
+        return resultList.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
 
     public ProducerDto get(String name) {
-        return mapper.producerToDto(getter.producers.getByName(name));
+        return mapper.toDto(getter.producers.getByName(name).orElse(null));
     }
 
 }

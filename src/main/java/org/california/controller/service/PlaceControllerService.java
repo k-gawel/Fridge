@@ -4,7 +4,7 @@ import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
 import org.california.model.transfer.request.PlaceForm;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.PlaceDto;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
@@ -39,7 +39,7 @@ public class PlaceControllerService {
         Account account = getterService.accounts.getByToken(token);
 
         Place place = placeService.newPlace(account, placeForm);
-        return mapper.placeToDto(place);
+        return mapper.toDto(place);
     }
 
 
@@ -51,7 +51,7 @@ public class PlaceControllerService {
 
         return places.stream()
                             .filter(p -> accountPermissionsService.hasAccessToPlace(account, p))
-                            .map(mapper::placeToDto)
+                            .map(mapper::toDto)
                             .collect(Collectors.toList());
     }
 
