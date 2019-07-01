@@ -11,6 +11,8 @@ import org.california.util.exceptions.NotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -115,11 +117,13 @@ public class AccountGetter {
     }
 
 
-    public Account getByName(String username) {
-        if(StringUtils.isAnyBlank(username))
-            throw new NotValidException("name.blank");
-
+    public Account getByName(@NotBlank String username) {
         return accountRepository.getByName(username);
+    }
+
+
+    public Account getByEmail(@Email @NotBlank String email) {
+        return accountRepository.getByEmail(email);
     }
 
 

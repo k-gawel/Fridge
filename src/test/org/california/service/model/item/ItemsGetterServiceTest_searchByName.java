@@ -2,8 +2,8 @@ package org.california.service.model.item;
 
 import org.california.config.HibernateUtil;
 import org.california.config.MyWebAppInitializer;
-import org.california.model.entity.Category;
 import org.california.model.entity.Place;
+import org.california.model.entity.item.Category;
 import org.california.service.getter.ItemGetter;
 import org.junit.Test;
 import org.junit.runner.RunWith;

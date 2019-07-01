@@ -30,12 +30,12 @@ INFO: HHH10005002: No explicit CDI BeanManager reference was passed to Hibernate
 5792 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/login],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.california.controller.AuthorizationController.login(java.lang.String,java.lang.String)
 5793 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/logout],methods=[DELETE]}" onto public void org.california.controller.AuthorizationController.logout(java.lang.String)
 5795 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/isTokenValid]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.california.controller.AuthorizationController.isTokenValid(java.lang.String)
-5799 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemId/newProduct],methods=[POST]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.Category> org.california.controller.item.CategoryController.addItemInstance(java.lang.String,java.lang.String) throws java.text.ParseException
-5800 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/categoryId/getAllCategories],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.Category> org.california.controller.item.CategoryController.getAllCategories()
+5799 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/item_id/newProduct],methods=[POST]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.item.Category> org.california.controller.item.CategoryController.addItemInstance(java.lang.String,java.lang.String) throws java.text.ParseException
+5800 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/category_id/getAllCategories],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.item.Category> org.california.controller.item.CategoryController.getAllCategories()
 5801 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/container/addNewContainer],methods=[POST]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.Container> org.california.controller.ContainerController.addNewContainer(java.lang.String,java.lang.String)
-5803 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemId/{itemId}],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.Item> org.california.controller.item.ItemController.getById(java.lang.Long,org.springframework.http.HttpEntity<byte[]>)
-5804 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemId/getByBarcode/{barcode}],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.Item> org.california.controller.item.ItemController.getByBarcode(java.lang.Long)
-5805 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemId/searchByName/{name}],methods=[GET]}" onto public org.springframework.http.ResponseEntity<java.util.List<org.california.model.entity.Item>> org.california.controller.item.ItemController.searchByName(java.lang.String)
+5803 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/item_id/{item_id}],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.item.Item> org.california.controller.item.ItemController.getById(java.lang.Long,org.springframework.http.HttpEntity<byte[]>)
+5804 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/item_id/getByBarcode/{barcode}],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.item.Item> org.california.controller.item.ItemController.getByBarcode(java.lang.Long)
+5805 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/item_id/searchByName/{name}],methods=[GET]}" onto public org.springframework.http.ResponseEntity<java.util.List<org.california.model.entity.item.Item>> org.california.controller.item.ItemController.searchByName(java.lang.String)
 5807 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemInstance/{itemInstanceId}/delete],methods=[PUT]}" onto public org.springframework.http.ResponseEntity<java.lang.Boolean> org.california.controller.ItemInstanceController.deleteInstance(java.lang.String,java.lang.Long)
 5808 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemInstance/{itemInstanceId}/open],methods=[PUT]}" onto public org.springframework.http.ResponseEntity<java.lang.Boolean> org.california.controller.ItemInstanceController.openInstance(java.lang.String,java.lang.Long)
 5811 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemInstance/{itemInstanceId}/frozeOrUnfroze],methods=[PUT]}" onto public org.springframework.http.ResponseEntity<java.lang.Boolean> org.california.controller.ItemInstanceController.frozeOrUnfrozeInstance(java.lang.String,java.lang.Long)
@@ -48,1158 +48,1158 @@ INFO: HHH10005002: No explicit CDI BeanManager reference was passed to Hibernate
 5817 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/place/{placeId}/removeAccount/{accountToRemoveId}],methods=[DELETE]}" onto public org.springframework.http.ResponseEntity<java.lang.Boolean> org.california.controller.PlaceController.removeAccount(java.lang.String,long,long)
 5818 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/place/{placeId}/addUser/{newUserName}],methods=[POST]}" onto public org.springframework.http.ResponseEntity<org.california.model.transfer.response.PlaceUsersList$PlaceUser> org.california.controller.PlaceController.addUserToPlace(java.lang.String,long,java.lang.String)
 5819 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/place/{placeId}/leave],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.Boolean> org.california.controller.PlaceController.leavePlace(java.lang.String,long)
-5820 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/categoryTest],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.Category> org.california.controller.TestController.categoryTest()
-5821 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemTest],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.Item> org.california.controller.TestController.itemTest()
+5820 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/categoryTest],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.item.Category> org.california.controller.TestController.categoryTest()
+5821 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping - Mapped "{[/itemTest],methods=[GET]}" onto public org.springframework.http.ResponseEntity<org.california.model.entity.item.Item> org.california.controller.TestController.itemTest()
 6200 [main] INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@609cd4d8: startup date [Thu Nov 08 22:59:24 GMT 2018]; root of context hierarchy
 List files: 3171
 /home/kamil/IdeaProjects/FridgeApi/images/4046234767292.jpg
 lis 08, 2018 10:59:30 PM org.hibernate.hql.internal.QueryTranslatorFactoryInitiator initiateService
 INFO: HHH000397: Using ASTQueryTranslatorFactory
-4046234767292 to org.california.model.entity.Item@304744a1
+4046234767292 to org.california.model.entity.item.Item@304744a1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334005526.jpg
-5900334005526 to org.california.model.entity.Item@43b4ec0c
+5900334005526 to org.california.model.entity.item.Item@43b4ec0c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500023484.jpg
-5900500023484 to org.california.model.entity.Item@4d4c4b14
+5900500023484 to org.california.model.entity.item.Item@4d4c4b14
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902781000130.jpg
-5902781000130 to org.california.model.entity.Item@2a9f8d47
+5902781000130 to org.california.model.entity.item.Item@2a9f8d47
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/50985098.jpg
-50985098 to org.california.model.entity.Item@4ec37a42
+50985098 to org.california.model.entity.item.Item@4ec37a42
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5201360509188.jpg
-5201360509188 to org.california.model.entity.Item@48333b12
+5201360509188 to org.california.model.entity.item.Item@48333b12
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900497310505.jpg
-5900497310505 to org.california.model.entity.Item@cbdc0f4
+5900497310505 to org.california.model.entity.item.Item@cbdc0f4
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4014400916829.jpg
-4014400916829 to org.california.model.entity.Item@4af44f2a
+4014400916829 to org.california.model.entity.item.Item@4af44f2a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900252000276.jpg
-5900252000276 to org.california.model.entity.Item@556843a5
+5900252000276 to org.california.model.entity.item.Item@556843a5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901044015171.jpg
-5901044015171 to org.california.model.entity.Item@fdf029a
+5901044015171 to org.california.model.entity.item.Item@fdf029a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900020013514.jpg
-5900020013514 to org.california.model.entity.Item@1921b43c
+5900020013514 to org.california.model.entity.item.Item@1921b43c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900919000045.jpg
-5900919000045 to org.california.model.entity.Item@57fae911
+5900919000045 to org.california.model.entity.item.Item@57fae911
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901204009569.jpg
-5901204009569 to org.california.model.entity.Item@6dadcf58
+5901204009569 to org.california.model.entity.item.Item@6dadcf58
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/9002490212063.jpg
-9002490212063 to org.california.model.entity.Item@2e60d4f4
+9002490212063 to org.california.model.entity.item.Item@2e60d4f4
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5908260251970.jpg
-5908260251970 to org.california.model.entity.Item@489c15e2
+5908260251970 to org.california.model.entity.item.Item@489c15e2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049011799.jpg
-5900049011799 to org.california.model.entity.Item@7a91027c
+5900049011799 to org.california.model.entity.item.Item@7a91027c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900385000945.jpg
-5900385000945 to org.california.model.entity.Item@5cdafb4d
+5900385000945 to org.california.model.entity.item.Item@5cdafb4d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900552035275.jpg
-5900552035275 to org.california.model.entity.Item@1a507ea0
+5900552035275 to org.california.model.entity.item.Item@1a507ea0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900983003997.jpg
-5900983003997 to org.california.model.entity.Item@67836d4
+5900983003997 to org.california.model.entity.item.Item@67836d4
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613034844248.jpg
-7613034844248 to org.california.model.entity.Item@14a3a66c
+7613034844248 to org.california.model.entity.item.Item@14a3a66c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5908260252915.jpg
-5908260252915 to org.california.model.entity.Item@51aa8c0f
+5908260252915 to org.california.model.entity.item.Item@51aa8c0f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900300543755.jpg
-5900300543755 to org.california.model.entity.Item@35d31e1c
+5900300543755 to org.california.model.entity.item.Item@35d31e1c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5905548350127.jpg
-5905548350127 to org.california.model.entity.Item@6f647464
+5905548350127 to org.california.model.entity.item.Item@6f647464
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901597868774.jpg
-5901597868774 to org.california.model.entity.Item@5d3c0735
+5901597868774 to org.california.model.entity.item.Item@5d3c0735
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900983000729.jpg
-5900983000729 to org.california.model.entity.Item@57e6f449
+5900983000729 to org.california.model.entity.item.Item@57e6f449
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901123600007.jpg
-5901123600007 to org.california.model.entity.Item@35ca0dac
+5901123600007 to org.california.model.entity.item.Item@35ca0dac
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900571006058.jpg
-5900571006058 to org.california.model.entity.Item@142f0ac1
+5900571006058 to org.california.model.entity.item.Item@142f0ac1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8718114892788.jpg
-8718114892788 to org.california.model.entity.Item@1a2bcce1
+8718114892788 to org.california.model.entity.item.Item@1a2bcce1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902020163220.jpg
-5902020163220 to org.california.model.entity.Item@6ab123d0
+5902020163220 to org.california.model.entity.item.Item@6ab123d0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902451018205.jpg
-5902451018205 to org.california.model.entity.Item@25a41143
+5902451018205 to org.california.model.entity.item.Item@25a41143
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032034665.jpg
-5901032034665 to org.california.model.entity.Item@2381a837
+5901032034665 to org.california.model.entity.item.Item@2381a837
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901135000543.jpg
-5901135000543 to org.california.model.entity.Item@794a3410
+5901135000543 to org.california.model.entity.item.Item@794a3410
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900396001221.jpg
-5900396001221 to org.california.model.entity.Item@234ad505
+5900396001221 to org.california.model.entity.item.Item@234ad505
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049004470.jpg
-5900049004470 to org.california.model.entity.Item@3a6732bc
+5900049004470 to org.california.model.entity.item.Item@3a6732bc
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084235235.jpg
-5900084235235 to org.california.model.entity.Item@69cf9acb
+5900084235235 to org.california.model.entity.item.Item@69cf9acb
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901483020101.jpg
-5901483020101 to org.california.model.entity.Item@7959747d
+5901483020101 to org.california.model.entity.item.Item@7959747d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900635500027.jpg
-5900635500027 to org.california.model.entity.Item@33a8f3e7
+5900635500027 to org.california.model.entity.item.Item@33a8f3e7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084008013.jpg
-5900084008013 to org.california.model.entity.Item@38485cee
+5900084008013 to org.california.model.entity.item.Item@38485cee
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900580000702.jpg
-5900580000702 to org.california.model.entity.Item@330fff8e
+5900580000702 to org.california.model.entity.item.Item@330fff8e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7622210282866.jpg
-7622210282866 to org.california.model.entity.Item@178e125f
+7622210282866 to org.california.model.entity.item.Item@178e125f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900788342017.jpg
-5900788342017 to org.california.model.entity.Item@68bffb06
+5900788342017 to org.california.model.entity.item.Item@68bffb06
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900300540242.jpg
-5900300540242 to org.california.model.entity.Item@47e0aeb5
+5900300540242 to org.california.model.entity.item.Item@47e0aeb5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5904306000953.jpg
-5904306000953 to org.california.model.entity.Item@3fa43b05
+5904306000953 to org.california.model.entity.item.Item@3fa43b05
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901483001612.jpg
-5901483001612 to org.california.model.entity.Item@5e5616f2
+5901483001612 to org.california.model.entity.item.Item@5e5616f2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902172000114.jpg
-5902172000114 to org.california.model.entity.Item@7b362c16
+5902172000114 to org.california.model.entity.item.Item@7b362c16
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900085011821.jpg
-5900085011821 to org.california.model.entity.Item@6edbdbed
+5900085011821 to org.california.model.entity.item.Item@6edbdbed
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084235051.jpg
-5900084235051 to org.california.model.entity.Item@5a4700ba
+5900084235051 to org.california.model.entity.item.Item@5a4700ba
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901882188815.jpg
-5901882188815 to org.california.model.entity.Item@3a99aa17
+5901882188815 to org.california.model.entity.item.Item@3a99aa17
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900397008946.jpg
-5900397008946 to org.california.model.entity.Item@22445d8e
+5900397008946 to org.california.model.entity.item.Item@22445d8e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049011164.jpg
-5900049011164 to org.california.model.entity.Item@36ce218e
+5900049011164 to org.california.model.entity.item.Item@36ce218e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900788943238.jpg
-5900788943238 to org.california.model.entity.Item@582a24c3
+5900788943238 to org.california.model.entity.item.Item@582a24c3
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900783002817.jpg
-5900783002817 to org.california.model.entity.Item@29c808c8
+5900783002817 to org.california.model.entity.item.Item@29c808c8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613034805874.jpg
-7613034805874 to org.california.model.entity.Item@b0f9c63
+7613034805874 to org.california.model.entity.item.Item@b0f9c63
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900788201017.jpg
-5900788201017 to org.california.model.entity.Item@453d15d7
+5900788201017 to org.california.model.entity.item.Item@453d15d7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5014328011001.jpg
-5014328011001 to org.california.model.entity.Item@4beea618
+5014328011001 to org.california.model.entity.item.Item@4beea618
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/80508939.jpg
-80508939 to org.california.model.entity.Item@6f60173c
+80508939 to org.california.model.entity.item.Item@6f60173c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900910008248.jpg
-5900910008248 to org.california.model.entity.Item@49fdc88e
+5900910008248 to org.california.model.entity.item.Item@49fdc88e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334006264.jpg
-5900334006264 to org.california.model.entity.Item@740ba30d
+5900334006264 to org.california.model.entity.item.Item@740ba30d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100688645.jpg
-8712100688645 to org.california.model.entity.Item@75989b13
+8712100688645 to org.california.model.entity.item.Item@75989b13
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900862019309.jpg
-5900862019309 to org.california.model.entity.Item@18537545
+5900862019309 to org.california.model.entity.item.Item@18537545
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049001523.jpg
-5900049001523 to org.california.model.entity.Item@7a953b17
+5900049001523 to org.california.model.entity.item.Item@7a953b17
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500027505.jpg
-5900500027505 to org.california.model.entity.Item@4af81941
+5900500027505 to org.california.model.entity.item.Item@4af81941
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613033000607.jpg
-7613033000607 to org.california.model.entity.Item@4cdf89a1
+7613033000607 to org.california.model.entity.item.Item@4cdf89a1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7300400481441.jpg
-7300400481441 to org.california.model.entity.Item@6e39cbaa
+7300400481441 to org.california.model.entity.item.Item@6e39cbaa
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902180740507.jpg
-5902180740507 to org.california.model.entity.Item@bc25046
+5902180740507 to org.california.model.entity.item.Item@bc25046
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901044005820.jpg
-5901044005820 to org.california.model.entity.Item@6b34e798
+5901044005820 to org.california.model.entity.item.Item@6b34e798
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900783002138.jpg
-5900783002138 to org.california.model.entity.Item@78809dea
+5900783002138 to org.california.model.entity.item.Item@78809dea
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334008527.jpg
-5900334008527 to org.california.model.entity.Item@27f23b31
+5900334008527 to org.california.model.entity.item.Item@27f23b31
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437037233.jpg
-5900437037233 to org.california.model.entity.Item@5f808de8
+5900437037233 to org.california.model.entity.item.Item@5f808de8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8000500023976.jpg
-8000500023976 to org.california.model.entity.Item@17d864f8
+8000500023976 to org.california.model.entity.item.Item@17d864f8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900788200034.jpg
-5900788200034 to org.california.model.entity.Item@620ede3a
+5900788200034 to org.california.model.entity.item.Item@620ede3a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032034139.jpg
-5901032034139 to org.california.model.entity.Item@20bb5d7f
+5901032034139 to org.california.model.entity.item.Item@20bb5d7f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4014400913323.jpg
-4014400913323 to org.california.model.entity.Item@498bcd33
+4014400913323 to org.california.model.entity.item.Item@498bcd33
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8000830301799.jpg
-8000830301799 to org.california.model.entity.Item@77c3507
+8000830301799 to org.california.model.entity.item.Item@77c3507
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049011119.jpg
-5900049011119 to org.california.model.entity.Item@4f5a0b3d
+5900049011119 to org.california.model.entity.item.Item@4f5a0b3d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/42155034.jpg
-42155034 to org.california.model.entity.Item@31248251
+42155034 to org.california.model.entity.item.Item@31248251
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900805002740.jpg
-5900805002740 to org.california.model.entity.Item@786560e9
+5900805002740 to org.california.model.entity.item.Item@786560e9
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500026089.jpg
-5900500026089 to org.california.model.entity.Item@56db9f2d
+5900500026089 to org.california.model.entity.item.Item@56db9f2d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900552040453.jpg
-5900552040453 to org.california.model.entity.Item@6f82dbc9
+5900552040453 to org.california.model.entity.item.Item@6f82dbc9
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7622300403997.jpg
-7622300403997 to org.california.model.entity.Item@5501d9cb
+7622300403997 to org.california.model.entity.item.Item@5501d9cb
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7622200003938.jpg
-7622200003938 to org.california.model.entity.Item@23e9bc96
+7622200003938 to org.california.model.entity.item.Item@23e9bc96
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900344102444.jpg
-5900344102444 to org.california.model.entity.Item@467ba23
+5900344102444 to org.california.model.entity.item.Item@467ba23
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049003121.jpg
-5900049003121 to org.california.model.entity.Item@24dfbc9b
+5900049003121 to org.california.model.entity.item.Item@24dfbc9b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900617015754.jpg
-5900617015754 to org.california.model.entity.Item@6a35ab2e
+5900617015754 to org.california.model.entity.item.Item@6a35ab2e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900617002969.jpg
-5900617002969 to org.california.model.entity.Item@72d6f5c
+5900617002969 to org.california.model.entity.item.Item@72d6f5c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900919011478.jpg
-5900919011478 to org.california.model.entity.Item@33e99277
+5900919011478 to org.california.model.entity.item.Item@33e99277
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5905617003916.jpg
-5905617003916 to org.california.model.entity.Item@2b13fc09
+5905617003916 to org.california.model.entity.item.Item@2b13fc09
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901483000738.jpg
-5901483000738 to org.california.model.entity.Item@1be853c5
+5901483000738 to org.california.model.entity.item.Item@1be853c5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900788742459.jpg
-5900788742459 to org.california.model.entity.Item@40b415c0
+5900788742459 to org.california.model.entity.item.Item@40b415c0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900617001115.jpg
-5900617001115 to org.california.model.entity.Item@75ecbcb4
+5900617001115 to org.california.model.entity.item.Item@75ecbcb4
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500028823.jpg
-5900500028823 to org.california.model.entity.Item@24c08b5d
+5900500028823 to org.california.model.entity.item.Item@24c08b5d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900397733183.jpg
-5900397733183 to org.california.model.entity.Item@649ca10
+5900397733183 to org.california.model.entity.item.Item@649ca10
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900445000014.jpg
-5900445000014 to org.california.model.entity.Item@36288e31
+5900445000014 to org.california.model.entity.item.Item@36288e31
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100868214.jpg
-8712100868214 to org.california.model.entity.Item@2223fd76
+8712100868214 to org.california.model.entity.item.Item@2223fd76
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900862218641.jpg
-5900862218641 to org.california.model.entity.Item@22b543f8
+5900862218641 to org.california.model.entity.item.Item@22b543f8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900020014481.jpg
-5900020014481 to org.california.model.entity.Item@1c0101c1
+5900020014481 to org.california.model.entity.item.Item@1c0101c1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900020012067.jpg
-5900020012067 to org.california.model.entity.Item@4ecac4d4
+5900020012067 to org.california.model.entity.item.Item@4ecac4d4
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902180660331.jpg
-5902180660331 to org.california.model.entity.Item@247f7ef6
+5902180660331 to org.california.model.entity.item.Item@247f7ef6
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901882014428.jpg
-5901882014428 to org.california.model.entity.Item@7582ac6f
+5901882014428 to org.california.model.entity.item.Item@7582ac6f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900956201184.jpg
-5900956201184 to org.california.model.entity.Item@4c2a96f4
+5900956201184 to org.california.model.entity.item.Item@4c2a96f4
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900252000146.jpg
-5900252000146 to org.california.model.entity.Item@437ceae5
+5900252000146 to org.california.model.entity.item.Item@437ceae5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900788402025.jpg
-5900788402025 to org.california.model.entity.Item@45c8a5ff
+5900788402025 to org.california.model.entity.item.Item@45c8a5ff
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900085010763.jpg
-5900085010763 to org.california.model.entity.Item@21606d95
+5900085010763 to org.california.model.entity.item.Item@21606d95
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901882110151.jpg
-5901882110151 to org.california.model.entity.Item@140f0dba
+5901882110151 to org.california.model.entity.item.Item@140f0dba
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900820000714.jpg
-5900820000714 to org.california.model.entity.Item@2dcb9429
+5900820000714 to org.california.model.entity.item.Item@2dcb9429
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900242000194.jpg
-5900242000194 to org.california.model.entity.Item@6998139e
+5900242000194 to org.california.model.entity.item.Item@6998139e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4046234158953.jpg
-4046234158953 to org.california.model.entity.Item@6212ca26
+4046234158953 to org.california.model.entity.item.Item@6212ca26
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5905548351162.jpg
-5905548351162 to org.california.model.entity.Item@7e642f83
+5905548351162 to org.california.model.entity.item.Item@7e642f83
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900397014619.jpg
-5900397014619 to org.california.model.entity.Item@54d30bfd
+5900397014619 to org.california.model.entity.item.Item@54d30bfd
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900862017886.jpg
-5900862017886 to org.california.model.entity.Item@1f08627f
+5900862017886 to org.california.model.entity.item.Item@1f08627f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500025921.jpg
-5900500025921 to org.california.model.entity.Item@1fe5bc11
+5900500025921 to org.california.model.entity.item.Item@1fe5bc11
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7622210217196.jpg
-7622210217196 to org.california.model.entity.Item@6ef11e27
+7622210217196 to org.california.model.entity.item.Item@6ef11e27
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900571111363.jpg
-5900571111363 to org.california.model.entity.Item@5cef8dab
+5900571111363 to org.california.model.entity.item.Item@5cef8dab
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613033213441.jpg
-7613033213441 to org.california.model.entity.Item@13083c50
+7613033213441 to org.california.model.entity.item.Item@13083c50
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900805007509.jpg
-5900805007509 to org.california.model.entity.Item@71315fb3
+5900805007509 to org.california.model.entity.item.Item@71315fb3
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901069000374.jpg
-5901069000374 to org.california.model.entity.Item@32202735
+5901069000374 to org.california.model.entity.item.Item@32202735
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/3083680975162.jpg
-3083680975162 to org.california.model.entity.Item@44312444
+3083680975162 to org.california.model.entity.item.Item@44312444
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4009900382250.jpg
-4009900382250 to org.california.model.entity.Item@5105afad
+4009900382250 to org.california.model.entity.item.Item@5105afad
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437002415.jpg
-5900437002415 to org.california.model.entity.Item@cbbc7df
+5900437002415 to org.california.model.entity.item.Item@cbbc7df
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900919002353.jpg
-5900919002353 to org.california.model.entity.Item@29dea04f
+5900919002353 to org.california.model.entity.item.Item@29dea04f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613030333531.jpg
-7613030333531 to org.california.model.entity.Item@1bac2dd7
+7613030333531 to org.california.model.entity.item.Item@1bac2dd7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900020012098.jpg
-5900020012098 to org.california.model.entity.Item@609a1d05
+5900020012098 to org.california.model.entity.item.Item@609a1d05
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900300545131.jpg
-5900300545131 to org.california.model.entity.Item@36d81062
+5900300545131 to org.california.model.entity.item.Item@36d81062
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334012869.jpg
-5900334012869 to org.california.model.entity.Item@6c9154bb
+5900334012869 to org.california.model.entity.item.Item@6c9154bb
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900691031114.jpg
-5900691031114 to org.california.model.entity.Item@aa7ca4c
+5900691031114 to org.california.model.entity.item.Item@aa7ca4c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902180510506.jpg
-5902180510506 to org.california.model.entity.Item@2c29c0dc
+5902180510506 to org.california.model.entity.item.Item@2c29c0dc
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900300540792.jpg
-5900300540792 to org.california.model.entity.Item@48aa24a8
+5900300540792 to org.california.model.entity.item.Item@48aa24a8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907069000406.jpg
-5907069000406 to org.california.model.entity.Item@5830d4d8
+5907069000406 to org.california.model.entity.item.Item@5830d4d8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7622210310408.jpg
-7622210310408 to org.california.model.entity.Item@24cfe8ff
+7622210310408 to org.california.model.entity.item.Item@24cfe8ff
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902180720509.jpg
-5902180720509 to org.california.model.entity.Item@1f049abd
+5902180720509 to org.california.model.entity.item.Item@1f049abd
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437013503.jpg
-5900437013503 to org.california.model.entity.Item@b2d8722
+5900437013503 to org.california.model.entity.item.Item@b2d8722
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901960048192.jpg
-5901960048192 to org.california.model.entity.Item@1ce6136e
+5901960048192 to org.california.model.entity.item.Item@1ce6136e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900085010121.jpg
-5900085010121 to org.california.model.entity.Item@766a4dcf
+5900085010121 to org.california.model.entity.item.Item@766a4dcf
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900783004934.jpg
-5900783004934 to org.california.model.entity.Item@2508556f
+5900783004934 to org.california.model.entity.item.Item@2508556f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084219297.jpg
-5900084219297 to org.california.model.entity.Item@7206bfe5
+5900084219297 to org.california.model.entity.item.Item@7206bfe5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901135024761.jpg
-5901135024761 to org.california.model.entity.Item@2ffc3d5e
+5901135024761 to org.california.model.entity.item.Item@2ffc3d5e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900983005656.jpg
-5900983005656 to org.california.model.entity.Item@1106798e
+5900983005656 to org.california.model.entity.item.Item@1106798e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613030963134.jpg
-7613030963134 to org.california.model.entity.Item@6532a5f3
+7613030963134 to org.california.model.entity.item.Item@6532a5f3
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900788943283.jpg
-5900788943283 to org.california.model.entity.Item@105a46b8
+5900788943283 to org.california.model.entity.item.Item@105a46b8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900300540662.jpg
-5900300540662 to org.california.model.entity.Item@1c290990
+5900300540662 to org.california.model.entity.item.Item@1c290990
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900397010444.jpg
-5900397010444 to org.california.model.entity.Item@515d7fcf
+5900397010444 to org.california.model.entity.item.Item@515d7fcf
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900839852861.jpg
-5900839852861 to org.california.model.entity.Item@337f3b20
+5900839852861 to org.california.model.entity.item.Item@337f3b20
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7610400070577.jpg
-7610400070577 to org.california.model.entity.Item@3196000e
+7610400070577 to org.california.model.entity.item.Item@3196000e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900020008121.jpg
-5900020008121 to org.california.model.entity.Item@24ddc881
+5900020008121 to org.california.model.entity.item.Item@24ddc881
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886010211.jpg
-5901886010211 to org.california.model.entity.Item@6b18d4c8
+5901886010211 to org.california.model.entity.item.Item@6b18d4c8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437085265.jpg
-5900437085265 to org.california.model.entity.Item@484937af
+5900437085265 to org.california.model.entity.item.Item@484937af
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900320001334.jpg
-5900320001334 to org.california.model.entity.Item@4e8eaf23
+5900320001334 to org.california.model.entity.item.Item@4e8eaf23
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900691031039.jpg
-5900691031039 to org.california.model.entity.Item@2ae6779a
+5900691031039 to org.california.model.entity.item.Item@2ae6779a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500026744.jpg
-5900500026744 to org.california.model.entity.Item@7a89261c
+5900500026744 to org.california.model.entity.item.Item@7a89261c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/3083681003963.jpg
-3083681003963 to org.california.model.entity.Item@1533d204
+3083681003963 to org.california.model.entity.item.Item@1533d204
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4006067084188.jpg
-4006067084188 to org.california.model.entity.Item@6fada76f
+4006067084188 to org.california.model.entity.item.Item@6fada76f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5903295003709.jpg
-5903295003709 to org.california.model.entity.Item@8c7e7d2
+5903295003709 to org.california.model.entity.item.Item@8c7e7d2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886016183.jpg
-5901886016183 to org.california.model.entity.Item@6b83bf27
+5901886016183 to org.california.model.entity.item.Item@6b83bf27
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5906827012255.jpg
-5906827012255 to org.california.model.entity.Item@479132c
+5906827012255 to org.california.model.entity.item.Item@479132c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900617013224.jpg
-5900617013224 to org.california.model.entity.Item@2aad2c4a
+5900617013224 to org.california.model.entity.item.Item@2aad2c4a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334009142.jpg
-5900334009142 to org.california.model.entity.Item@794279fd
+5900334009142 to org.california.model.entity.item.Item@794279fd
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900983002761.jpg
-5900983002761 to org.california.model.entity.Item@153388b1
+5900983002761 to org.california.model.entity.item.Item@153388b1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/50960767.jpg
-50960767 to org.california.model.entity.Item@1eaf08d2
+50960767 to org.california.model.entity.item.Item@1eaf08d2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5906441330360.jpg
-5906441330360 to org.california.model.entity.Item@5ca2eaad
+5906441330360 to org.california.model.entity.item.Item@5ca2eaad
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900919000816.jpg
-5900919000816 to org.california.model.entity.Item@1707f9e0
+5900919000816 to org.california.model.entity.item.Item@1707f9e0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049011195.jpg
-5900049011195 to org.california.model.entity.Item@56690d4e
+5900049011195 to org.california.model.entity.item.Item@56690d4e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500031458.jpg
-5900500031458 to org.california.model.entity.Item@c3a1db2
+5900500031458 to org.california.model.entity.item.Item@c3a1db2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901135000475.jpg
-5901135000475 to org.california.model.entity.Item@241f4260
+5901135000475 to org.california.model.entity.item.Item@241f4260
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049011126.jpg
-5900049011126 to org.california.model.entity.Item@3ac4f33c
+5900049011126 to org.california.model.entity.item.Item@3ac4f33c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900353500798.jpg
-5900353500798 to org.california.model.entity.Item@6c4d8078
+5900353500798 to org.california.model.entity.item.Item@6c4d8078
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907573336015.jpg
-5907573336015 to org.california.model.entity.Item@7867b489
+5907573336015 to org.california.model.entity.item.Item@7867b489
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901067446020.jpg
-5901067446020 to org.california.model.entity.Item@110ff7e2
+5901067446020 to org.california.model.entity.item.Item@110ff7e2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/9312631142327.jpg
-9312631142327 to org.california.model.entity.Item@15e103d
+9312631142327 to org.california.model.entity.item.Item@15e103d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901588017952.jpg
-5901588017952 to org.california.model.entity.Item@51c08081
+5901588017952 to org.california.model.entity.item.Item@51c08081
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900635000022.jpg
-5900635000022 to org.california.model.entity.Item@775c9bf0
+5900635000022 to org.california.model.entity.item.Item@775c9bf0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5908260251987.jpg
-5908260251987 to org.california.model.entity.Item@2e7eafa0
+5908260251987 to org.california.model.entity.item.Item@2e7eafa0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/42211846.jpg
-42211846 to org.california.model.entity.Item@1fca503
+42211846 to org.california.model.entity.item.Item@1fca503
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901067475105.jpg
-5901067475105 to org.california.model.entity.Item@d00f0b5
+5901067475105 to org.california.model.entity.item.Item@d00f0b5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901069000305.jpg
-5901069000305 to org.california.model.entity.Item@69795fb6
+5901069000305 to org.california.model.entity.item.Item@69795fb6
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500024429.jpg
-5900500024429 to org.california.model.entity.Item@67e47a18
+5900500024429 to org.california.model.entity.item.Item@67e47a18
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/59027058.jpg
-59027058 to org.california.model.entity.Item@3b32a54d
+59027058 to org.california.model.entity.item.Item@3b32a54d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901696000730.jpg
-5901696000730 to org.california.model.entity.Item@1324fda2
+5901696000730 to org.california.model.entity.item.Item@1324fda2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901123182138.jpg
-5901123182138 to org.california.model.entity.Item@4bfb838d
+5901123182138 to org.california.model.entity.item.Item@4bfb838d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901067401050.jpg
-5901067401050 to org.california.model.entity.Item@3c289f8
+5901067401050 to org.california.model.entity.item.Item@3c289f8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8000500192801.jpg
-8000500192801 to org.california.model.entity.Item@36f088de
+8000500192801 to org.california.model.entity.item.Item@36f088de
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886010198.jpg
-5901886010198 to org.california.model.entity.Item@3c603d8d
+5901886010198 to org.california.model.entity.item.Item@3c603d8d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8722700074885.jpg
-8722700074885 to org.california.model.entity.Item@5d371d83
+8722700074885 to org.california.model.entity.item.Item@5d371d83
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900617010834.jpg
-5900617010834 to org.california.model.entity.Item@59534928
+5900617010834 to org.california.model.entity.item.Item@59534928
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437037011.jpg
-5900437037011 to org.california.model.entity.Item@352b3806
+5900437037011 to org.california.model.entity.item.Item@352b3806
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084002011.jpg
-5900084002011 to org.california.model.entity.Item@145603b1
+5900084002011 to org.california.model.entity.item.Item@145603b1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901204006292.jpg
-5901204006292 to org.california.model.entity.Item@6ddf1af2
+5901204006292 to org.california.model.entity.item.Item@6ddf1af2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8722700652038.jpg
-8722700652038 to org.california.model.entity.Item@533c996c
+8722700652038 to org.california.model.entity.item.Item@533c996c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900102015245.jpg
-5900102015245 to org.california.model.entity.Item@12b7124
+5900102015245 to org.california.model.entity.item.Item@12b7124
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8722700255710.jpg
-8722700255710 to org.california.model.entity.Item@18074a21
+8722700255710 to org.california.model.entity.item.Item@18074a21
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437308029.jpg
-5900437308029 to org.california.model.entity.Item@2161ce09
+5900437308029 to org.california.model.entity.item.Item@2161ce09
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900059020378.jpg
-5900059020378 to org.california.model.entity.Item@55f54fe7
+5900059020378 to org.california.model.entity.item.Item@55f54fe7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902078003202.jpg
-5902078003202 to org.california.model.entity.Item@1ce313d7
+5902078003202 to org.california.model.entity.item.Item@1ce313d7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032034641.jpg
-5901032034641 to org.california.model.entity.Item@121f0ffd
+5901032034641 to org.california.model.entity.item.Item@121f0ffd
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084203142.jpg
-5900084203142 to org.california.model.entity.Item@64a8d164
+5900084203142 to org.california.model.entity.item.Item@64a8d164
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5908260252168.jpg
-5908260252168 to org.california.model.entity.Item@33d5cb7c
+5908260252168 to org.california.model.entity.item.Item@33d5cb7c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500031496.jpg
-5900500031496 to org.california.model.entity.Item@61dd0ce8
+5900500031496 to org.california.model.entity.item.Item@61dd0ce8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902451011107.jpg
-5902451011107 to org.california.model.entity.Item@669d6390
+5902451011107 to org.california.model.entity.item.Item@669d6390
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8722700255734.jpg
-8722700255734 to org.california.model.entity.Item@589772e8
+8722700255734 to org.california.model.entity.item.Item@589772e8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084203937.jpg
-5900084203937 to org.california.model.entity.Item@236d5f72
+5900084203937 to org.california.model.entity.item.Item@236d5f72
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900956002378.jpg
-5900956002378 to org.california.model.entity.Item@127311f5
+5900956002378 to org.california.model.entity.item.Item@127311f5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8594003843815.jpg
-8594003843815 to org.california.model.entity.Item@3dda5a2d
+8594003843815 to org.california.model.entity.item.Item@3dda5a2d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049000809.jpg
-5900049000809 to org.california.model.entity.Item@3f989724
+5900049000809 to org.california.model.entity.item.Item@3f989724
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902180150603.jpg
-5902180150603 to org.california.model.entity.Item@37428393
+5902180150603 to org.california.model.entity.item.Item@37428393
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084192606.jpg
-5900084192606 to org.california.model.entity.Item@2f6a50c3
+5900084192606 to org.california.model.entity.item.Item@2f6a50c3
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900497341011.jpg
-5900497341011 to org.california.model.entity.Item@531e02c3
+5900497341011 to org.california.model.entity.item.Item@531e02c3
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/42211853.jpg
-42211853 to org.california.model.entity.Item@6b37b91
+42211853 to org.california.model.entity.item.Item@6b37b91
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900951028502.jpg
-5900951028502 to org.california.model.entity.Item@76848604
+5900951028502 to org.california.model.entity.item.Item@76848604
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901044005806.jpg
-5901044005806 to org.california.model.entity.Item@6ef943e5
+5901044005806 to org.california.model.entity.item.Item@6ef943e5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5904353039340.jpg
-5904353039340 to org.california.model.entity.Item@21a4b859
+5904353039340 to org.california.model.entity.item.Item@21a4b859
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500024276.jpg
-5900500024276 to org.california.model.entity.Item@3cf71017
+5900500024276 to org.california.model.entity.item.Item@3cf71017
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084032018.jpg
-5900084032018 to org.california.model.entity.Item@71e25894
+5900084032018 to org.california.model.entity.item.Item@71e25894
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084035019.jpg
-5900084035019 to org.california.model.entity.Item@44a0894f
+5900084035019 to org.california.model.entity.item.Item@44a0894f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084235136.jpg
-5900084235136 to org.california.model.entity.Item@508bb5b9
+5900084235136 to org.california.model.entity.item.Item@508bb5b9
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901588017945.jpg
-5901588017945 to org.california.model.entity.Item@1537b465
+5901588017945 to org.california.model.entity.item.Item@1537b465
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900102013043.jpg
-5900102013043 to org.california.model.entity.Item@78ed6d93
+5900102013043 to org.california.model.entity.item.Item@78ed6d93
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032034962.jpg
-5901032034962 to org.california.model.entity.Item@6e7a9c8
+5901032034962 to org.california.model.entity.item.Item@6e7a9c8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900300544615.jpg
-5900300544615 to org.california.model.entity.Item@2ce0841e
+5900300544615 to org.california.model.entity.item.Item@2ce0841e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900947010023.jpg
-5900947010023 to org.california.model.entity.Item@5e72151c
+5900947010023 to org.california.model.entity.item.Item@5e72151c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900397016378.jpg
-5900397016378 to org.california.model.entity.Item@2b969d0e
+5900397016378 to org.california.model.entity.item.Item@2b969d0e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900385000075.jpg
-5900385000075 to org.california.model.entity.Item@7778863e
+5900385000075 to org.california.model.entity.item.Item@7778863e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5906441330865.jpg
-5906441330865 to org.california.model.entity.Item@76705c37
+5906441330865 to org.california.model.entity.item.Item@76705c37
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8718114706153.jpg
-8718114706153 to org.california.model.entity.Item@507c97ca
+8718114706153 to org.california.model.entity.item.Item@507c97ca
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900919007020.jpg
-5900919007020 to org.california.model.entity.Item@561379a1
+5900919007020 to org.california.model.entity.item.Item@561379a1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901135011051.jpg
-5901135011051 to org.california.model.entity.Item@53d557ea
+5901135011051 to org.california.model.entity.item.Item@53d557ea
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100379291.jpg
-8712100379291 to org.california.model.entity.Item@117859fa
+8712100379291 to org.california.model.entity.item.Item@117859fa
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886017678.jpg
-5901886017678 to org.california.model.entity.Item@3795e3e0
+5901886017678 to org.california.model.entity.item.Item@3795e3e0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900175401532.jpg
-5900175401532 to org.california.model.entity.Item@67be8ba1
+5900175401532 to org.california.model.entity.item.Item@67be8ba1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500018176.jpg
-5900500018176 to org.california.model.entity.Item@63aaf945
+5900500018176 to org.california.model.entity.item.Item@63aaf945
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/3083680086936.jpg
-3083680086936 to org.california.model.entity.Item@15d7b7ae
+3083680086936 to org.california.model.entity.item.Item@15d7b7ae
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/80508878.jpg
-80508878 to org.california.model.entity.Item@17743a65
+80508878 to org.california.model.entity.item.Item@17743a65
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/80053828.jpg
-80053828 to org.california.model.entity.Item@70061238
+80053828 to org.california.model.entity.item.Item@70061238
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100331824.jpg
-8712100331824 to org.california.model.entity.Item@43473c7a
+8712100331824 to org.california.model.entity.item.Item@43473c7a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032009120.jpg
-5901032009120 to org.california.model.entity.Item@26901333
+5901032009120 to org.california.model.entity.item.Item@26901333
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/80800019.jpg
-80800019 to org.california.model.entity.Item@4a22a358
+80800019 to org.california.model.entity.item.Item@4a22a358
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5908310285047.jpg
-5908310285047 to org.california.model.entity.Item@5309289b
+5908310285047 to org.california.model.entity.item.Item@5309289b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900452000205.jpg
-5900452000205 to org.california.model.entity.Item@5931cd7f
+5900452000205 to org.california.model.entity.item.Item@5931cd7f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900452004838.jpg
-5900452004838 to org.california.model.entity.Item@7727f0dc
+5900452004838 to org.california.model.entity.item.Item@7727f0dc
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032034412.jpg
-5901032034412 to org.california.model.entity.Item@1104114d
+5901032034412 to org.california.model.entity.item.Item@1104114d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7300400114431.jpg
-7300400114431 to org.california.model.entity.Item@6b44fde
+7300400114431 to org.california.model.entity.item.Item@6b44fde
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049001141.jpg
-5900049001141 to org.california.model.entity.Item@79d649ed
+5900049001141 to org.california.model.entity.item.Item@79d649ed
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907471441927.jpg
-5907471441927 to org.california.model.entity.Item@3014f311
+5907471441927 to org.california.model.entity.item.Item@3014f311
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8585000203757.jpg
-8585000203757 to org.california.model.entity.Item@7fea544f
+8585000203757 to org.california.model.entity.item.Item@7fea544f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5998710984589.jpg
-5998710984589 to org.california.model.entity.Item@a7614ed
+5998710984589 to org.california.model.entity.item.Item@a7614ed
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5906747308469.jpg
-5906747308469 to org.california.model.entity.Item@42744b51
+5906747308469 to org.california.model.entity.item.Item@42744b51
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902172000305.jpg
-5902172000305 to org.california.model.entity.Item@24c47abd
+5902172000305 to org.california.model.entity.item.Item@24c47abd
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900049000205.jpg
-5900049000205 to org.california.model.entity.Item@52d93447
+5900049000205 to org.california.model.entity.item.Item@52d93447
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900983019943.jpg
-5900983019943 to org.california.model.entity.Item@3c921f10
+5900983019943 to org.california.model.entity.item.Item@3c921f10
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/3700123300137.jpg
-3700123300137 to org.california.model.entity.Item@14a50d6b
+3700123300137 to org.california.model.entity.item.Item@14a50d6b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901069004587.jpg
-5901069004587 to org.california.model.entity.Item@40ccda8b
+5901069004587 to org.california.model.entity.item.Item@40ccda8b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084025010.jpg
-5900084025010 to org.california.model.entity.Item@40d9d5bc
+5900084025010 to org.california.model.entity.item.Item@40d9d5bc
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907029002259.jpg
-5907029002259 to org.california.model.entity.Item@aebd700
+5907029002259 to org.california.model.entity.item.Item@aebd700
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907069000499.jpg
-5907069000499 to org.california.model.entity.Item@5e7ea6ea
+5907069000499 to org.california.model.entity.item.Item@5e7ea6ea
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900259353276.jpg
-5900259353276 to org.california.model.entity.Item@3b0f0fd9
+5900259353276 to org.california.model.entity.item.Item@3b0f0fd9
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907029002150.jpg
-5907029002150 to org.california.model.entity.Item@7346a425
+5907029002150 to org.california.model.entity.item.Item@7346a425
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900983019981.jpg
-5900983019981 to org.california.model.entity.Item@149ecd50
+5900983019981 to org.california.model.entity.item.Item@149ecd50
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437037219.jpg
-5900437037219 to org.california.model.entity.Item@4c21b822
+5900437037219 to org.california.model.entity.item.Item@4c21b822
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901669487841.jpg
-5901669487841 to org.california.model.entity.Item@46689c8e
+5901669487841 to org.california.model.entity.item.Item@46689c8e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8584004010071.jpg
-8584004010071 to org.california.model.entity.Item@44847ca7
+8584004010071 to org.california.model.entity.item.Item@44847ca7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886016015.jpg
-5901886016015 to org.california.model.entity.Item@548e45c5
+5901886016015 to org.california.model.entity.item.Item@548e45c5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100354373.jpg
-8712100354373 to org.california.model.entity.Item@783c6882
+8712100354373 to org.california.model.entity.item.Item@783c6882
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437019703.jpg
-5900437019703 to org.california.model.entity.Item@750941bc
+5900437019703 to org.california.model.entity.item.Item@750941bc
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901204006315.jpg
-5901204006315 to org.california.model.entity.Item@4fc7290f
+5901204006315 to org.california.model.entity.item.Item@4fc7290f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900788440997.jpg
-5900788440997 to org.california.model.entity.Item@77b23e07
+5900788440997 to org.california.model.entity.item.Item@77b23e07
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886015261.jpg
-5901886015261 to org.california.model.entity.Item@2c6533d2
+5901886015261 to org.california.model.entity.item.Item@2c6533d2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5906747312138.jpg
-5906747312138 to org.california.model.entity.Item@7810b16
+5906747312138 to org.california.model.entity.item.Item@7810b16
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900919018569.jpg
-5900919018569 to org.california.model.entity.Item@6be727a6
+5900919018569 to org.california.model.entity.item.Item@6be727a6
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900085003437.jpg
-5900085003437 to org.california.model.entity.Item@4efd469e
+5900085003437 to org.california.model.entity.item.Item@4efd469e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900956002354.jpg
-5900956002354 to org.california.model.entity.Item@6a57a878
+5900956002354 to org.california.model.entity.item.Item@6a57a878
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900300512379.jpg
-5900300512379 to org.california.model.entity.Item@1662546d
+5900300512379 to org.california.model.entity.item.Item@1662546d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032034276.jpg
-5901032034276 to org.california.model.entity.Item@3029f160
+5901032034276 to org.california.model.entity.item.Item@3029f160
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901067484039.jpg
-5901067484039 to org.california.model.entity.Item@7c6b9b75
+5901067484039 to org.california.model.entity.item.Item@7c6b9b75
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907501002418.jpg
-5907501002418 to org.california.model.entity.Item@6181eac6
+5907501002418 to org.california.model.entity.item.Item@6181eac6
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900020021038.jpg
-5900020021038 to org.california.model.entity.Item@4efccaa5
+5900020021038 to org.california.model.entity.item.Item@4efccaa5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900102008735.jpg
-5900102008735 to org.california.model.entity.Item@1c3d9f0b
+5900102008735 to org.california.model.entity.item.Item@1c3d9f0b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900919003329.jpg
-5900919003329 to org.california.model.entity.Item@39fe9f42
+5900919003329 to org.california.model.entity.item.Item@39fe9f42
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900102011780.jpg
-5900102011780 to org.california.model.entity.Item@61035491
+5900102011780 to org.california.model.entity.item.Item@61035491
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5905617003961.jpg
-5905617003961 to org.california.model.entity.Item@4f535e18
+5905617003961 to org.california.model.entity.item.Item@4f535e18
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8722700307631.jpg
-8722700307631 to org.california.model.entity.Item@6719a0fe
+8722700307631 to org.california.model.entity.item.Item@6719a0fe
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084241748.jpg
-5900084241748 to org.california.model.entity.Item@3f7b9190
+5900084241748 to org.california.model.entity.item.Item@3f7b9190
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8593893400368.jpg
-8593893400368 to org.california.model.entity.Item@5be71883
+8593893400368 to org.california.model.entity.item.Item@5be71883
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4014400919325.jpg
-4014400919325 to org.california.model.entity.Item@31c6c9bf
+4014400919325 to org.california.model.entity.item.Item@31c6c9bf
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886002643.jpg
-5901886002643 to org.california.model.entity.Item@60f5f187
+5901886002643 to org.california.model.entity.item.Item@60f5f187
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900541000390.jpg
-5900541000390 to org.california.model.entity.Item@305ed7c7
+5900541000390 to org.california.model.entity.item.Item@305ed7c7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901841000356.jpg
-5901841000356 to org.california.model.entity.Item@63b197e2
+5901841000356 to org.california.model.entity.item.Item@63b197e2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900783000370.jpg
-5900783000370 to org.california.model.entity.Item@1386310a
+5900783000370 to org.california.model.entity.item.Item@1386310a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900956100593.jpg
-5900956100593 to org.california.model.entity.Item@1c24b9f7
+5900956100593 to org.california.model.entity.item.Item@1c24b9f7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907069000369.jpg
-5907069000369 to org.california.model.entity.Item@38196add
+5907069000369 to org.california.model.entity.item.Item@38196add
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5014328092420.jpg
-5014328092420 to org.california.model.entity.Item@3c4bec0c
+5014328092420 to org.california.model.entity.item.Item@3c4bec0c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500025617.jpg
-5900500025617 to org.california.model.entity.Item@21e8faf6
+5900500025617 to org.california.model.entity.item.Item@21e8faf6
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900085011067.jpg
-5900085011067 to org.california.model.entity.Item@3d17558b
+5900085011067 to org.california.model.entity.item.Item@3d17558b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334001375.jpg
-5900334001375 to org.california.model.entity.Item@5d532698
+5900334001375 to org.california.model.entity.item.Item@5d532698
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901204004151.jpg
-5901204004151 to org.california.model.entity.Item@74518e44
+5901204004151 to org.california.model.entity.item.Item@74518e44
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900738000363.jpg
-5900738000363 to org.california.model.entity.Item@41075a95
+5900738000363 to org.california.model.entity.item.Item@41075a95
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437013206.jpg
-5900437013206 to org.california.model.entity.Item@3ab8ff1a
+5900437013206 to org.california.model.entity.item.Item@3ab8ff1a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/85814844.jpg
-85814844 to org.california.model.entity.Item@5f6bfd6b
+85814844 to org.california.model.entity.item.Item@5f6bfd6b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900073020033.jpg
-5900073020033 to org.california.model.entity.Item@59222315
+5900073020033 to org.california.model.entity.item.Item@59222315
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5413548040639.jpg
-5413548040639 to org.california.model.entity.Item@42eb7058
+5413548040639 to org.california.model.entity.item.Item@42eb7058
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900552039594.jpg
-5900552039594 to org.california.model.entity.Item@91f894f
+5900552039594 to org.california.model.entity.item.Item@91f894f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900691086169.jpg
-5900691086169 to org.california.model.entity.Item@12154df0
+5900691086169 to org.california.model.entity.item.Item@12154df0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900288002930.jpg
-5900288002930 to org.california.model.entity.Item@5611a202
+5900288002930 to org.california.model.entity.item.Item@5611a202
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900352008035.jpg
-5900352008035 to org.california.model.entity.Item@2475cf3e
+5900352008035 to org.california.model.entity.item.Item@2475cf3e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900320003222.jpg
-5900320003222 to org.california.model.entity.Item@1558fa36
+5900320003222 to org.california.model.entity.item.Item@1558fa36
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900397732209.jpg
-5900397732209 to org.california.model.entity.Item@264c47ad
+5900397732209 to org.california.model.entity.item.Item@264c47ad
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334006004.jpg
-5900334006004 to org.california.model.entity.Item@3f0dadf5
+5900334006004 to org.california.model.entity.item.Item@3f0dadf5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8718114715865.jpg
-8718114715865 to org.california.model.entity.Item@27aedf46
+8718114715865 to org.california.model.entity.item.Item@27aedf46
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900956201085.jpg
-5900956201085 to org.california.model.entity.Item@2f91a061
+5900956201085 to org.california.model.entity.item.Item@2f91a061
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100391965.jpg
-8712100391965 to org.california.model.entity.Item@8a34a47
+8712100391965 to org.california.model.entity.item.Item@8a34a47
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900571300491.jpg
-5900571300491 to org.california.model.entity.Item@719719cb
+5900571300491 to org.california.model.entity.item.Item@719719cb
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886016022.jpg
-5901886016022 to org.california.model.entity.Item@14ce6e2d
+5901886016022 to org.california.model.entity.item.Item@14ce6e2d
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4001686503638.jpg
-4001686503638 to org.california.model.entity.Item@4ff6f7c5
+4001686503638 to org.california.model.entity.item.Item@4ff6f7c5
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900242000156.jpg
-5900242000156 to org.california.model.entity.Item@2f130e29
+5900242000156 to org.california.model.entity.item.Item@2f130e29
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437100012.jpg
-5900437100012 to org.california.model.entity.Item@5d40d69c
+5900437100012 to org.california.model.entity.item.Item@5d40d69c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900073020095.jpg
-5900073020095 to org.california.model.entity.Item@2043f8e7
+5900073020095 to org.california.model.entity.item.Item@2043f8e7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900385012061.jpg
-5900385012061 to org.california.model.entity.Item@8a039b2
+5900385012061 to org.california.model.entity.item.Item@8a039b2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8585000209230.jpg
-8585000209230 to org.california.model.entity.Item@6ca36232
+8585000209230 to org.california.model.entity.item.Item@6ca36232
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084181013.jpg
-5900084181013 to org.california.model.entity.Item@668caffa
+5900084181013 to org.california.model.entity.item.Item@668caffa
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5948935002605.jpg
-5948935002605 to org.california.model.entity.Item@4628f150
+5948935002605 to org.california.model.entity.item.Item@4628f150
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613033758485.jpg
-7613033758485 to org.california.model.entity.Item@7678345f
+7613033758485 to org.california.model.entity.item.Item@7678345f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/42268192.jpg
-42268192 to org.california.model.entity.Item@17862d43
+42268192 to org.california.model.entity.item.Item@17862d43
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084239707.jpg
-5900084239707 to org.california.model.entity.Item@4fcfd58f
+5900084239707 to org.california.model.entity.item.Item@4fcfd58f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900020004659.jpg
-5900020004659 to org.california.model.entity.Item@6d19480c
+5900020004659 to org.california.model.entity.item.Item@6d19480c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902180160602.jpg
-5902180160602 to org.california.model.entity.Item@756cf0aa
+5902180160602 to org.california.model.entity.item.Item@756cf0aa
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8594003848858.jpg
-8594003848858 to org.california.model.entity.Item@346cf949
+8594003848858 to org.california.model.entity.item.Item@346cf949
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8005510003727.jpg
-8005510003727 to org.california.model.entity.Item@2d13f56e
+8005510003727 to org.california.model.entity.item.Item@2d13f56e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7622210078131.jpg
-7622210078131 to org.california.model.entity.Item@35734de0
+7622210078131 to org.california.model.entity.item.Item@35734de0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900956003634.jpg
-5900956003634 to org.california.model.entity.Item@52d7982c
+5900956003634 to org.california.model.entity.item.Item@52d7982c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901204002577.jpg
-5901204002577 to org.california.model.entity.Item@10dc8bed
+5901204002577 to org.california.model.entity.item.Item@10dc8bed
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8005510001334.jpg
-8005510001334 to org.california.model.entity.Item@1a189422
+8005510001334 to org.california.model.entity.item.Item@1a189422
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437080109.jpg
-5900437080109 to org.california.model.entity.Item@2997eb7b
+5900437080109 to org.california.model.entity.item.Item@2997eb7b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902451028105.jpg
-5902451028105 to org.california.model.entity.Item@daba3c
+5902451028105 to org.california.model.entity.item.Item@daba3c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/3850104257933.jpg
-3850104257933 to org.california.model.entity.Item@2d1cbd96
+3850104257933 to org.california.model.entity.item.Item@2d1cbd96
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334008756.jpg
-5900334008756 to org.california.model.entity.Item@339b492a
+5900334008756 to org.california.model.entity.item.Item@339b492a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032085155.jpg
-5901032085155 to org.california.model.entity.Item@69fe2678
+5901032085155 to org.california.model.entity.item.Item@69fe2678
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032035143.jpg
-5901032035143 to org.california.model.entity.Item@23e453c0
+5901032035143 to org.california.model.entity.item.Item@23e453c0
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032035136.jpg
-5901032035136 to org.california.model.entity.Item@2dac0c8e
+5901032035136 to org.california.model.entity.item.Item@2dac0c8e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5907658333397.jpg
-5907658333397 to org.california.model.entity.Item@7f57baf7
+5907658333397 to org.california.model.entity.item.Item@7f57baf7
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901204005592.jpg
-5901204005592 to org.california.model.entity.Item@65c6a736
+5901204005592 to org.california.model.entity.item.Item@65c6a736
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900983014139.jpg
-5900983014139 to org.california.model.entity.Item@ba7eaf2
+5900983014139 to org.california.model.entity.item.Item@ba7eaf2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900783001155.jpg
-5900783001155 to org.california.model.entity.Item@64edce7a
+5900783001155 to org.california.model.entity.item.Item@64edce7a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900552021155.jpg
-5900552021155 to org.california.model.entity.Item@6a1b1c32
+5900552021155 to org.california.model.entity.item.Item@6a1b1c32
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5906441330643.jpg
-5906441330643 to org.california.model.entity.Item@48ca3751
+5906441330643 to org.california.model.entity.item.Item@48ca3751
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900102009978.jpg
-5900102009978 to org.california.model.entity.Item@596fe085
+5900102009978 to org.california.model.entity.item.Item@596fe085
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900300545032.jpg
-5900300545032 to org.california.model.entity.Item@639175a
+5900300545032 to org.california.model.entity.item.Item@639175a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901067460019.jpg
-5901067460019 to org.california.model.entity.Item@788a3243
+5901067460019 to org.california.model.entity.item.Item@788a3243
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5449000133328.jpg
-5449000133328 to org.california.model.entity.Item@2959575f
+5449000133328 to org.california.model.entity.item.Item@2959575f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900805007462.jpg
-5900805007462 to org.california.model.entity.Item@3c6236d1
+5900805007462 to org.california.model.entity.item.Item@3c6236d1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901032034269.jpg
-5901032034269 to org.california.model.entity.Item@267c8296
+5901032034269 to org.california.model.entity.item.Item@267c8296
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901069000596.jpg
-5901069000596 to org.california.model.entity.Item@535ed33c
+5901069000596 to org.california.model.entity.item.Item@535ed33c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100561467.jpg
-8712100561467 to org.california.model.entity.Item@4c96d9bc
+8712100561467 to org.california.model.entity.item.Item@4c96d9bc
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901882014442.jpg
-5901882014442 to org.california.model.entity.Item@f56880a
+5901882014442 to org.california.model.entity.item.Item@f56880a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5906441340338.jpg
-5906441340338 to org.california.model.entity.Item@68e67e41
+5906441340338 to org.california.model.entity.item.Item@68e67e41
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613031654123.jpg
-7613031654123 to org.california.model.entity.Item@1a03d6f9
+7613031654123 to org.california.model.entity.item.Item@1a03d6f9
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500027857.jpg
-5900500027857 to org.california.model.entity.Item@72acc3b6
+5900500027857 to org.california.model.entity.item.Item@72acc3b6
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900691086183.jpg
-5900691086183 to org.california.model.entity.Item@27a37ed4
+5900691086183 to org.california.model.entity.item.Item@27a37ed4
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901135010085.jpg
-5901135010085 to org.california.model.entity.Item@c2a8867
+5901135010085 to org.california.model.entity.item.Item@c2a8867
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/3083680072694.jpg
-3083680072694 to org.california.model.entity.Item@767d4be1
+3083680072694 to org.california.model.entity.item.Item@767d4be1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4820001314786.jpg
-4820001314786 to org.california.model.entity.Item@508c59ba
+4820001314786 to org.california.model.entity.item.Item@508c59ba
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/3083680074094.jpg
-3083680074094 to org.california.model.entity.Item@69134972
+3083680074094 to org.california.model.entity.item.Item@69134972
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902781000017.jpg
-5902781000017 to org.california.model.entity.Item@7f37ba90
+5902781000017 to org.california.model.entity.item.Item@7f37ba90
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901067446075.jpg
-5901067446075 to org.california.model.entity.Item@23185c7f
+5901067446075 to org.california.model.entity.item.Item@23185c7f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900783004460.jpg
-5900783004460 to org.california.model.entity.Item@33a14de1
+5900783004460 to org.california.model.entity.item.Item@33a14de1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901886016398.jpg
-5901886016398 to org.california.model.entity.Item@5114db7b
+5901886016398 to org.california.model.entity.item.Item@5114db7b
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900084031011.jpg
-5900084031011 to org.california.model.entity.Item@34f719c2
+5900084031011 to org.california.model.entity.item.Item@34f719c2
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900500023491.jpg
-5900500023491 to org.california.model.entity.Item@5b4e71df
+5900500023491 to org.california.model.entity.item.Item@5b4e71df
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900983000873.jpg
-5900983000873 to org.california.model.entity.Item@1417285c
+5900983000873 to org.california.model.entity.item.Item@1417285c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8718114887098.jpg
-8718114887098 to org.california.model.entity.Item@4bdb6df9
+8718114887098 to org.california.model.entity.item.Item@4bdb6df9
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900259057525.jpg
-5900259057525 to org.california.model.entity.Item@772ad4e
+5900259057525 to org.california.model.entity.item.Item@772ad4e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100397332.jpg
-8712100397332 to org.california.model.entity.Item@3b381abd
+8712100397332 to org.california.model.entity.item.Item@3b381abd
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900288004316.jpg
-5900288004316 to org.california.model.entity.Item@5d23b79a
+5900288004316 to org.california.model.entity.item.Item@5d23b79a
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902172000053.jpg
-5902172000053 to org.california.model.entity.Item@3f88a8cc
+5902172000053 to org.california.model.entity.item.Item@3f88a8cc
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900344700367.jpg
-5900344700367 to org.california.model.entity.Item@298d9dac
+5900344700367 to org.california.model.entity.item.Item@298d9dac
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7613032161378.jpg
-7613032161378 to org.california.model.entity.Item@773846
+7613032161378 to org.california.model.entity.item.Item@773846
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/9001466301558.jpg
-9001466301558 to org.california.model.entity.Item@360bc5e8
+9001466301558 to org.california.model.entity.item.Item@360bc5e8
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/7622210310361.jpg
-7622210310361 to org.california.model.entity.Item@2043d70f
+7622210310361 to org.california.model.entity.item.Item@2043d70f
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902978008451.jpg
-5902978008451 to org.california.model.entity.Item@60cbfa40
+5902978008451 to org.california.model.entity.item.Item@60cbfa40
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900334013378.jpg
-5900334013378 to org.california.model.entity.Item@7d186657
+5900334013378 to org.california.model.entity.item.Item@7d186657
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/4014400917062.jpg
-4014400917062 to org.california.model.entity.Item@68367bfa
+4014400917062 to org.california.model.entity.item.Item@68367bfa
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/8712100520761.jpg
-8712100520761 to org.california.model.entity.Item@34d1843e
+8712100520761 to org.california.model.entity.item.Item@34d1843e
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5901414203054.jpg
-5901414203054 to org.california.model.entity.Item@5e95ff0c
+5901414203054 to org.california.model.entity.item.Item@5e95ff0c
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900437034720.jpg
-5900437034720 to org.california.model.entity.Item@2f81eff3
+5900437034720 to org.california.model.entity.item.Item@2f81eff3
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900552000372.jpg
-5900552000372 to org.california.model.entity.Item@2eee21c1
+5900552000372 to org.california.model.entity.item.Item@2eee21c1
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5900353644249.jpg
 43560 [Thread-1] INFO org.springframework.web.context.support.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@609cd4d8: startup date [Thu Nov 08 22:59:24 GMT 2018]; root of context hierarchy
-5900353644249 to org.california.model.entity.Item@2bc20fea
+5900353644249 to org.california.model.entity.item.Item@2bc20fea
 Rename succed
 /home/kamil/IdeaProjects/FridgeApi/images/5902891280217.jpg
 

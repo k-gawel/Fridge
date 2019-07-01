@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.Place;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class WishListDto implements Serializable {
 
     private Long id;

@@ -35,10 +35,8 @@ public class WishListItem extends BaseEntity {
 
     private String comment;
 
-    @ManyToOne @JoinColumn
-    private Category category;
 
     @ManyToOne @JoinColumn
-    private Item item;
+    private Category category;
 
 }

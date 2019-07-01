@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.Token;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.Map;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class InitialResponse implements Serializable {
 
     private long id;

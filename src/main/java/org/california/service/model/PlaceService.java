@@ -4,8 +4,6 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.Place;
 import org.california.model.transfer.request.PlaceForm;
-import org.california.model.validator.PlaceFormValidator;
-import org.california.model.validator.Validator;
 import org.california.repository.place.PlaceRepository;
 import org.california.util.exceptions.NotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +29,10 @@ public class PlaceService {
 
 
     public Place newPlace(Account account, PlaceForm placeForm) {
-
-        Validator validator = new PlaceFormValidator();
-        if(!validator.validate(placeForm))
-            throw new NotValidException(validator.getMessagesAsString());
-
         Place place = new Place();
         place.getAccounts().add(account);
         place.setAdmin(account);
-        place.setName(placeForm.getName());
+        place.setName(placeForm.name);
         place.setCreatedOn(new Date());
 
         Container firstContainer = new Container();

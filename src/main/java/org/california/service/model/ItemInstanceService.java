@@ -2,17 +2,17 @@ package org.california.service.model;
 
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
-import org.california.model.entity.Item;
 import org.california.model.entity.ItemInstance;
+import org.california.model.entity.item.Item;
 import org.california.model.transfer.request.ItemInstanceForm;
-import org.california.model.validator.ItemInstanceFormValidator;
+import org.california.model.util.DateUtils;
 import org.california.repository.iteminstance.ItemInstanceRepository;
 import org.california.service.getter.GetterService;
 import org.california.util.exceptions.NotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Service
 public class ItemInstanceService {
@@ -32,10 +32,10 @@ public class ItemInstanceService {
 
 
     public ItemInstance create(Account account, ItemInstanceForm form) {
-        ItemInstance result = fromDTO(form);
+        ItemInstance result = fromForm(form);
 
         result.setAddedBy(account);
-        result.setAddedOn(new Date());
+        result.setAddedOn(LocalDate.now());
 
         result =  itemInstanceRepository.save(result);
 
@@ -52,7 +52,7 @@ public class ItemInstanceService {
             return false;
 
         itemInstance.setOpenBy(account);
-        itemInstance.setOpenOn(new Date());
+        itemInstance.setOpenOn(LocalDate.now());
 
         boolean result = itemInstanceRepository.save(itemInstance) != null;
 
@@ -69,7 +69,7 @@ public class ItemInstanceService {
             return false;
 
         itemInstance.setDeletedBy(account);
-        itemInstance.setDeletedOn(new Date());
+        itemInstance.setDeletedOn(LocalDate.now());
 
         boolean result = itemInstanceRepository.save(itemInstance) != null;
 
@@ -86,20 +86,14 @@ public class ItemInstanceService {
     }
 
 
-    private ItemInstance fromDTO(ItemInstanceForm form) {
-
-        ItemInstanceFormValidator validator = new ItemInstanceFormValidator();
-
-        if(!validator.validate(form))
-            throw new NotValidException(validator.getMessages().toString());
-
-        Item item = getterService.items.getByKey(form.getItemId());
-        Container container = getterService.containers.getById(form.getContainerId());
-        Date expireDate = form.getExpireDate();
-        String comment = form.getComment();
+    private ItemInstance fromForm(ItemInstanceForm form) {
+        Item item = getterService.items.getByKey(form.itemId);
+        Container container = getterService.containers.getById(form.containerId);
+        LocalDate expireDate = DateUtils.asLocalDate(form.expireDate);
+        String comment = form.comment;
 
         if(item == null || container == null)
-            throw new NotValidException("item_and_container.null");
+            throw new NotValidException("item_or_container.null");
 
         ItemInstance result = new ItemInstance();
 

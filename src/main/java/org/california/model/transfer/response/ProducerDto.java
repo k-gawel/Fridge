@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.item.Producer;
 import org.california.model.util.ObjectUtils;
@@ -8,6 +9,7 @@ import org.california.model.util.ObjectUtils;
 import java.io.Serializable;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class ProducerDto implements Serializable{
 
     private Long id;

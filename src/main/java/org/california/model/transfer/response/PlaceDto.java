@@ -1,9 +1,11 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
+import org.california.model.entity.WishList;
 import org.jetbrains.annotations.NotNull;
 
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +13,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class PlaceDto implements Serializable {
 
     private Long id;
@@ -19,7 +22,7 @@ public class PlaceDto implements Serializable {
 
     private Collection<ContainerDto> containers;
     private Collection<PlaceUserDto> users;
-
+    private Collection<WishListDto>  wish_lists;
 
     public static class Builder {
         
@@ -53,8 +56,15 @@ public class PlaceDto implements Serializable {
         }
 
         public class ContainersSetter {
-            public UsersSetter setContainers(@NotEmpty Collection<ContainerDto> containers) {
+            public WishListsSetter setContainers(@NotEmpty Collection<ContainerDto> containers) {
                 Builder.this.result.containers = containers;
+                return new WishListsSetter();
+            }
+        }
+
+        public class WishListsSetter {
+            public UsersSetter setWishLists(@NotNull Collection<WishListDto> wishLists) {
+                Builder.this.result.wish_lists = wishLists;
                 return new UsersSetter();
             }
         }

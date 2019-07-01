@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
 import org.california.model.entity.Token;
-import org.california.model.transfer.response.EntityToDtoMapper;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.InitialResponse;
 import org.california.service.getter.GetterService;
 import org.california.util.exceptions.NotValidException;
@@ -37,7 +37,6 @@ public class AuthorizationService {
 
         InitialResponse result;
         result = getInitialResponse(account);
-        result.token = token;
 
         return result;
     }
@@ -49,10 +48,9 @@ public class AuthorizationService {
 
         Account account = getAccount(username, password);
 
-        Token token = tokenService.create(account);
+        tokenService.create(account);
         InitialResponse result;
         result = getInitialResponse(account);
-        result.token = token.getToken();
         return result;
     }
 
@@ -67,17 +65,14 @@ public class AuthorizationService {
         if(account == null)
             throw new NotValidException("account.null");
 
-        InitialResponse result = new InitialResponse();
-
-        result.id = account.getId();
-        result.name = account.getName();
-        result.places = account.getPlaces().stream()
-                .collect(Collectors.toMap(Place::getId, Place::getName));
-        result.producers = getterService.producers.getAll().stream()
-                .map(mapper::toDto).collect(Collectors.toList());
-        result.root_category = getterService.categories.getRootCategory();
-
-        return result;
+        return new InitialResponse.Builder()
+                .setId(account)
+                .setName(account)
+                .setToken(getterService.tokens.getByAccount(account))
+                .setPlaces(account.getPlaces().stream().collect(Collectors.toMap(Place::getId, Place::getName)))
+                .setProducers(getterService.producers.getAll().stream().map(mapper::toDto).collect(Collectors.toList()))
+                .setRootCategory(getterService.categories.getRootCategory())
+                .build();
     }
 
 

@@ -3,19 +3,23 @@ package org.california.model.transfer.response;
 
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.Container;
 import org.california.model.entity.Place;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class ContainerDto implements Serializable {
 
     private Long id;
     private String name;
-    private Long placeId;
+    private Long place_id;
+    private Collection<ItemInstanceDto> instances;
     
     public static class Builder {
 
@@ -38,13 +42,20 @@ public class ContainerDto implements Serializable {
         }
 
         public class PlaceIdSetter {
-            public FinalBuilder setPlaceId(Long placeId) {
-                Builder.this.result.placeId = placeId;
-                return new FinalBuilder();
+            public InstancesSetter setPlaceId(Long placeId) {
+                Builder.this.result.place_id = placeId;
+                return new InstancesSetter();
             }
 
-            public FinalBuilder setPlaceId(@NotNull Place place)  {
+            public InstancesSetter setPlaceId(@NotNull Place place)  {
                 return setPlaceId(place.getId());
+            }
+        }
+
+        public class InstancesSetter {
+            public FinalBuilder setInstances(@NotNull Collection<ItemInstanceDto> instances) {
+                Builder.this.result.instances = instances;
+                return new FinalBuilder();
             }
         }
 

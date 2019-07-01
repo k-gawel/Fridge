@@ -1,7 +1,6 @@
 package org.california.service.model.AccountManagementService_test;
 
 import org.california.model.entity.Account;
-import org.california.model.validator.AccountFormValidator;
 import org.california.service.model.AccountManagementService;
 import org.california.util.exceptions.NotValidException;
 import org.junit.Before;
@@ -41,19 +40,19 @@ class AccountManagementServiceTest_changePassword {
     @Test
     public void not_valid_parameters() {
 
-        // NULL ACCOUNT, VALID PASSWORD
+        // NULL Account, VALID PASSWORD
         executable = () -> service.changePassword(null, "valid_password");
         errorClass = NotValidException.class;
         errorMessage = "account.null";
         assertThrowsMessage(errorClass, executable, errorMessage);
 
-        // NOT-NULL ACCOUNT, NOT-VALID PASSWORD
+        // NOT-NULL Account, NOT-VALID PASSWORD
         executable = () -> service.changePassword(new Account(), "not_valid_password");
         errorClass = NotValidException.class;
         errorMessage = "password.not_valid";
         assertThrowsMessage(errorClass, executable, errorMessage);
 
-        // NULL ACCOUNT, NOT-VALID PASSWORD
+        // NULL Account, NOT-VALID PASSWORD
         executable = () -> service.changePassword(null, "not_valid_password");
         errorClass = NotValidException.class;
         errorMessage = "account.null";

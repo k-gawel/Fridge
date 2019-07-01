@@ -3,8 +3,8 @@ package org.california.service.getter;
 import org.apache.commons.collections.CollectionUtils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
-import org.california.model.entity.Item;
 import org.california.model.entity.ItemInstance;
+import org.california.model.entity.item.Item;
 import org.california.repository.iteminstance.ItemInstanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,7 @@ public class ItemInstanceGetter {
     }
 
 
+    @SuppressWarnings("ConstantConditions")
     public Collection<ItemInstance> get(Collection<Item> items, Collection<Container> containers, Collection<Account> owners, Boolean deleted, Boolean open, Boolean frozen, int limit) {
         if(items.isEmpty() && containers.isEmpty() && owners.isEmpty())
             return Collections.emptySet();
@@ -57,10 +58,6 @@ public class ItemInstanceGetter {
 
         // ITEMS ; CONTAINERS ; owners
         if(!items.isEmpty() && !containers.isEmpty() && owners.isEmpty())
-            return itemInstanceRepository.getByItemsAndContainers(items, containers, deleted, open, frozen, limit);
-
-        // ITEMS ; containers ; OWNERS
-        if(!items.isEmpty() && containers.isEmpty() && !owners.isEmpty())
             return itemInstanceRepository.getByItemsAndContainers(items, containers, deleted, open, frozen, limit);
 
         // ITEMS ; CONTAINERS ; OWNERS

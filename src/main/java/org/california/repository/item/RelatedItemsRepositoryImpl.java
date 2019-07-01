@@ -24,10 +24,16 @@ public class RelatedItemsRepositoryImpl extends AbstractRepositoryImpl implement
         if(CollectionUtils.isEmpty(categories))
             return Collections.emptySet();
 
-        final String HQL = "SELECT II.item FROM ItemInstance II WHERE II.item.category IN (:categories) AND II.item.place IS NULL " +
-                "GROUP BY II.item ORDER BY count (*) DESC";
+        final String HQL = "SELECT II.item FROM ItemInstance II " +
+                           "WHERE II.item.category IN (:categories) AND II.item.place IS NULL " +
+                           "GROUP BY II.item ORDER BY count (*) DESC";
 
-        Query<Item> query = getSession().createQuery(HQL);
+        final String HQL2 = "SELECT I FROM Item I LEFT JOIN ItemInstance II ON I = II.item " +
+                            "WHERE I.category in :categories AND I.place IS NULL " +
+                            "GROUP BY I " +
+                            "ORDER BY COUNT(II.item) DESC";
+
+        Query<Item> query = getSession().createQuery(HQL2);
         query.setParameterList("categories", categories);
         query.setMaxResults(10);
 
@@ -44,7 +50,13 @@ public class RelatedItemsRepositoryImpl extends AbstractRepositoryImpl implement
                            "WHERE II.item.category IN (:categories) AND (II.item.place IS NULL OR II.item.place IN (:places)) " +
                            "GROUP BY II.item ORDER BY count (*) DESC ";
 
-        Query<Item> query = getSession().createQuery(HQL);
+
+        final String HQL2 = "SELECT I FROM Item I LEFT JOIN ItemInstance II ON I = II.item " +
+                "WHERE I.category IN (:categories) AND (I.place IS NULL OR I.place IN (:places)) " +
+                "GROUP BY I " +
+                "ORDER BY COUNT(II.item) DESC";
+
+        Query<Item> query = getSession().createQuery(HQL2);
         query.setParameterList("categories", categories);
         query.setParameterList("places", places);
         query.setMaxResults(10);

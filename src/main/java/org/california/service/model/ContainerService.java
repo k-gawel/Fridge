@@ -58,14 +58,11 @@ public class ContainerService {
     }
 
 
-    public Container createNewContainer(Account account, ContainerForm containerForm) {
-        if(!containerForm.validate())
-            throw new NotValidException("Container form not valid");
-
-        long placeId = containerForm.getPlaceId();
+    public Container createNewContainer(Account account, ContainerForm form) {
+        long placeId = form.placeId;
         Place place = getterService.places.getByKey(placeId);
 
-        return createNewContainer(place, account, containerForm.getName());
+        return createNewContainer(place, account, form.name);
     }
 
 

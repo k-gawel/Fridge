@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.item.Ingredient;
 import org.jetbrains.annotations.NotNull;
@@ -8,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 
 @ToString @EqualsAndHashCode
+@Getter
 public class IngredientDto implements Serializable {
 
     private long id;

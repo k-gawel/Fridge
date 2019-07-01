@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.ItemInstance;
@@ -12,6 +13,7 @@ import org.california.model.entity.item.Item;
 import java.util.Date;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class WishListItemDto {
     
     private Long id;

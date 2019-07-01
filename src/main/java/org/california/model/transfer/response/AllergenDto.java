@@ -1,11 +1,13 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.item.Allergen;
 import org.jetbrains.annotations.NotNull;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class AllergenDto {
 
     private long id;

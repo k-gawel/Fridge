@@ -17,7 +17,6 @@ import java.util.Date;
 @Service
 public class InstanceOnChangeService {
 
-
     private final InstanceOnChangeRepository instanceOnChangeRepository;
 
 

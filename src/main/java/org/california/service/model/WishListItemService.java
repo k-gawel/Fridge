@@ -1,7 +1,11 @@
 package org.california.service.model;
 
-import org.california.model.entity.*;
-import org.california.model.transfer.request.ItemInstanceForm;
+import org.california.model.entity.Account;
+import org.california.model.entity.ItemInstance;
+import org.california.model.entity.WishList;
+import org.california.model.entity.WishListItem;
+import org.california.model.entity.item.Category;
+import org.california.model.entity.item.Item;
 import org.california.model.transfer.request.WishListItemForm;
 import org.california.repository.wishlist.WishListItemRepository;
 import org.california.service.getter.GetterService;
@@ -31,20 +35,12 @@ public class WishListItemService {
         this.accountPermissionsService = accountPermissionsService;
     }
 
-    public WishListItem addInstance(Account account, WishListItem wishListItem, ItemInstanceForm itemInstanceForm) {
-
-        if(account == null || wishListItem == null || itemInstanceForm == null)
+    public boolean addInstance(Account account, WishListItem wishListItem, ItemInstance instance) {
+        if(account == null || wishListItem == null || instance == null)
             throw new UnauthorizedException();
 
-        ItemInstance instance = itemInstanceService.create(account, itemInstanceForm);
-
-        wishListItem.setAddedOn(new Date());
         wishListItem.setAddedInstance(instance);
-        wishListItem.setAddedBy(account);
-
-        wishListItemRepository.save(wishListItem);
-
-        return wishListItem;
+        return wishListItemRepository.save(wishListItem) != null;
     }
 
 
@@ -64,7 +60,7 @@ public class WishListItemService {
 
     public WishListItem newWishListItem(WishListItemForm wishListItemForm) {
 
-        WishListItem result = fromDTO(wishListItemForm);
+        WishListItem result = fromForm(wishListItemForm);
         wishListItemRepository.save(result);
         return result;
 
@@ -72,12 +68,12 @@ public class WishListItemService {
 
 
     // Creates object from DTO for a new created WishList
-    public WishListItem fromDTO(Account author, WishList currentWishList, WishListItemForm form) {
+    public WishListItem fromForm(Account author, WishList currentWishList, WishListItemForm form) {
         if(author == null || currentWishList == null) {
             throw new NotValidException("Wyjebalem sie w krewoaniu z dto");
         }
 
-        WishListItem result = fromDTO(form);
+        WishListItem result = fromForm(form);
         result.setAuthor(author);
         result.setWishList(currentWishList);
 
@@ -88,9 +84,9 @@ public class WishListItemService {
 
 
     // Creates object from DTO with not null WishList field in
-    public WishListItem fromDTO(Account author, WishListItemForm form) {
+    public WishListItem fromForm(Account author, WishListItemForm form) {
 
-        WishListItem result = fromDTO(form);
+        WishListItem result = fromForm(form);
 
         wishListItemRepository.save(result);
 
@@ -99,24 +95,20 @@ public class WishListItemService {
 
 
     // Creates from DTO object with author as null and nullable wishlist fields
-    WishListItem fromDTO(WishListItemForm form) {
+    WishListItem fromForm(WishListItemForm form) {
         WishListItem result = new WishListItem();
 
         result.setCreatedOn(new Date());
-        result.setComment(form.getComment());
+        result.setComment(form.comment);
 
-        WishList list = getterService.wishLists.getByKey(form.getWishListId());
+        WishList list = getterService.wishLists.getByKey(form.wish_list_id);
         result.setWishList(list);
 
-        Category category = getterService.categories.getByKey(form.getCategoryId());
+        Category category = getterService.categories.getByKey(form.category_id);
         result.setCategory(category);
 
-        Item item = getterService.items.getByKey(form.getItemId());
-        result.setItem(item);
-
-        Account author = getterService.accounts.getByKey(form.getAuthorId());
+        Account author = getterService.accounts.getByKey(form.author_id);
         result.setAuthor(author);
-
 
         return result;
 

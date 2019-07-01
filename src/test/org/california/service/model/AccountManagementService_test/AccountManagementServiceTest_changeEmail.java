@@ -1,7 +1,6 @@
 package org.california.service.model.AccountManagementService_test;
 
 import org.california.model.entity.Account;
-import org.california.model.validator.AccountFormValidator;
 import org.california.repository.account.AccountRepository;
 import org.california.service.model.AccountManagementService;
 import org.california.util.exceptions.NotValidException;
@@ -54,21 +53,21 @@ public class AccountManagementServiceTest_changeEmail {
     @Test
     public void not_valid_params() {
 
-        // NULL ACCOUNT, NOT-VALID EMAIL
+        // NULL Account, NOT-VALID EMAIL
         executable = () -> accountManagementService.changeEmail(null, "not_valid_email");
         errorClass = NotValidException.class;
         errorMessage = "account.null";
         assertThrowsMessage(errorClass, executable, errorMessage);
 
 
-        // NOT-NULL ACCOUNT, NOT_VALID EMAIL
+        // NOT-NULL Account, NOT_VALID EMAIL
         executable = () -> accountManagementService.changeEmail(new Account(), "not_valid_email");
         errorClass = NotValidException.class;
         errorMessage = "email.not_valid";
         assertThrowsMessage(errorClass, executable, errorMessage);
 
 
-        // NULL ACCOUNT, VALID EMAIL
+        // NULL Account, VALID EMAIL
         executable = () -> accountManagementService.changeEmail(null, "valid_email");
         errorClass = NotValidException.class;
         errorMessage = "account.null";

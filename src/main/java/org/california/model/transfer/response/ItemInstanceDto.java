@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 
 
 @EqualsAndHashCode @ToString
+@Getter
 public class ItemInstanceDto implements Serializable {
 
     private Long id;

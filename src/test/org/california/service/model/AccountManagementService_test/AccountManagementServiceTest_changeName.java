@@ -1,7 +1,6 @@
 package org.california.service.model.AccountManagementService_test;
 
 import org.california.model.entity.Account;
-import org.california.model.validator.AccountFormValidator;
 import org.california.repository.account.AccountRepository;
 import org.california.service.model.AccountManagementService;
 import org.california.util.exceptions.NotValidException;
@@ -56,19 +55,19 @@ public class AccountManagementServiceTest_changeName {
         String errorMessage;
 
 
-        // NOT-NULL ACCOUNT, NOT-VALID NAME
+        // NOT-NULL Account, NOT-VALID NAME
         executable = () -> accountManagementService.changeName(new Account(), "not_valid_name");
         errorClass = NotValidException.class;
         errorMessage = "name.not_valid";
         assertThrowsMessage(errorClass, executable, errorMessage);
 
-        // NULL ACCOUNT, VALID NAME
+        // NULL Account, VALID NAME
         executable = () -> accountManagementService.changeName(null, "valid_name");
         errorClass = NotValidException.class;
         errorMessage = "account.null";
         assertThrowsMessage(errorClass, executable, errorMessage);
 
-        // NULL ACCOUNT, NOT-VALID NAME
+        // NULL Account, NOT-VALID NAME
         executable = () -> accountManagementService.changeName(null, "not_valid_name");
         errorClass = NotValidException.class;
         errorMessage = "account.null";

@@ -1,12 +1,14 @@
-package org.california.model.transfer.response;
+package org.california.service.builders;
 
 import org.california.model.entity.*;
 import org.california.model.entity.item.*;
+import org.california.model.transfer.response.*;
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,15 +34,18 @@ public class EntityToDtoMapper {
     public PlaceDto toDto(Place place) {
         Collection<ContainerDto> containers = place.getContainers().stream().map(this::toDto).collect(Collectors.toList());;
         Collection<PlaceUserDto> placeUsers = placeUsersToDto(place);
+        Collection<WishListDto>  wishLists  = getter.wishLists.get(Collections.singleton(place), true).stream().map(this::toDto).collect(Collectors.toList());
 
         return new PlaceDto.Builder()
                 .setId(place)
                 .setName(place.getName())
                 .setAdminId(place.getAdmin())
                 .setContainers(containers)
+                .setWishLists(wishLists)
                 .setUsers(placeUsers)
                 .build();
     }
+
 
     private Collection<PlaceUserDto> placeUsersToDto(Place p) {
         Collection<PlaceUserDto> activeDto = p.getAccounts().stream()
@@ -55,12 +60,18 @@ public class EntityToDtoMapper {
 
 
     public ContainerDto toDto(Container container) {
+        Collection<ItemInstanceDto> instances = getter.itemInstances.get(Collections.emptySet(), Collections.singleton(container),
+                                                                         Collections.emptySet(), false, null, null, 0)
+                                                        .stream().map(this::toDto).collect(Collectors.toList());
+
         return new ContainerDto.Builder()
                 .setId(container)
                 .setName(container.getName())
                 .setPlaceId(container.getPlace())
+                .setInstances(instances)
                 .build();
     }
+
 
     private PlaceUserDto placeUserToDto(Account account, Place place, boolean status) {
         return new PlaceUserDto.Builder()
@@ -109,7 +120,7 @@ public class EntityToDtoMapper {
                 .setDescription(WL.getDescription())
                 .setPlaceId(WL.getPlace())
                 .setItems(WL.getItems().stream().map(this::toDto).collect(Collectors.toList()))
-                .setStatus(WL.getStatus())
+                .setStatus(WL.isStatus())
                 .build();
     }
 

@@ -1,5 +1,8 @@
 package org.california.model.transfer.response;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.InstanceChange;
 import org.california.model.util.ChangeOnInstance;
@@ -8,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@EqualsAndHashCode @ToString
+@Getter
 public class InstanceChangeDto implements Serializable {
 
     private Long id;

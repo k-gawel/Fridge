@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.BaseNamedEntity;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class NamedEntityDto implements Serializable {
 
     private Serializable id;

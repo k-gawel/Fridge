@@ -1,6 +1,7 @@
 package org.california.model.transfer.response;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.Place;
 import org.california.model.entity.item.Capacity;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @EqualsAndHashCode @ToString
+@Getter
 public class ItemDto implements Serializable {
 
     private Long id;
@@ -121,8 +123,8 @@ public class ItemDto implements Serializable {
         public class CapacitySetter {
 
             public AllergensSetter setCapacity(Capacity capacity) {
-                String capacityString = capacity != null ? capacity.toString() : null;
-                Builder.this.result.capacity = capacityString;
+                if(capacity != null)
+                    Builder.this.result.capacity = capacity.getValue() + ";" + capacity.getUnit().toString();
                 return new AllergensSetter();
             }
 
