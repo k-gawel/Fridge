@@ -105,26 +105,16 @@ public class WishListItemDto {
         }
 
         public class CategoryIdSetter {
-            public ItemIdSetter setCategoryId(Long categoryId) {
+            public CommentSetter setCategoryId(Long categoryId) {
                 Builder.this.result.categoryId = categoryId;
-                return new ItemIdSetter();
+                return new CommentSetter();
             }
 
-            public ItemIdSetter setCategoryId(Category category) {
+            public CommentSetter setCategoryId(Category category) {
                 return setCategoryId(category != null ? category.getId() : null);
             }
         }
 
-        public class ItemIdSetter {
-            public CommentSetter setItemId(Long itemId) {
-                Builder.this.result.itemId = itemId;
-                return new CommentSetter();
-            }
-
-            public CommentSetter setItemId(Item item) {
-                return setItemId(item != null ? item.getId() : null);
-            }
-        }
 
         public class CommentSetter {
             public FinalBuilder setComment(String comment) {

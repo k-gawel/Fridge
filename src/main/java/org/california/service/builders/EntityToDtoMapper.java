@@ -135,7 +135,6 @@ public class EntityToDtoMapper {
                 .setAddedOn(WLI.getAddedOn())
                 .setAddedInstanceId(WLI.getAddedInstance())
                 .setCategoryId(WLI.getCategory())
-                .setItemId(WLI.getItem())
                 .setComment(WLI.getComment())
                 .build();
     }
