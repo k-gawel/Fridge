@@ -1,6 +1,6 @@
 package org.california.service.model;
 
-import org.california.model.entity.Category;
+import org.california.model.entity.item.Category;
 import org.california.repository.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

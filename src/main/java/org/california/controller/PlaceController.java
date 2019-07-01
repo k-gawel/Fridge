@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
+@RestController("/places")
 @CrossOrigin
 public class PlaceController {
 
@@ -25,7 +25,7 @@ public class PlaceController {
     }
 
 
-    @PostMapping("/places")
+    @PostMapping
     public ResponseEntity newPlace(
             @RequestHeader("token") String token,
             @Valid @RequestBody PlaceForm placeForm
@@ -48,7 +48,7 @@ public class PlaceController {
     }
 
 
-    @GetMapping("/places/{place_ids}")
+    @GetMapping("/{place_ids}")
     public ResponseEntity get(
             @RequestHeader("token") String token,
             @PathVariable(name = "ids") String placeIdsString
@@ -71,7 +71,7 @@ public class PlaceController {
     }
 
 
-    @PutMapping("/places/{place_id}/admin/{new_admin_id}")
+    @PutMapping("/{place_id}/admin/{new_admin_id}")
     public ResponseEntity changeAdmin(
             @RequestHeader("token") String token,
             @PathVariable(name = "place_id") Long placeId,
@@ -99,7 +99,7 @@ public class PlaceController {
     }
 
 
-    @DeleteMapping("/places/{place_id}/accounts/{account_id}")
+    @DeleteMapping("/{place_id}/accounts/{account_id}")
     public ResponseEntity removeUser(
             @RequestHeader("token") String token,
             @PathVariable("place_id") Long placeId,
@@ -124,7 +124,7 @@ public class PlaceController {
     }
 
 
-    @PostMapping("/place/{place_id}/acounts/{account_id}")
+    @PostMapping("/{place_id}/acounts/{account_id}")
     public ResponseEntity addUser(
             @RequestHeader("token") String token,
             @PathVariable("place_id") Long placeId,

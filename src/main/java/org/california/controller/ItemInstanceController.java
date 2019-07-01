@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 
-@RestController
+@RestController("/item_instances")
 @CrossOrigin
 public class
 ItemInstanceController {
@@ -30,7 +30,7 @@ ItemInstanceController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @PostMapping("/item_instances")
+    @PostMapping
     public ResponseEntity newItemInstance(
             @RequestHeader("token") final String token,
             @Valid @RequestBody final ItemInstanceForm itemInstanceForm
@@ -52,7 +52,7 @@ ItemInstanceController {
     }
 
 
-    @GetMapping("/item_instances")
+    @GetMapping
     public ResponseEntity get(
             @RequestHeader("token") String token,
             @RequestParam(name = "ids", defaultValue = "") String ids,
@@ -84,7 +84,7 @@ ItemInstanceController {
     }
 
 
-    @PutMapping("/itemInstance/{instance_id}")
+    @PutMapping("/{instance_id}")
     public ResponseEntity update(
             @RequestHeader("token") String token,
             @PathVariable("instance_id") Long instanceId,

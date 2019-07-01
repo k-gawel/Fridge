@@ -1,6 +1,6 @@
 package org.california.controller.item;
 
-import org.california.model.entity.Category;
+import org.california.model.entity.item.Category;
 import org.california.service.getter.GetterService;
 import org.california.service.model.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

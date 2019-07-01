@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("/related_items")
 @CrossOrigin
 public class RelatedItemsContoller {
 
@@ -17,7 +17,7 @@ public class RelatedItemsContoller {
         this.relatedItemsControllerService = relatedItemsControllerService;
     }
 
-    @GetMapping("/related_items")
+    @GetMapping
     public ResponseEntity get(
             @RequestHeader("token") String token,
             @RequestParam(name = "category_id", defaultValue = "0") Long categoryId,

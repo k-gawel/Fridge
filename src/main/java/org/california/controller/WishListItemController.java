@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@RestController
+@RestController("/wish_list_items")
 @CrossOrigin
 public class WishListItemController {
 
@@ -25,7 +25,7 @@ public class WishListItemController {
     }
 
 
-    @PostMapping("wish_list_items")
+    @PostMapping
     public ResponseEntity newItem(@RequestHeader("token") String token,
                                   @RequestBody WishListItemForm form) throws IOException
     {
@@ -48,7 +48,7 @@ public class WishListItemController {
     }
 
 
-    @PostMapping("wish_list_items/{id}/instances/{instanceId}")
+    @PostMapping("/{id}/instances/{instanceId}")
     public ResponseEntity addInstance(@RequestHeader("token") String token,
                                       @PathVariable("instanceId") Long instanceId,
                                       @PathVariable("id") Long wishListItemId)

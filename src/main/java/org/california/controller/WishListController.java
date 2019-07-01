@@ -77,7 +77,7 @@ public class WishListController {
     }
 
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(
             @RequestHeader("token") String token,
             @PathVariable("id") Long id

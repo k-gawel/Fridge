@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("/auth")
 @CrossOrigin
 public class AuthorizationController {
 
@@ -22,7 +22,7 @@ public class AuthorizationController {
     }
 
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity login(
             @RequestHeader(name = "token", defaultValue = "") String token,
             @RequestHeader(name = "username", defaultValue = "") String username,
@@ -47,7 +47,7 @@ public class AuthorizationController {
     }
 
 
-    @PostMapping("/auth/logout")
+    @PostMapping("/logout")
     public ResponseEntity<Boolean> logout(@RequestHeader("token") String token) {
         return null;
     }

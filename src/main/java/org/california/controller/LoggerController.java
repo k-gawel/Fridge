@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController
+@RestController("/logs")
 @CrossOrigin
 public class LoggerController {
 
@@ -23,7 +23,7 @@ public class LoggerController {
         this.loggerControllerService = loggerControllerService;
     }
 
-    @GetMapping("logs/instances")
+    @GetMapping("/instances")
     public ResponseEntity getInstancesLogsByPlace(@RequestHeader("token") String token,
                                                   @RequestParam(name = "container_ids", defaultValue = "") String containerIdsString,
                                                   @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,

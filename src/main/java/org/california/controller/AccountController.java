@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
+@RestController("/accounts")
 @CrossOrigin
 public class AccountController {
 
@@ -22,7 +22,7 @@ public class AccountController {
     }
 
 
-    @PostMapping("/accounts")
+    @PostMapping
     public ResponseEntity newAccount(@Valid @RequestBody AccountForm form) {
         Object result;
         HttpStatus httpStatus;
@@ -42,7 +42,7 @@ public class AccountController {
     }
 
 
-    @PutMapping("/accounts")
+    @PutMapping
     public ResponseEntity changeAccountDetails(
             @RequestHeader("token") String token,
             @RequestHeader("password") String password,
@@ -67,7 +67,7 @@ public class AccountController {
     }
 
 
-    @GetMapping("/accounts")
+    @GetMapping
     public ResponseEntity searchAccountByName(
             @RequestHeader("token") String token,
             @RequestParam(name = "name", defaultValue = "") String name

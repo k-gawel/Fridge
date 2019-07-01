@@ -1,6 +1,7 @@
 package org.california.util;
 
-import org.california.model.entity.Category;
+
+import org.california.model.entity.item.Category;
 
 import java.io.File;
 import java.util.stream.Collectors;

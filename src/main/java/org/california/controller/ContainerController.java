@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@RestController
+@RestController("/containers")
 @CrossOrigin
 public class ContainerController {
 
@@ -28,7 +28,7 @@ public class ContainerController {
         this.containerControllerService = containerControllerService;
     }
 
-    @PostMapping(value = "/containers", consumes = "application/json")
+    @PostMapping(consumes = "application/json")
     public ResponseEntity addNewContainer(
             @RequestHeader("token") String token,
             @Valid @RequestBody ContainerForm containerForm)
@@ -51,7 +51,7 @@ public class ContainerController {
     }
 
 
-    @GetMapping("/containers")
+    @GetMapping
     public ResponseEntity get(
             @RequestHeader("token") String token,
             @RequestParam(value = "ids", defaultValue = "") String ids,
@@ -76,7 +76,7 @@ public class ContainerController {
     }
 
 
-    @GetMapping(value = "/containers/user_stats", consumes = "application/json")
+    @GetMapping(value = "/user_stats", consumes = "application/json")
     public ResponseEntity getUserStats(
             @RequestHeader("token") String token,
             @RequestParam(name = "user_ids", defaultValue = "") String userIdsString,
