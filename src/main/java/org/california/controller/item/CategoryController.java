@@ -28,9 +28,7 @@ public class CategoryController {
     }
 
 
-
-
-    @GetMapping("/category/getAllCategories")
+    @GetMapping("/categories")
     public ResponseEntity getAllCategories() {
 
         Object result;

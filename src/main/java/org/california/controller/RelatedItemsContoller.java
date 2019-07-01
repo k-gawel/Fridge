@@ -17,7 +17,7 @@ public class RelatedItemsContoller {
         this.relatedItemsControllerService = relatedItemsControllerService;
     }
 
-    @GetMapping("/items")
+    @GetMapping("/related_items")
     public ResponseEntity get(
             @RequestHeader("token") String token,
             @RequestParam(name = "category_id", defaultValue = "0") Long categoryId,

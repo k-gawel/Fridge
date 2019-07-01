@@ -20,28 +20,8 @@ public class ProducerController {
         this.controllerService = controllerService;
     }
 
-    @GetMapping("/producer/get")
-    public ResponseEntity get(String name) {
 
-        Object result;
-        HttpStatus status;
-
-        try {
-            result = controllerService.get(name);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-
-        return ResponseEntity
-                .status(status)
-                .body(result);
-    }
-
-
-    @GetMapping("/producer/search")
+    @GetMapping("/producers")
     public ResponseEntity search(
             @RequestParam(name = "ids", defaultValue = "") String idsString,
             @RequestParam(name = "name", defaultValue = "") String name,

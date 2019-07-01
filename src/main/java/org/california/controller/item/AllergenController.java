@@ -20,33 +20,12 @@ public class AllergenController {
         this.controllerService = controllerService;
     }
 
-    @GetMapping("/allergen/get")
-    public ResponseEntity get(String name) {
 
-        Object result;
-        HttpStatus status;
-
-        try {
-            result = controllerService.get(name);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-
-        return ResponseEntity
-                .status(status)
-                .body(result);
-    }
-
-
-    @GetMapping("/allergen/search")
+    @GetMapping("/allergens")
     public ResponseEntity search(
             @RequestParam(name = "ids", defaultValue = "") String idsString,
             @RequestParam(name = "name", defaultValue = "") String name,
             @RequestParam(name = "nameStart", defaultValue = "") String nameStart) {
-
         Object result;
         HttpStatus status;
 

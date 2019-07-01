@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @CrossOrigin
 @RestController
 public class ItemController {
@@ -25,7 +27,7 @@ public class ItemController {
     }
 
 
-    @GetMapping(value = "/item/search")
+    @GetMapping(value = "/items")
     public ResponseEntity searchItems(
             @RequestHeader(name = "token", defaultValue = "") String token,
             @RequestParam(name = "itemIds", defaultValue = "") String itemIdsString,
@@ -34,10 +36,6 @@ public class ItemController {
             @RequestParam(name = "barcode", defaultValue = "0") long barcode,
             @RequestParam(name = "category", defaultValue = "5") long categoryId
     ) {
-
-        logger.info("Token: {}, itemIds: {}, placeIds: {}, name: {}, barcode: {}, category: {}",
-                    token, itemIdsString, placeIdsString, name, barcode, categoryId);
-
         Object result;
         HttpStatus httpStatus;
 
@@ -57,13 +55,11 @@ public class ItemController {
     }
 
 
-    @PostMapping(value = "/item/newItem")
+    @PostMapping(value = "/items")
     public ResponseEntity newItem(
             @RequestHeader("token") String token,
-            @RequestBody ItemForm form
+            @Valid @RequestBody ItemForm form
     ) {
-
-        logger.info("Token: {}, form: {}", token, form);
 
         Object result;
         HttpStatus httpStatus;

@@ -19,33 +19,12 @@ public class IngredientController {
         this.controllerService = controllerService;
     }
 
-    @GetMapping("/ingredient/get")
-    public ResponseEntity get(String name) {
 
-        Object result;
-        HttpStatus status;
-
-        try {
-            result = controllerService.get(name);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-
-        return ResponseEntity
-                .status(status)
-                .body(result);
-    }
-
-
-    @GetMapping("/ingredient/search")
+    @GetMapping("/ingredients")
     public ResponseEntity search(
             @RequestParam(name = "ids", defaultValue = "") String idsString,
             @RequestParam(name = "name", defaultValue = "") String name,
             @RequestParam(name = "nameStart", defaultValue = "") String nameStart) {
-
         Object result;
         HttpStatus status;
 
