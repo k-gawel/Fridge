@@ -36,5 +36,15 @@ public class CategoryRepositoryImpl extends AbstractNamedEntityRepositoryImpl<Ca
         return query.getResultList();
     }
 
+    @Override
+    public Collection<Category> getByParent(Category o) {
+        Query query = getSession().createQuery(o != null ?
+                "SELECT C FROM Category C WHERE C.parent = :parent" :
+                "SELECT C FROM Category C WHERE C.parent IS NULL");
+        query.setParameter("parent", o);
+
+        return query.getResultList();
+    }
+
 
 }

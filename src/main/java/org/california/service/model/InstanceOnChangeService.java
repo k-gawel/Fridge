@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -49,7 +50,7 @@ public class InstanceOnChangeService {
         InstanceChange instanceChange = new InstanceChange();
         instanceChange.setAccount(account);
         instanceChange.setChangeType(changeOnInstance);
-        instanceChange.setChangeDate(new Date());
+        instanceChange.setChangeDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         instanceChange.setInstance(itemInstance);
 
         save(instanceChange);

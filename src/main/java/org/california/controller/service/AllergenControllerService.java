@@ -46,7 +46,7 @@ public class AllergenControllerService {
 
 
     public NamedEntityDto get(String name) {
-        return mapper.toDto(getter.allergens.getByName(name).orElse(null));
+        return mapper.toDto(getter.allergens.getByName(name));
     }
 
 }

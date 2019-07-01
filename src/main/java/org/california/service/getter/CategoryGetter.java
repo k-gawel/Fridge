@@ -56,4 +56,7 @@ public class CategoryGetter {
         return result;
     }
 
+    public Category getRootCategory() {
+        return categoryRepository.getByParent(null).stream().findFirst().orElseThrow(IllegalStateException::new);
+    }
 }
