@@ -30,7 +30,7 @@ public abstract class AbstractRepositoryImpl<T extends Serializable> implements 
     }
 
 
-    @Transactional(readOnly = false)
+    @Transactional
     public T save(T entity) {
         try {
             getSession().saveOrUpdate(entity);
@@ -73,6 +73,8 @@ public abstract class AbstractRepositoryImpl<T extends Serializable> implements 
 
     @Transactional(readOnly = true)
     public T getByKey(Serializable key) {
+        if(key == null)
+            return null;
         return (T) getSession().get(clazz, key);
     }
 
