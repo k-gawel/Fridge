@@ -3,7 +3,7 @@ package org.california.repository.iteminstance;
 import org.apache.commons.collections.CollectionUtils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
-import org.california.model.entity.Item;
+import org.california.model.entity.item.Item;
 import org.california.model.entity.ItemInstance;
 import org.california.repository.AbstractRepositoryImpl;
 import org.hibernate.query.Query;

@@ -1,6 +1,6 @@
 package org.california.service.getter;
 
-import org.california.model.entity.Ingredient;
+import org.california.model.entity.item.Ingredient;
 import org.california.repository.item.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

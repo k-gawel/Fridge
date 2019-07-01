@@ -1,6 +1,7 @@
 package org.california.service.model;
 
 import org.california.model.entity.*;
+import org.california.model.entity.item.Item;
 import org.springframework.stereotype.Service;
 
 @Service

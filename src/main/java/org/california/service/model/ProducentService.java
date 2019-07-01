@@ -1,6 +1,6 @@
 package org.california.service.model;
 
-import org.california.model.entity.Producent;
+import org.california.model.entity.item.Producer;
 import org.california.repository.item.ProducerRepository;
 import org.california.util.exceptions.NotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +18,16 @@ public class ProducentService {
     }
 
 
-    public Producent getProducent(String name) {
+    public Producer getProducent(String name) {
         if(name == null)
             throw new NotValidException("producentname.null");
 
-        Producent result = producerRepository.getByName(name);
+        Producer result = producerRepository.getByName(name);
 
         if(result != null)
             return result;
 
-        result = new Producent();
+        result = new Producer();
         result.setName(name);
         return producerRepository.save(result);
     }

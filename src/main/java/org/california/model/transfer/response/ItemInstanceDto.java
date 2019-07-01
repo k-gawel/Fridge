@@ -7,7 +7,7 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.ItemInstance;
 import org.california.model.entity.item.Item;
-import org.california.model.util.ObjectUtils;
+import org.california.util.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -118,7 +118,7 @@ public class ItemInstanceDto implements Serializable {
 
         public class OpenOnSetter {
             public FrozenByIdSetter setOpenOn(LocalDate date) {
-                ObjectUtils.allAreNullOrNoneIs(date, Builder.this.result.openById);
+                ObjectUtils.areAllNullOrNoneIs(date, Builder.this.result.openById);
 
                 Builder.this.result.openOn = date;
                 return new FrozenByIdSetter();
@@ -138,7 +138,7 @@ public class ItemInstanceDto implements Serializable {
 
         public class FrozenOnSetter {
             public DeletedByIdSetter setFrozenOn(LocalDate localDate) {
-                ObjectUtils.allAreNullOrNoneIs(localDate, Builder.this.result.frozenById);
+                ObjectUtils.areAllNullOrNoneIs(localDate, Builder.this.result.frozenById);
                 Builder.this.result.frozenOn = localDate;
 
                 return new DeletedByIdSetter();
@@ -158,7 +158,7 @@ public class ItemInstanceDto implements Serializable {
 
         public class DeletedOnSetter {
             public FinalBuilder setDeletedOn(LocalDate deletedOn) {
-                ObjectUtils.allAreNullOrNoneIs(deletedOn, Builder.this.result.deletedById);
+                ObjectUtils.areAllNullOrNoneIs(deletedOn, Builder.this.result.deletedById);
 
                 Builder.this.result.deletedOn = deletedOn;
 

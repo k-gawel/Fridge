@@ -5,7 +5,6 @@ import org.california.model.entity.Container;
 import org.california.model.entity.ItemInstance;
 import org.california.model.entity.item.Item;
 import org.california.model.transfer.request.ItemInstanceForm;
-import org.california.model.util.DateUtils;
 import org.california.repository.iteminstance.ItemInstanceRepository;
 import org.california.service.getter.GetterService;
 import org.california.util.exceptions.NotValidException;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 @Service
 public class ItemInstanceService {
@@ -89,7 +89,7 @@ public class ItemInstanceService {
     private ItemInstance fromForm(ItemInstanceForm form) {
         Item item = getterService.items.getByKey(form.itemId);
         Container container = getterService.containers.getById(form.containerId);
-        LocalDate expireDate = DateUtils.asLocalDate(form.expireDate);
+        LocalDate expireDate = form.expireDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String comment = form.comment;
 
         if(item == null || container == null)

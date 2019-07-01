@@ -26,6 +26,7 @@ public class AllergenController {
             @RequestParam(name = "ids", defaultValue = "") String idsString,
             @RequestParam(name = "name", defaultValue = "") String name,
             @RequestParam(name = "nameStart", defaultValue = "") String nameStart) {
+
         Object result;
         HttpStatus status;
 

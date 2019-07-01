@@ -1,6 +1,6 @@
 package org.california.repository.item;
 
-import org.california.model.entity.Ingredient;
+import org.california.model.entity.item.Ingredient;
 import org.california.repository.AbstractNamedEntityRepositoryImpl;
 import org.springframework.stereotype.Repository;
 

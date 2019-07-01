@@ -2,7 +2,7 @@ package org.california.repository.iteminstance;
 
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
-import org.california.model.entity.Item;
+import org.california.model.entity.item.Item;
 import org.california.model.entity.ItemInstance;
 import org.california.repository.AbstractRepository;
 

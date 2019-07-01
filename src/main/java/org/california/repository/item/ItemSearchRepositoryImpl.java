@@ -1,8 +1,8 @@
 package org.california.repository.item;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.california.model.entity.Category;
-import org.california.model.entity.Item;
+import org.california.model.entity.item.Category;
+import org.california.model.entity.item.Item;
 import org.california.model.entity.Place;
 import org.california.repository.AbstractRepositoryImpl;
 import org.hibernate.query.Query;

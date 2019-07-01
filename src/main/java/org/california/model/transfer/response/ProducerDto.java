@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.item.Producer;
-import org.california.model.util.ObjectUtils;
+import org.california.util.ObjectUtils;
 
 import java.io.Serializable;
 
@@ -30,7 +30,7 @@ public class ProducerDto implements Serializable{
 
         public class NameSetter {
             public FinalBuilder setName(String name) {
-                ObjectUtils.allAreNullOrNoneIs(name, Builder.this.result.id);
+                ObjectUtils.areAllNullOrNoneIs(name, Builder.this.result.id);
 
                 Builder.this.result.name = name;
                 return new FinalBuilder();

@@ -60,7 +60,6 @@ public class ItemController {
             @RequestHeader("token") String token,
             @Valid @RequestBody ItemForm form
     ) {
-
         Object result;
         HttpStatus httpStatus;
 

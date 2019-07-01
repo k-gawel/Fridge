@@ -23,8 +23,8 @@ public class ProducerGetter {
 
 
 
-    public Producent getByKey(Serializable key) {
-        return producerRepository.getByKey(key);
+    public Producer getByKey(Serializable key) {
+        return repository.getByKey(key);
     }
 
 

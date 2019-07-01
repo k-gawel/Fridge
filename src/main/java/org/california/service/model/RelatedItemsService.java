@@ -1,7 +1,7 @@
 package org.california.service.model;
 
-import org.california.model.entity.Category;
-import org.california.model.entity.Item;
+import org.california.model.entity.item.Category;
+import org.california.model.entity.item.Item;
 import org.california.model.entity.Place;
 import org.california.repository.item.RelatedItemsRepository;
 import org.california.service.getter.GetterService;

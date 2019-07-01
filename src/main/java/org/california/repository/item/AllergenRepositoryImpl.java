@@ -1,6 +1,6 @@
 package org.california.repository.item;
 
-import org.california.model.entity.Allergen;
+import org.california.model.entity.item.Allergen;
 import org.california.repository.AbstractNamedEntityRepositoryImpl;
 import org.springframework.stereotype.Repository;
 
