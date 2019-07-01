@@ -7,7 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -26,14 +30,11 @@ ItemInstanceController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @PostMapping("/itemInstance/new")
+    @PostMapping("/item_instances")
     public ResponseEntity newItemInstance(
-            @RequestHeader("token") String token,
-            @RequestBody ItemInstanceForm itemInstanceForm
+            @RequestHeader("token") final String token,
+            @Valid @RequestBody final ItemInstanceForm itemInstanceForm
     ) {
-
-        logger.info("token: {}, form: {}", token, itemInstanceForm);
-
         Object result;
         HttpStatus httpStatus;
 
@@ -46,13 +47,12 @@ ItemInstanceController {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+
+        return ResponseEntity.status(httpStatus).body(result);
     }
 
 
-    @GetMapping("/itemInstance/get")
+    @GetMapping("/item_instances")
     public ResponseEntity get(
             @RequestHeader("token") String token,
             @RequestParam(name = "ids", defaultValue = "") String ids,
@@ -65,9 +65,6 @@ ItemInstanceController {
             @RequestParam(name = "frozen", defaultValue = "") String frozen,
             @RequestParam(name = "limit", defaultValue = "0") int limit
     ) {
-
-       logger.info("token: {}, ids: {}, items {}, places: {}, containers: {}, owners: {}, deleted: {}, open: {}, frozen, {}, limit: {}",
-                    token, ids, items, places, containers, owners, deleted, open, frozen, limit);
 
        Object result;
        HttpStatus httpStatus;
@@ -87,10 +84,10 @@ ItemInstanceController {
     }
 
 
-    @PutMapping("/itemInstance/update/{instanceId}")
+    @PutMapping("/itemInstance/{instance_id}")
     public ResponseEntity update(
             @RequestHeader("token") String token,
-            @PathVariable("instanceId") Long instanceId,
+            @PathVariable("instance_id") Long instanceId,
             @RequestParam(value = "frozeOrUnfroze", defaultValue = "false") boolean frozeOrUnfroze,
             @RequestParam(value = "open", defaultValue = "false") boolean open,
             @RequestParam(value = "delete", defaultValue = "false") boolean delete

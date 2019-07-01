@@ -3,26 +3,36 @@ package org.california.controller;
 import org.california.controller.service.WishListControllerService;
 import org.california.model.transfer.request.WishListForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+@RestController(value = "/wishlists")
 @CrossOrigin
 public class WishListController {
 
-    private WishListControllerService wishListControllerService;
+    private final WishListControllerService wishListControllerService;
 
     @Autowired
     public WishListController(WishListControllerService wishListControllerService) {
         this.wishListControllerService = wishListControllerService;
     }
 
-    @PostMapping("/wishlist/newWishlist")
+    @PostMapping
     public ResponseEntity newWishList(
             @RequestHeader("token") String token,
-            @RequestBody WishListForm wishListForm
-    ) {
+            @Valid @RequestBody WishListForm wishListForm)
+    {
         Object result;
         HttpStatus httpStatus;
 
@@ -41,7 +51,7 @@ public class WishListController {
     }
 
 
-    @GetMapping("/wishlist/get")
+    @GetMapping
     public ResponseEntity get(
             @RequestHeader("token") String token,
             @RequestParam(name = "placeIds", defaultValue = "") String placesIds,
@@ -64,6 +74,15 @@ public class WishListController {
                 .status(httpStatus)
                 .body(result);
 
+    }
+
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity delete(
+            @RequestHeader("token") String token,
+            @PathVariable("id") Long id
+    ) {
+        return null;
     }
 
 

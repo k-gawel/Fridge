@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin
 public class PlaceController {
@@ -23,14 +25,11 @@ public class PlaceController {
     }
 
 
-    @PostMapping("/place/new")
+    @PostMapping("/places")
     public ResponseEntity newPlace(
             @RequestHeader("token") String token,
-            @RequestBody PlaceForm placeForm
+            @Valid @RequestBody PlaceForm placeForm
     ) {
-
-        logger.info("%M token: {}, placeForm: {}", token, placeForm);
-
         Object result;
         HttpStatus httpStatus;
 
@@ -49,14 +48,11 @@ public class PlaceController {
     }
 
 
-    @GetMapping("/place/get")
+    @GetMapping("/places/{place_ids}")
     public ResponseEntity get(
             @RequestHeader("token") String token,
-            @RequestParam(name = "ids", defaultValue = "") String placeIdsString
+            @PathVariable(name = "ids") String placeIdsString
     ) {
-
-        logger.info("%M token: {}, ids: {}", token, placeIdsString);
-
         Object result;
         HttpStatus httpStatus;
 
@@ -75,11 +71,11 @@ public class PlaceController {
     }
 
 
-    @PutMapping("/place/change_admin")
+    @PutMapping("/places/{place_id}/admin/{new_admin_id}")
     public ResponseEntity changeAdmin(
             @RequestHeader("token") String token,
-            @RequestParam(name = "place_id") Long placeId,
-            @RequestParam(name = "new_admin_id") Long newAdminId
+            @PathVariable(name = "place_id") Long placeId,
+            @PathVariable(name = "new_admin_id") Long newAdminId
     ) {
 
         logger.info("%M token: {}, placeId: {}, newAdminId: {}", token, placeId, newAdminId);
@@ -103,20 +99,17 @@ public class PlaceController {
     }
 
 
-    @DeleteMapping("/place/removeUser")
+    @DeleteMapping("/places/{place_id}/accounts/{account_id}")
     public ResponseEntity removeUser(
             @RequestHeader("token") String token,
-            @RequestParam("placeId") Long placeId,
-            @RequestParam("userId") Long userId
+            @PathVariable("place_id") Long placeId,
+            @PathVariable("account_id") Long accountId
     ) {
-
-        logger.info("%M token: {}, placeId: {}, userId: {}", token, placeId, userId);
-
         Object result;
         HttpStatus httpStatus;
 
         try {
-            result = placeControllerService.removeUserFromPlace(token, placeId, userId);
+            result = placeControllerService.removeUserFromPlace(token, placeId, accountId);
             httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
             logger.error(e.toString());
@@ -131,20 +124,20 @@ public class PlaceController {
     }
 
 
-    @PutMapping("/place/addUser")
+    @PostMapping("/place/{place_id}/acounts/{account_id}")
     public ResponseEntity addUser(
             @RequestHeader("token") String token,
-            @RequestParam("placeId") Long placeId,
-            @RequestParam("userId") Long userId
+            @PathVariable("place_id") Long placeId,
+            @PathVariable("account_id") Long accountId
     ) {
 
-        logger.info("%M token: {}, placeId: {}, userId: {}", token, placeId, userId);
+        logger.info("%M token: {}, placeId: {}, userId: {}", token, placeId, accountId);
 
         Object result;
         HttpStatus httpStatus;
 
         try {
-            result = placeControllerService.addUserToPlace(token, placeId, userId);
+            result = placeControllerService.addUserToPlace(token, placeId, accountId);
             httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
             logger.error(e.toString());

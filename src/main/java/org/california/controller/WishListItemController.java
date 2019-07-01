@@ -1,6 +1,7 @@
 package org.california.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.california.controller.service.WishListItemControllerService;
 import org.california.model.transfer.request.ItemInstanceForm;
 import org.california.model.transfer.request.WishListItemForm;
@@ -9,11 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @CrossOrigin
 public class WishListItemController {
 
-    private WishListItemControllerService controllerService;
+    private final WishListItemControllerService controllerService;
+
 
     @Autowired
     public WishListItemController(WishListItemControllerService controllerService) {
@@ -21,11 +25,10 @@ public class WishListItemController {
     }
 
 
-    @PostMapping("wishListItem/new")
-    public ResponseEntity newItem(
-            @RequestHeader("token") String token,
-            @RequestBody WishListItemForm form) {
-
+    @PostMapping("wish_list_items")
+    public ResponseEntity newItem(@RequestHeader("token") String token,
+                                  @RequestBody WishListItemForm form) throws IOException
+    {
         Object result;
         HttpStatus status;
 
@@ -45,17 +48,17 @@ public class WishListItemController {
     }
 
 
-    @PostMapping("wishListItem/{id}/addInstance")
+    @PostMapping("wish_list_items/{id}/instances/{instanceId}")
     public ResponseEntity addInstance(@RequestHeader("token") String token,
-                                      @RequestBody ItemInstanceForm instanceForm,
-                                      @PathVariable("id") Long wishListItemId) {
-
+                                      @PathVariable("instanceId") Long instanceId,
+                                      @PathVariable("id") Long wishListItemId)
+    {
         Object result;
         HttpStatus status;
 
         try {
-            result = controllerService.addInstanceToWishListItem(token, wishListItemId, instanceForm);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            result = controllerService.addInstanceToWishListItem(token, wishListItemId, instanceId);
+            status = HttpStatus.OK;
         } catch (Exception e) {
             e.printStackTrace();
             result = e;

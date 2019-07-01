@@ -5,7 +5,10 @@ import org.california.model.transfer.request.AccountForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -19,10 +22,8 @@ public class AccountController {
     }
 
 
-    @PostMapping("/account/newAccount")
-    public ResponseEntity newAccount(
-            @RequestBody AccountForm form
-    ) {
+    @PostMapping("/accounts")
+    public ResponseEntity newAccount(@Valid @RequestBody AccountForm form) {
         Object result;
         HttpStatus httpStatus;
 
@@ -41,11 +42,11 @@ public class AccountController {
     }
 
 
-    @PutMapping("/account/changeAccountDetails")
+    @PutMapping("/accounts")
     public ResponseEntity changeAccountDetails(
             @RequestHeader("token") String token,
             @RequestHeader("password") String password,
-            @RequestBody AccountForm accountForm
+            @Valid @RequestBody AccountForm accountForm
 
     ) {
         Object result;
@@ -53,7 +54,7 @@ public class AccountController {
 
         try {
             result = accountControllerService.changeAccountDetails(token, password, accountForm);
-            httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            httpStatus = HttpStatus.OK;
         } catch (Exception e) {
             e.printStackTrace();
             result = e;
@@ -66,12 +67,11 @@ public class AccountController {
     }
 
 
-    @GetMapping("/account/search")
+    @GetMapping("/accounts")
     public ResponseEntity searchAccountByName(
             @RequestHeader("token") String token,
             @RequestParam(name = "name", defaultValue = "") String name
     ) {
-
         Object result;
         HttpStatus httpStatus;
 

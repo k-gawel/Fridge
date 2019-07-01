@@ -20,8 +20,8 @@ public class RelatedItemsContoller {
     @GetMapping("/items")
     public ResponseEntity get(
             @RequestHeader("token") String token,
-            @RequestParam(name = "categoryId", defaultValue = "0") Long categoryId,
-            @RequestParam(name = "placeIds", defaultValue = "") String placeIdsString,
+            @RequestParam(name = "category_id", defaultValue = "0") Long categoryId,
+            @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,
             @RequestParam(name = "params", defaultValue = "most_popular") String params
     ) {
         Object result;
