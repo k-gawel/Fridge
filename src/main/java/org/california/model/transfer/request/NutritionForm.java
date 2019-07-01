@@ -2,18 +2,40 @@ package org.california.model.transfer.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.graalvm.compiler.lir.CompositeValue;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 
+@Validated
 public class NutritionForm implements Serializable {
 
+    @PositiveOrZero(message = "energy_kj.negative")
     public final Double energy_kj;
+
+    @PositiveOrZero(message = "energy_kcal.negative")
     public final Double energy_kcal;
+
+    @PositiveOrZero(message = "fat.negative")
     public final Double fat;
+
+    @PositiveOrZero(message = "saturated_fat.negative")
     public final Double saturated_fat;
+
+    @PositiveOrZero(message = "carbohydrate.negative")
     public final Double carbohydrate;
+
+    @PositiveOrZero(message = "sugar.negative")
     public final Double sugar;
+
+    @PositiveOrZero(message = "protein.negative")
     public final Double protein;
+
+    @PositiveOrZero(message = "salt.negative")
     public final Double salt;
 
     @JsonCreator
