@@ -32,8 +32,8 @@ public class HibernateUtil {
 
         dataSource.setDriverClassName(props.getProperty(Environment.DRIVER));
         dataSource.setUrl(props.getProperty(Environment.URL));
-        dataSource.setUsername(props.getProperty(Environment.USER));
-        dataSource.setPassword(props.getProperty(Environment.PASS));
+        dataSource.setUsername(System.getProperty("db.username"));
+        dataSource.setPassword(System.getProperty("db.password"));
 
         return dataSource;
     }
