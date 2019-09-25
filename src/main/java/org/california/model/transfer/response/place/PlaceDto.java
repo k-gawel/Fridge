@@ -18,7 +18,9 @@ public class PlaceDto implements Serializable {
 
     private Collection<ContainerDto> containers;
     private Collection<PlaceUserDto> users;
-    private Collection<WishListDto> wish_lists;
+
+    private Collection<WishListDto> wishLists;
+    private Collection<ShopListDto> shopLists;
 
 
     public static class Builder {
@@ -26,35 +28,39 @@ public class PlaceDto implements Serializable {
             return new InnerBuilder();
         }
 
-        public interface UsersSetter {
-            Wish_listsSetter withUsers(Collection<PlaceUserDto> users);
-        }
-
         public interface FinalBuilder {
             PlaceDto build();
-        }
-
-        public interface Wish_listsSetter {
-            FinalBuilder withWishLists(Collection<WishListDto> wish_lists);
-        }
-
-        public interface NameSetter {
-            AdminIdSetter withName(String name);
         }
 
         public interface AdminIdSetter {
             ContainersSetter withAdminId(Long adminId);
         }
 
-        public interface ContainersSetter {
-            UsersSetter withContainers(Collection<ContainerDto> containers);
+        public interface ShopListsSetter {
+            FinalBuilder withShopLists(Collection<ShopListDto> shopLists);
+        }
+
+        public interface NameSetter {
+            AdminIdSetter withName(String name);
+        }
+
+        public interface UsersSetter {
+            WishListsSetter withUsers(Collection<PlaceUserDto> users);
         }
 
         public interface IdSetter {
             NameSetter withId(Long id);
         }
 
-        public static class InnerBuilder implements UsersSetter, FinalBuilder, Wish_listsSetter, NameSetter, AdminIdSetter, ContainersSetter, IdSetter {
+        public interface ContainersSetter {
+            UsersSetter withContainers(Collection<ContainerDto> containers);
+        }
+
+        public interface WishListsSetter {
+            ShopListsSetter withWishLists(Collection<WishListDto> wishLists);
+        }
+
+        public static class InnerBuilder implements FinalBuilder, AdminIdSetter, ShopListsSetter, NameSetter, UsersSetter, IdSetter, ContainersSetter, WishListsSetter {
             private PlaceDto result = new PlaceDto();
 
             public NameSetter withId(Long id) {
@@ -77,13 +83,18 @@ public class PlaceDto implements Serializable {
                 return this;
             }
 
-            public Wish_listsSetter withUsers(Collection<PlaceUserDto> users) {
+            public WishListsSetter withUsers(Collection<PlaceUserDto> users) {
                 result.users = users;
                 return this;
             }
 
-            public FinalBuilder withWishLists(Collection<WishListDto> wish_lists) {
-                result.wish_lists = wish_lists;
+            public ShopListsSetter withWishLists(Collection<WishListDto> wishLists) {
+                result.wishLists = wishLists;
+                return this;
+            }
+
+            public FinalBuilder withShopLists(Collection<ShopListDto> shopLists) {
+                result.shopLists = shopLists;
                 return this;
             }
 
@@ -92,6 +103,4 @@ public class PlaceDto implements Serializable {
             }
         }
     }
-
-
 }

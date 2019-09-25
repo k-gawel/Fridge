@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public abstract class BaseGetter<T extends BaseEntity> {
 
-    private final AbstractRepository<T> repository;
+    protected final AbstractRepository<T> repository;
 
     final Class<T> getterClass;
 

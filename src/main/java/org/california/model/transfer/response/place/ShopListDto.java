@@ -7,6 +7,7 @@ import org.california.model.transfer.response.AccountDateDto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
 
 @EqualsAndHashCode
 @ToString
@@ -14,13 +15,15 @@ import java.time.LocalDate;
 public class ShopListDto implements Serializable {
 
     private Long id;
+
+    private Long placeId;
     private AccountDateDto created;
 
     private boolean status;
     private String description;
 
     private String shopName;
-    private Long placeId;
+    private Collection<Number> instances;
 
 
     public static class Builder {
@@ -28,8 +31,8 @@ public class ShopListDto implements Serializable {
             return new InnerBuilder();
         }
 
-        public interface PlaceIdSetter {
-            FinalBuilder withPlaceId(Long placeId);
+        public interface ShopNameSetter {
+            InstancesSetter withShopName(String shopName);
         }
 
         public interface FinalBuilder {
@@ -37,11 +40,19 @@ public class ShopListDto implements Serializable {
         }
 
         public interface IdSetter {
-            CreatedSetter withId(Long id);
+            PlaceIdSetter withId(Long id);
         }
 
-        public interface ShopNameSetter {
-            PlaceIdSetter withShopName(String shopName);
+        public interface DescriptionSetter {
+            ShopNameSetter withDescription(String description);
+        }
+
+        public interface InstancesSetter {
+            FinalBuilder withInstances(Collection<Number> instances);
+        }
+
+        public interface PlaceIdSetter {
+            CreatedSetter withPlaceId(Long placeId);
         }
 
         public interface CreatedSetter {
@@ -52,15 +63,16 @@ public class ShopListDto implements Serializable {
             DescriptionSetter withStatus(boolean status);
         }
 
-        public interface DescriptionSetter {
-            ShopNameSetter withDescription(String description);
-        }
-
-        public static class InnerBuilder implements PlaceIdSetter, FinalBuilder, IdSetter, ShopNameSetter, CreatedSetter, StatusSetter, DescriptionSetter {
+        public static class InnerBuilder implements ShopNameSetter, FinalBuilder, IdSetter, DescriptionSetter, InstancesSetter, PlaceIdSetter, CreatedSetter, StatusSetter {
             private ShopListDto result = new ShopListDto();
 
-            public CreatedSetter withId(Long id) {
+            public PlaceIdSetter withId(Long id) {
                 result.id = id;
+                return this;
+            }
+
+            public CreatedSetter withPlaceId(Long placeId) {
+                result.placeId = placeId;
                 return this;
             }
 
@@ -79,13 +91,13 @@ public class ShopListDto implements Serializable {
                 return this;
             }
 
-            public PlaceIdSetter withShopName(String shopName) {
+            public InstancesSetter withShopName(String shopName) {
                 result.shopName = shopName;
                 return this;
             }
 
-            public FinalBuilder withPlaceId(Long placeId) {
-                result.placeId = placeId;
+            public FinalBuilder withInstances(Collection<Number> instances) {
+                result.instances = instances;
                 return this;
             }
 

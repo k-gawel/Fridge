@@ -44,6 +44,7 @@ public class EntityToDtoMapper {
 
     public PlaceDto toDto(Place place) {
         Collection<WishList> wishLists = getter.wishLists.get(Collections.singleton(place), true);
+        Collection<ShopList> shopLists = getter.shopLists.get(Collections.singleton(place), true);
         Collection<ItemInstanceDto> deletedInstancesFromWishLists = getDeletedInstancesDtoFromWishLists(wishLists);
 
         Collection<ContainerDto> containerDtos = place.getContainers().stream()
@@ -54,7 +55,8 @@ public class EntityToDtoMapper {
 
 
         Collection<PlaceUserDto> placeUsers = placeUsersToDto(place);
-        Collection<WishListDto> wishListDtos = wishLists.stream().map(this::toDto).collect(Collectors.toSet());
+        var wishListDtos = wishLists.stream().map(this::toDto).collect(Collectors.toSet());
+        var shopListDtos = shopLists.stream().map(this::toDto).collect(Collectors.toSet());
 
         return new PlaceDto.Builder().create()
                 .withId(place.getId())
@@ -63,6 +65,7 @@ public class EntityToDtoMapper {
                 .withContainers(containerDtos)
                 .withUsers(placeUsers)
                 .withWishLists(wishListDtos)
+                .withShopLists(shopListDtos)
                 .build();
     }
 
@@ -290,11 +293,12 @@ public class EntityToDtoMapper {
     public ShopListDto toDto(ShopList sl) {
         return new ShopListDto.Builder().create()
                 .withId(sl.getId())
+                .withPlaceId(sl.getPlace().getId())
                 .withCreated(toDto(sl.getCreated()))
                 .withStatus(sl.isStatus())
                 .withDescription(sl.getDescription())
                 .withShopName(sl.getShopName())
-                .withPlaceId(sl.getPlace().getId())
+                .withInstances(sl.getInstances().stream().map(BaseEntity::getId).collect(Collectors.toList()))
                 .build();
     }
 
