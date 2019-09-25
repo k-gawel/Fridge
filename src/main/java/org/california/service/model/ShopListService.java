@@ -58,7 +58,7 @@ public class ShopListService {
 
     private ShopList fromForm(ShopListForm form) {
         ShopList shopList = new ShopList();
-        shopList.setCreatedOn(LocalDate.now());
+        shopList.setCreated(LocalDate.now());
         shopList.setDescription(form.description);
         shopList.setPlace(form.place);
         shopList.setShopName(form.shopName);

@@ -3,6 +3,7 @@ package org.california.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.california.model.entity.utils.AccountDate;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -21,17 +22,16 @@ public class ShopList extends BaseEntity {
 
     boolean status = true;
 
-    private LocalDate createdOn;
-    private String description;
-    private String shopName;
-
     @ManyToOne
     @JoinColumn
     private Place place;
+    private AccountDate created;
+
+    private String description;
+    private String shopName;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "shopList")
     Collection<ItemInstance> instances = new HashSet<>();
-
 
 }

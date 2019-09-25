@@ -290,7 +290,7 @@ public class EntityToDtoMapper {
     public ShopListDto toDto(ShopList sl) {
         return new ShopListDto.Builder().create()
                 .withId(sl.getId())
-                .withCreatedOn(sl.getCreatedOn())
+                .withCreated(toDto(sl.getCreated()))
                 .withStatus(sl.isStatus())
                 .withDescription(sl.getDescription())
                 .withShopName(sl.getShopName())
