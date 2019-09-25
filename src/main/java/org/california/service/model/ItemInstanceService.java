@@ -1,58 +1,50 @@
 package org.california.service.model;
 
 import org.california.model.entity.Account;
-import org.california.model.entity.Container;
 import org.california.model.entity.ItemInstance;
-import org.california.model.entity.item.Item;
-import org.california.model.transfer.request.ItemInstanceForm;
+import org.california.model.entity.utils.AccountDate;
+import org.california.model.transfer.request.forms.ItemInstanceForm;
+import org.california.model.transfer.request.forms.MoneyForm;
 import org.california.repository.iteminstance.ItemInstanceRepository;
-import org.california.service.getter.GetterService;
-import org.california.util.exceptions.NotValidException;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
 @Service
 public class ItemInstanceService {
 
-    private ItemInstanceRepository itemInstanceRepository;
-    private GetterService getterService;
-    private InstanceOnChangeService instanceOnChangeService;
-
+    private final ItemInstanceRepository itemInstanceRepository;
+    private final ShopListService shopListService;
+    private final InstanceOnChangeService instanceOnChangeService;
+    private final WishListItemService wishListItemService;
 
 
     @Autowired
-    public ItemInstanceService(ItemInstanceRepository itemInstanceRepository, GetterService getterService, InstanceOnChangeService instanceOnChangeService) {
+    public ItemInstanceService(ItemInstanceRepository itemInstanceRepository, ShopListService shopListService, InstanceOnChangeService instanceOnChangeService, WishListItemService wishListItemService) {
         this.itemInstanceRepository = itemInstanceRepository;
-        this.getterService = getterService;
+        this.shopListService = shopListService;
         this.instanceOnChangeService = instanceOnChangeService;
+        this.wishListItemService = wishListItemService;
     }
 
 
     public ItemInstance create(Account account, ItemInstanceForm form) {
         ItemInstance result = fromForm(form);
-
-        result.setAddedBy(account);
-        result.setAddedOn(LocalDate.now());
-
-        result =  itemInstanceRepository.save(result);
-
-        if(result != null)
-            instanceOnChangeService.add(account, result);
-
-        return result;
+        result.setAdded(new AccountDate(account));
+        return itemInstanceRepository.save(result);
     }
 
 
     public boolean open(Account account, ItemInstance itemInstance) {
-        if(account == null || itemInstance == null ||
-                itemInstance.getOpenBy() != null || itemInstance.getOpenOn() != null)
+        if (account == null || itemInstance == null || itemInstance.isOpen())
             return false;
 
-        itemInstance.setOpenBy(account);
-        itemInstance.setOpenOn(LocalDate.now());
+        itemInstance.setOpened(new AccountDate(account));
 
         boolean result = itemInstanceRepository.save(itemInstance) != null;
 
@@ -64,12 +56,10 @@ public class ItemInstanceService {
 
 
     public boolean delete(Account account, ItemInstance itemInstance) {
-        if(account == null && itemInstance == null ||
-                itemInstance.getDeletedOn() != null || itemInstance.getDeletedBy() != null)
+        if (account == null && itemInstance == null || itemInstance.isDeleted())
             return false;
 
-        itemInstance.setDeletedBy(account);
-        itemInstance.setDeletedOn(LocalDate.now());
+        itemInstance.setDeleted(new AccountDate(account));
 
         boolean result = itemInstanceRepository.save(itemInstance) != null;
 
@@ -86,23 +76,30 @@ public class ItemInstanceService {
     }
 
 
-    private ItemInstance fromForm(ItemInstanceForm form) {
-        Item item = getterService.items.getByKey(form.itemId);
-        Container container = getterService.containers.getById(form.containerId);
-        LocalDate expireDate = form.expireDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        String comment = form.comment;
-
-        if(item == null || container == null)
-            throw new NotValidException("item_or_container.null");
-
+    private ItemInstance fromForm(@Valid ItemInstanceForm form) {
         ItemInstance result = new ItemInstance();
 
-        result.setItem(item);
-        result.setContainer(container);
-        result.setExpireOn(expireDate);
-        result.setComment(comment);
+        result.setAdded(new AccountDate(form.user, LocalDate.now()));
+        result.setPrice(moneyFromForm(form.price));
+        result.setItem(form.item);
+        result.setContainer(form.container);
+        result.setExpireOn(form.expireDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        result.setComment(form.comment);
+
+        if (form.wishListItem != null)
+            wishListItemService.addInstance(form.user, form.wishListItem, result);
+        if (form.shopList != null)
+            shopListService.addInstance(form.shopList, result);
 
         return result;
+    }
+
+
+    private Money moneyFromForm(MoneyForm moneyForm) {
+        CurrencyUnit currencyUnit = CurrencyUnit.of(moneyForm.currency);
+        double amount = moneyForm.amount.doubleValue();
+
+        return Money.of(currencyUnit, amount);
     }
 
 }

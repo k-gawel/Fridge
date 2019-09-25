@@ -7,7 +7,8 @@ import lombok.ToString;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class BaseNamedEntity extends BaseEntity {
 
     protected String name;
@@ -19,4 +20,8 @@ public class BaseNamedEntity extends BaseEntity {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "[ " + getClass().getSimpleName() + ", ID: " + id + " , NAME: " + name + " ]";
+    }
 }

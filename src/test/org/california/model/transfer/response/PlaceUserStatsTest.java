@@ -1,5 +1,6 @@
 package org.california.model.transfer.response;
 
+import org.california.model.transfer.response.place.PlaceUserStats;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

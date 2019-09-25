@@ -1,9 +1,9 @@
 package org.california.repository.item;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.california.model.entity.Place;
 import org.california.model.entity.item.Category;
 import org.california.model.entity.item.Item;
-import org.california.model.entity.Place;
 import org.california.repository.AbstractRepositoryImpl;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -54,10 +54,26 @@ public class ItemSearchRepositoryImpl extends AbstractRepositoryImpl implements 
             return Collections.emptySet();
 
         final String HQL = "SELECT I FROM Item I WHERE I.name LIKE :name " +
-                                                  "AND (I.place IS NULL OR I.place in :places)";
+                "AND (I.place IS NULL OR I.place in :places)";
 
         Query<Item> query = getSession().createQuery(HQL);
         query.setParameter("name", "%" + name  + "%");
+        query.setParameterList("places", places);
+
+        return query.getResultList();
+    }
+
+
+    @Override
+    public Collection<Item> searchByPlaceAndCategories(Collection<Place> places, Collection<Category> categories) {
+        if (CollectionUtils.isEmpty(places) || CollectionUtils.isEmpty(categories))
+            return Collections.emptySet();
+
+        final String HQL = "SELECT I FROM Item I WHERE I.category in :categories " +
+                "AND (I.place IS NULL OR I.place in :places)";
+
+        Query<Item> query = getSession().createQuery(HQL);
+        query.setParameterList("categories", categories);
         query.setParameterList("places", places);
 
         return query.getResultList();

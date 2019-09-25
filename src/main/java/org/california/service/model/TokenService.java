@@ -16,7 +16,7 @@ import java.util.Random;
 @Service
 public class TokenService {
 
-    private TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
 
     private final Logger logger = LoggerFactory.getLogger(getClass().getName());
 

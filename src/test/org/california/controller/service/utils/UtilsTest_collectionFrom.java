@@ -13,7 +13,7 @@ public class UtilsTest_collectionFrom {
     public void stringIsEmpty() {
 
         String string;
-        Collection<Long> result;
+        Collection<Number> result;
 
         string = null;
         result = Utils.collectionOf(string);
@@ -29,7 +29,7 @@ public class UtilsTest_collectionFrom {
     public void stringOfSingleNumber() {
 
         String string;
-        Collection<Long> result;
+        Collection<Number> result;
 
         string = "1";
         result = Utils.collectionOf(string);
@@ -53,7 +53,7 @@ public class UtilsTest_collectionFrom {
     public void stringOfAlphabeticCharacters() {
 
         String string;
-        Collection<Long> result;
+        Collection<Number> result;
 
         string = "a";
         result = Utils.collectionOf(string);
@@ -85,7 +85,7 @@ public class UtilsTest_collectionFrom {
     public void stringOfNumbers() {
 
         String string;
-        Collection<Long> result;
+        Collection<Number> result;
 
         string = "1,2";
         result = Utils.collectionOf(string);
@@ -109,7 +109,7 @@ public class UtilsTest_collectionFrom {
     public void mixedString() {
 
         String string;
-        Collection<Long> result;
+        Collection<Number> result;
 
         string = "1,a,2";
         result = Utils.collectionOf(string);

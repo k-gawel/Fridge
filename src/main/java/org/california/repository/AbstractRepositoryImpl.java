@@ -15,12 +15,13 @@ import java.util.Iterator;
 import java.util.UUID;
 
 @Transactional
-public abstract class AbstractRepositoryImpl<T extends Serializable> implements AbstractRepository<T>{
+public abstract class AbstractRepositoryImpl<T extends BaseEntity> implements AbstractRepository<T> {
+
+    Class<T> clazz;
 
     @Autowired
-    SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
-    protected Class<T> clazz;
     protected final void setClazz(Class<T> clazz) {
         this.clazz = clazz;
     }
@@ -28,7 +29,6 @@ public abstract class AbstractRepositoryImpl<T extends Serializable> implements 
     protected final Session getSession() {
         return sessionFactory.getCurrentSession();
     }
-
 
     @Transactional
     public T save(T entity) {
@@ -72,7 +72,7 @@ public abstract class AbstractRepositoryImpl<T extends Serializable> implements 
 
 
     @Transactional(readOnly = true)
-    public T getByKey(Serializable key) {
+    public T getByKey(Number key) {
         if(key == null)
             return null;
         return (T) getSession().get(clazz, key);
@@ -80,7 +80,7 @@ public abstract class AbstractRepositoryImpl<T extends Serializable> implements 
 
     @Override
     @Transactional(readOnly = false)
-    public Collection<T> getByKeys(Collection<Long> ids) {
+    public Collection<T> getByKeys(Collection<? extends Number> ids) {
         if(CollectionUtils.isEmpty(ids))
             return Collections.emptySet();
 

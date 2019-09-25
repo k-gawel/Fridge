@@ -4,8 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
 import org.california.model.entity.Token;
-import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.InitialResponse;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.util.exceptions.NotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,11 +80,10 @@ public class AuthorizationService {
         if(StringUtils.isAnyBlank(username, password))
             throw new NotValidException("username.blank|password.blank");
 
-        Account account = getterService.accounts.getByName(username);
+        Account account = getterService.accounts.getByName(username)
+                .orElseThrow(() -> new NotValidException("account.doesn't_exists"));
 
-        if(account == null)
-            throw new NotValidException("account.doesn't_exists");
-        else if(!account.getPassword().equals(password))
+        if (!account.getPassword().equals(password))
             throw new NotValidException("password.not_equal");
         else
             return account;

@@ -3,15 +3,13 @@ package org.california.controller.service;
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
-import org.california.model.entity.Place;
-import org.california.model.transfer.request.ContainerForm;
-import org.california.model.transfer.response.ContainerDto;
+import org.california.model.transfer.request.forms.ContainerForm;
+import org.california.model.transfer.response.place.ContainerDto;
+import org.california.model.transfer.response.place.PlaceUserStats;
 import org.california.service.builders.EntityToDtoMapper;
-import org.california.model.transfer.response.PlaceUserStats;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.ContainerService;
-import org.california.util.exceptions.NotValidException;
 import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,14 +35,13 @@ ContainerControllerService {
         this.containerService = containerService;
     }
 
-    public ContainerDto newContainer(String token, ContainerForm containerForm) {
+    public ContainerDto newContainer(String token, ContainerForm form) {
         Account account = getterService.accounts.getByToken(token);
-        Place place = getterService.places.getByKey(containerForm.placeId);
 
-        if(!accountPermissionsService.hasAccessToPlace(account, place))
+        if (!accountPermissionsService.hasAccessToPlace(account, form.place))
             throw new UnauthorizedException("containeraccess.denied");
 
-        Container container = containerService.createNewContainer(account, containerForm);
+        Container container = containerService.createNewContainer(account, form);
 
         return mapper.toDto(container);
     }
@@ -53,8 +50,8 @@ ContainerControllerService {
     public Collection<ContainerDto> get(String token, String containerIdsString, String placeIdsString) {
 
         Account account = getterService.accounts.getByToken(token);
-        Collection<Long> containerIds = Utils.collectionOf(containerIdsString);
-        Collection<Long> placeIds = Utils.collectionOf(placeIdsString);
+        Collection<Number> containerIds = Utils.collectionOf(containerIdsString);
+        Collection<Number> placeIds = Utils.collectionOf(placeIdsString);
 
         Collection<Container> result = get(account, containerIds, placeIds);
 
@@ -66,13 +63,13 @@ ContainerControllerService {
     }
 
 
-    private Collection<Container> get(Account account, Collection<Long> containerIds, Collection<Long> placeIds) {
+    private Collection<Container> get(Account account, Collection<Number> containerIds, Collection<Number> placeIds) {
 
         if(!containerIds.isEmpty())
-            return getterService.containers.getByIds(containerIds);
+            return getterService.containers.getByKeys(containerIds);
 
         else if(!placeIds.isEmpty())
-            return getterService.containers.getByPlaces(getterService.places.getByIds(placeIds));
+            return getterService.containers.getByPlaces(getterService.places.getByKeys(placeIds));
 
         else if(account != null)
             return getterService.containers.getByPlaces(account.getPlaces());
@@ -88,20 +85,20 @@ ContainerControllerService {
         if(account == null)
             throw new UnauthorizedException();
 
-        Collection<Long> userIds      = Utils.collectionOf(userIdsString);
-        Collection<Long> placeIds     = Utils.collectionOf(placeIdsString);
-        Collection<Long> containerIds = Utils.collectionOf(containerIdsString);
+        Collection<Number> userIds = Utils.collectionOf(userIdsString);
+        Collection<Number> placeIds = Utils.collectionOf(placeIdsString);
+        Collection<Number> containerIds = Utils.collectionOf(containerIdsString);
 
 
         Collection<Container> containers = containerIds.isEmpty() ?
-                getterService.containers.getByPlaces(getterService.places.getByIds(placeIds))
-                : getterService.containers.getByIds(containerIds);
+                getterService.containers.getByPlaces(getterService.places.getByKeys(placeIds))
+                : getterService.containers.getByKeys(containerIds);
 
         containers.removeIf(c -> !accountPermissionsService.hasAccessToContainer(account, c));
 
         Collection<Account> accounts = userIds.isEmpty() ?
                 getterService.accounts.getAllByContainers(containers)
-                : getterService.accounts.getByIds(userIds);
+                : getterService.accounts.getByKeys(containerIds);
 
         return containerService.getUsersStats(accounts, containers);
     }

@@ -1,5 +1,6 @@
 package org.california.controller.service;
 
+import lombok.Builder;
 import org.california.model.transfer.response.InitialResponse;
 import org.california.service.model.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthorizationControllerService {
 
-    private AuthorizationService authorizationService;
+    private final AuthorizationService authorizationService;
 
     @Autowired
     public AuthorizationControllerService(AuthorizationService authorizationService) {
@@ -30,5 +31,6 @@ public class AuthorizationControllerService {
             return false;
         }
     }
+
 
 }

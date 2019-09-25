@@ -1,8 +1,8 @@
 package org.california.repository.item;
 
+import org.california.model.entity.Place;
 import org.california.model.entity.item.Category;
 import org.california.model.entity.item.Item;
-import org.california.model.entity.Place;
 import org.california.model.util.KeyValue;
 
 import java.util.Collection;

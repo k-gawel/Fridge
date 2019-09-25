@@ -19,7 +19,8 @@ import java.util.HashSet;
 
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class Category extends BaseNamedEntity {
 
     @ManyToOne @JoinColumn
@@ -29,6 +30,7 @@ public class Category extends BaseNamedEntity {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "parent")
+    @ToString.Exclude
     private Collection<Category> children = new HashSet<>();
 
     public Category() { }

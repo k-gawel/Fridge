@@ -1,6 +1,5 @@
 package org.california.service.getter;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.Place;
@@ -8,32 +7,18 @@ import org.california.repository.place.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
-public class PlaceGetter {
+public class PlaceGetter extends BaseGetter<Place> {
 
     private final PlaceRepository placeRepository;
 
     @Autowired
     PlaceGetter(PlaceRepository placeRepository) {
+        super(placeRepository, Place.class);
         this.placeRepository = placeRepository;
-    }
-
-
-    public Place getByKey(Serializable key) {
-        return placeRepository.getByKey(key);
-    }
-
-
-    @NotEmpty
-    public Collection<Place> getByIds(Collection<Long> ids) {
-        return CollectionUtils.isEmpty(ids) ?
-                Collections.emptySet() : placeRepository.getByIds(ids);
     }
 
 

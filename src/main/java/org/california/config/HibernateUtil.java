@@ -32,8 +32,8 @@ public class HibernateUtil {
 
         dataSource.setDriverClassName(props.getProperty(Environment.DRIVER));
         dataSource.setUrl(props.getProperty(Environment.URL));
-        dataSource.setUsername(System.getProperty("db.username"));
-        dataSource.setPassword(System.getProperty("db.password"));
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
 
         return dataSource;
     }
@@ -44,6 +44,7 @@ public class HibernateUtil {
 
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         Properties settings = Environment.getProperties();
+        settings.setProperty("show_sql", "true");
 
         factoryBean.setHibernateProperties(settings);
         factoryBean.setDataSource(getDataSource());

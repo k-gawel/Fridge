@@ -1,13 +1,15 @@
 package org.california.repository;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 public interface AbstractRepository<T> {
 
     T save(T entity);
-    T getByKey(Serializable key);
-    Collection<T> getByKeys(Collection<Long> ids);
+
+    T getByKey(Number key);
+
+    Collection<T> getByKeys(Collection<? extends Number> ids);
     boolean delete(T entity);
     void setUUID();
+
 }

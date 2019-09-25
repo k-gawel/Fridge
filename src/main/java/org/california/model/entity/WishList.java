@@ -10,11 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class WishList extends BaseNamedEntity {
 
     private String description;
@@ -27,16 +29,11 @@ public class WishList extends BaseNamedEntity {
     @OneToMany(mappedBy = "wishList")
     private Collection<WishListItem> items = new HashSet<>();
 
+
+    private LocalDate createdOn;
+    private LocalDate archivedOn;
+
+
     public WishList() { }
-
-    public WishList(WishList wishList) {
-        this.id = wishList.getId();
-        this.name = wishList.getName();
-        this.description = wishList.getDescription();
-        this.status = wishList.isStatus();
-
-        this.place = wishList.getPlace();
-        this.items = wishList.getItems();
-    }
 
 }

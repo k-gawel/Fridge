@@ -4,11 +4,9 @@ import org.california.model.entity.Account;
 import org.california.model.entity.ItemInstance;
 import org.california.model.entity.WishList;
 import org.california.model.entity.WishListItem;
-import org.california.model.entity.item.Category;
-import org.california.model.entity.item.Item;
-import org.california.model.transfer.request.WishListItemForm;
+import org.california.model.entity.utils.AccountDate;
+import org.california.model.transfer.request.forms.WishListItemForm;
 import org.california.repository.wishlist.WishListItemRepository;
-import org.california.service.getter.GetterService;
 import org.california.util.exceptions.NotValidException;
 import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +18,14 @@ import java.util.Date;
 public class WishListItemService {
 
 
-    private WishListItemRepository wishListItemRepository;
-    private WishListService wishListService;
-    private GetterService getterService;
-    private ItemInstanceService itemInstanceService;
-    private AccountPermissionsService accountPermissionsService;
+    private final WishListItemRepository wishListItemRepository;
+    private final WishListService wishListService;
+    private final AccountPermissionsService accountPermissionsService;
 
     @Autowired
-    public WishListItemService(WishListItemRepository wishListItemRepository, WishListService wishListService, GetterService getterService, ItemInstanceService itemInstanceService, AccountPermissionsService accountPermissionsService) {
+    public WishListItemService(WishListItemRepository wishListItemRepository, WishListService wishListService, AccountPermissionsService accountPermissionsService) {
         this.wishListItemRepository = wishListItemRepository;
         this.wishListService = wishListService;
-        this.getterService = getterService;
-        this.itemInstanceService = itemInstanceService;
         this.accountPermissionsService = accountPermissionsService;
     }
 
@@ -40,6 +34,9 @@ public class WishListItemService {
             throw new UnauthorizedException();
 
         wishListItem.setAddedInstance(instance);
+        wishListItem.setAdded(new AccountDate(account));
+
+        instance.setWishListItem(wishListItem);
         return wishListItemRepository.save(wishListItem) != null;
     }
 
@@ -100,15 +97,9 @@ public class WishListItemService {
 
         result.setCreatedOn(new Date());
         result.setComment(form.comment);
-
-        WishList list = getterService.wishLists.getByKey(form.wish_list_id);
-        result.setWishList(list);
-
-        Category category = getterService.categories.getByKey(form.category_id);
-        result.setCategory(category);
-
-        Account author = getterService.accounts.getByKey(form.author_id);
-        result.setAuthor(author);
+        result.setWishList(form.wishList);
+        result.setCategory(form.category);
+        result.setAuthor(form.author);
 
         return result;
 

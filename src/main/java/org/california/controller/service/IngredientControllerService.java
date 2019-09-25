@@ -3,8 +3,8 @@ package org.california.controller.service;
 import org.apache.commons.lang3.StringUtils;
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.item.Ingredient;
+import org.california.model.transfer.response.item.IngredientDto;
 import org.california.service.builders.EntityToDtoMapper;
-import org.california.model.transfer.response.IngredientDto;
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,12 @@ public class IngredientControllerService {
 
 
     public Collection<IngredientDto> search(String idsString, String name, String nameStart) {
-        Collection<Long> ids = Utils.collectionOf(idsString);
+        Collection<Number> ids = Utils.collectionOf(idsString);
 
         Collection<Ingredient> resultList;
 
         if(!ids.isEmpty())
-            resultList = getter.ingredients.getByIds(ids);
+            resultList = getter.ingredients.getByKeys(ids);
         else if(StringUtils.isNotBlank(name))
             resultList = getter.ingredients.searchByName(name);
         else if(!StringUtils.isNotBlank(nameStart))
@@ -44,8 +44,4 @@ public class IngredientControllerService {
     }
 
 
-    public IngredientDto get(String name) {
-        return mapper.toDto(getter.ingredients.getByName(name));
-    }
-    
 }

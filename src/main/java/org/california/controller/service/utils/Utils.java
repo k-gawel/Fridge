@@ -5,9 +5,8 @@ import java.util.HashSet;
 
 public class Utils {
 
-    public static Collection<Long> collectionOf(String ids) {
-
-            Collection<Long> result = new HashSet<>();
+    public static Collection<Number> collectionOf(String ids) {
+        Collection<Number> result = new HashSet<>();
 
             if(ids == null)
                 return result;
@@ -25,8 +24,10 @@ public class Utils {
 
     }
 
+
     public static Boolean stringToBoolean(String string) {
         return string.equals("") ? null : Boolean.valueOf(string);
     }
+
 
 }

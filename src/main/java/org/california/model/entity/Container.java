@@ -1,5 +1,6 @@
 package org.california.model.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,12 +13,13 @@ import java.util.Date;
 import java.util.HashSet;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class Container extends BaseNamedEntity {
 
-    @LazyCollection(value = LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "container")
-    private transient Collection<ItemInstance> itemInstances = new HashSet<>();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "container")
+    private Collection<ItemInstance> itemInstances = new HashSet<>();
 
     @Column(nullable = false)
     private Date date = new Date();
@@ -27,12 +29,6 @@ public class Container extends BaseNamedEntity {
     private Place place;
 
     public Container() {
-
-    }
-
-    @Override
-    public String toString() {
-        return "ID: [" + id + "] name: [" + name + "] placeId: [" + place.getId() + "]";
     }
 
 

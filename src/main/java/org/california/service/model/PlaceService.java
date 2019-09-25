@@ -3,9 +3,8 @@ package org.california.service.model;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.Place;
-import org.california.model.transfer.request.PlaceForm;
+import org.california.model.transfer.request.forms.PlaceForm;
 import org.california.repository.place.PlaceRepository;
-import org.california.util.exceptions.NotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ import java.util.Date;
 public class PlaceService {
 
 
-    private PlaceRepository placeRepository;
+    private final PlaceRepository placeRepository;
 
     @Autowired
     public PlaceService(PlaceRepository placeRepository) {

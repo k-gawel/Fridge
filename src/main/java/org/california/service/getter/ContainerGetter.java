@@ -11,26 +11,14 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
-public class ContainerGetter {
+public class ContainerGetter extends BaseGetter<Container> {
 
     private final ContainerRepository containerRepository;
 
     @Autowired
     ContainerGetter(ContainerRepository containerRepository) {
+        super(containerRepository, Container.class);
         this.containerRepository = containerRepository;
-    }
-
-
-    public Container getById(Long id) {
-        if(id == null)
-            return null;
-
-        return containerRepository.getByKey(id);
-    }
-
-
-    public Collection<Container> getByIds(Collection<Long> ids) {
-        return containerRepository.getByIds(ids);
     }
 
 

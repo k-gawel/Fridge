@@ -3,8 +3,8 @@ package org.california.controller.service;
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
+import org.california.model.transfer.response.iteminstance.InstanceChangeDto;
 import org.california.service.builders.EntityToDtoMapper;
-import org.california.model.transfer.response.InstanceChangeDto;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.InstanceOnChangeService;
@@ -35,15 +35,15 @@ public class LoggerControllerService {
     public Collection<InstanceChangeDto> getInstancesChangesByPlace(String token, String placeIdsString, String containerIdsString, int limit) {
 
         Account account = getterService.accounts.getByToken(token);
-        Collection<Long> placeIds = Utils.collectionOf(placeIdsString);
-        Collection<Long> containerIds = Utils.collectionOf(containerIdsString);
+        Collection<Number> placeIds = Utils.collectionOf(placeIdsString);
+        Collection<Number> containerIds = Utils.collectionOf(containerIdsString);
 
         Collection<Container> containers;
 
         if(!containerIds.isEmpty())
-            containers = getterService.containers.getByIds(containerIds);
+            containers = getterService.containers.getByKeys(containerIds);
         else if(!placeIds.isEmpty())
-            containers = getterService.containers.getByPlaces(getterService.places.getByIds(placeIds));
+            containers = getterService.containers.getByPlaces(getterService.places.getByKeys(placeIds));
         else if(account != null)
             containers = getterService.containers.getByAccounts(Collections.singleton(account));
         else

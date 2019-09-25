@@ -1,8 +1,8 @@
 package org.california.service.model;
 
+import org.california.model.entity.Place;
 import org.california.model.entity.item.Category;
 import org.california.model.entity.item.Item;
-import org.california.model.entity.Place;
 import org.california.repository.item.RelatedItemsRepository;
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,8 @@ import java.util.Collection;
 @Service
 public class RelatedItemsService {
 
-    private RelatedItemsRepository relatedItemsRepository;
-    private GetterService getterService;
+    private final RelatedItemsRepository relatedItemsRepository;
+    private final GetterService getterService;
 
     @Autowired
     public RelatedItemsService(RelatedItemsRepository relatedItemsRepository, GetterService getterService) {
@@ -25,7 +25,7 @@ public class RelatedItemsService {
 
     public Collection<Item> getMostPopular(Category category, Collection<Place> places) {
         if(category == null)
-            category = getterService.categories.getByKey(0L);
+            category = getterService.categories.getByKey(0L).get();
 
         Collection<Category> categories = getterService.categories.getFinalCategories(category);
 
@@ -33,7 +33,6 @@ public class RelatedItemsService {
             return relatedItemsRepository.getMostPopularOfCategories(categories);
         else
             return relatedItemsRepository.getMostPopularOfCategories(places, categories);
-
     }
 
 

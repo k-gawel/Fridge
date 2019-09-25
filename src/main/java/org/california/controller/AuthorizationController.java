@@ -4,46 +4,39 @@ import org.california.controller.service.AuthorizationControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("/auth")
+@RequestMapping("/auth")
 @CrossOrigin
-public class AuthorizationController {
+public class AuthorizationController extends BaseController {
 
 
-    private AuthorizationControllerService authorizationControllerService;
+    private final AuthorizationControllerService controllerService;
 
     @Autowired
-    public AuthorizationController(AuthorizationControllerService authorizationControllerService) {
-        this.authorizationControllerService = authorizationControllerService;
+    public AuthorizationController(AuthorizationControllerService controllerService) {
+        this.controllerService = controllerService;
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity login(
-            @RequestHeader(name = "token", defaultValue = "") String token,
-            @RequestHeader(name = "username", defaultValue = "") String username,
-            @RequestHeader(name = "password", defaultValue = "") String password
+    public ResponseEntity login(@RequestHeader(name = "token", defaultValue = "") String token,
+                                @RequestHeader(name = "username", defaultValue = "") String username,
+                                @RequestHeader(name = "password", defaultValue = "") String password
     ) {
-
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = authorizationControllerService.login(token, username, password);
-            httpStatus = HttpStatus.OK;
+            result = controllerService.login(token, username, password);
+            status = HttpStatus.OK;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+        return ResponseEntity.status(status).body(result);
     }
 
 

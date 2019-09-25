@@ -14,7 +14,8 @@ import java.util.Date;
 import java.util.HashSet;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class Account extends BaseNamedEntity {
 
     @Column(nullable = false)

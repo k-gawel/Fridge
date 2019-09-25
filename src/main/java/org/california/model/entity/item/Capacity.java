@@ -1,6 +1,5 @@
 package org.california.model.entity.item;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class Capacity extends BaseEntity {
 
     @Column
@@ -25,6 +25,9 @@ public class Capacity extends BaseEntity {
     }
 
     public Capacity(String string) {
+        if (StringUtils.isBlank(string))
+            return;
+
         String pString = string.trim()
                                 .replaceAll(",", ".")
                                 .replaceAll("\\s+", "");

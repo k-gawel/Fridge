@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.Token;
 import org.california.model.entity.item.Category;
+import org.california.model.transfer.response.item.ProducerDto;
 
 import java.io.Serializable;
 import java.util.Collection;

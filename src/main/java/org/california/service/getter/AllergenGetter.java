@@ -5,31 +5,22 @@ import org.california.repository.item.AllergenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
-public class AllergenGetter {
+public class AllergenGetter extends BaseGetter<Allergen> {
     
     private final AllergenRepository allergenRepository;
 
     @Autowired
     AllergenGetter(AllergenRepository allergenRepository) {
+        super(allergenRepository, Allergen.class);
         this.allergenRepository = allergenRepository;
     }
 
-    
-    public Allergen getByKey(Serializable key) {
-        return allergenRepository.getByKey(key);
-    }
 
-
-    public Collection<Allergen> getByIds(Collection<Long> ids) {
-        return allergenRepository.getByKeys(ids);
-    }
-
-    
-    public Allergen getByName(String name) {
+    public Optional<Allergen> getByName(String name) {
         return allergenRepository.getByName(name);
     }
 
@@ -43,12 +34,4 @@ public class AllergenGetter {
         return allergenRepository.getWhereNameStartsWith(nameStart);
     }
 
-    public Allergen getOrCreateByName(String name) {
-        Allergen result = getByName(name);
-
-        if(result != null)
-            return result;
-        else
-            return allergenRepository.save(new Allergen(name));
-    }
 }

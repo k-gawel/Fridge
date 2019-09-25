@@ -1,88 +1,81 @@
 package org.california.controller;
 
 import org.california.controller.service.WishListControllerService;
-import org.california.model.transfer.request.WishListForm;
+import org.california.model.transfer.request.forms.WishListForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
-@RestController(value = "/wishlists")
+@RestController("/wishlists")
+@RequestMapping("/wishlists")
 @CrossOrigin
-public class WishListController {
+public class WishListController extends BaseController {
 
-    private final WishListControllerService wishListControllerService;
+    private final WishListControllerService controllerService;
 
     @Autowired
-    public WishListController(WishListControllerService wishListControllerService) {
-        this.wishListControllerService = wishListControllerService;
+    public WishListController(WishListControllerService controllerService) {
+        this.controllerService = controllerService;
     }
 
     @PostMapping
-    public ResponseEntity newWishList(
-            @RequestHeader("token") String token,
-            @Valid @RequestBody WishListForm wishListForm)
-    {
+    public ResponseEntity newWishList(@RequestHeader("token") String token,
+                                      @Valid @RequestBody WishListForm wishListForm) {
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = this.wishListControllerService.newWishList(token, wishListForm);
-            httpStatus = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
+            result = this.controllerService.newWishList(token, wishListForm);
+            status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+
+        return ResponseEntity.status(status).body(result);
     }
 
 
     @GetMapping
-    public ResponseEntity get(
-            @RequestHeader("token") String token,
-            @RequestParam(name = "placeIds", defaultValue = "") String placesIds,
-            @RequestParam(name = "ids", defaultValue = "") String wishListIds,
-            @RequestParam(name = "active", defaultValue = "true") boolean active
-    ) {
+    public ResponseEntity get(@RequestHeader("token") String token,
+                              @RequestParam(name = "placeIds", defaultValue = "") String placesIds,
+                              @RequestParam(name = "ids", defaultValue = "") String wishListIds,
+                              @RequestParam(name = "active", defaultValue = "true") boolean active) {
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = this.wishListControllerService.get(token, placesIds, wishListIds, active);
-            httpStatus = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
+            result = this.controllerService.get(token, placesIds, wishListIds, active);
+            status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
-
+        return ResponseEntity.status(status).body(result);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(
-            @RequestHeader("token") String token,
-            @PathVariable("id") Long id
-    ) {
-        return null;
+    public ResponseEntity delete(@RequestHeader("token") String token,
+                                 @PathVariable("id") Long wishListid) {
+        Object result;
+        HttpStatus status;
+
+        try {
+            result = this.controllerService.archive(token, wishListid);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result = result(e);
+            status = status(e);
+        }
+
+        return ResponseEntity.status(status).body(result);
     }
 
 

@@ -1,9 +1,9 @@
 package org.california.controller.service;
 
 import org.california.model.entity.Account;
-import org.california.model.transfer.request.AccountForm;
-import org.california.service.builders.EntityToDtoMapper;
+import org.california.model.transfer.request.forms.AccountForm;
 import org.california.model.transfer.response.NamedEntityDto;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountManagementService;
 import org.california.service.model.AccountService;

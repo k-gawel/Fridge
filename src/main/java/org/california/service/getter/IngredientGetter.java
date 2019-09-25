@@ -5,35 +5,23 @@ import org.california.repository.item.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
-public class IngredientGetter {
+public class IngredientGetter extends BaseGetter<Ingredient> {
 
     private final IngredientRepository ingredientRepository;
 
 
     @Autowired
     IngredientGetter(IngredientRepository ingredientRepository) {
+        super(ingredientRepository, Ingredient.class);
         this.ingredientRepository = ingredientRepository;
     }
 
 
-    public Ingredient getByKey(Serializable key) {
-        if(key == null)
-            return null;
-
-        return ingredientRepository.getByKey(key);
-    }
-
-
-    public Collection<Ingredient> getByIds(Collection<Long> ids) {
-        return ingredientRepository.getByKeys(ids);
-    }
-
-
-    public Ingredient getByName(String name) {
+    public Optional<Ingredient> getByName(String name) {
         return ingredientRepository.getByName(name);
     }
 

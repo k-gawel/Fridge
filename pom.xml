@@ -24,8 +24,9 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <systemPropertyVariables>
-                        <db.username>${db.username}</db.username>
-                        <db.password>${db.password}</db.password>
+                        <db.username>root</db.username>
+                        <db.password>root</db.password>
+                        <buildDirectory>${project.build.directory}</buildDirectory>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -39,6 +40,14 @@
                     <url>${tomcat-server.url}</url>
                     <path>${tomcat-server.path}</path>
                     <update>true</update>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
 
@@ -304,7 +313,16 @@
             <version>3.8.1</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.joda</groupId>
+            <artifactId>joda-money</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+            <version>4.8.39</version>
+        </dependency>
 
 
     </dependencies>

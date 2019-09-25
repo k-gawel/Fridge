@@ -12,7 +12,8 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class Token extends BaseEntity {
 
     @OneToOne

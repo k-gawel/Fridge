@@ -3,14 +3,13 @@ package org.california.service.getter;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.Place;
-import org.california.model.transfer.response.PlaceUserStats;
+import org.california.model.transfer.response.place.PlaceUserStats;
 import org.california.repository.container.ContainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
 

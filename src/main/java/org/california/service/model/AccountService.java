@@ -1,7 +1,7 @@
 package org.california.service.model;
 
 import org.california.model.entity.Account;
-import org.california.model.transfer.request.AccountForm;
+import org.california.model.transfer.request.forms.AccountForm;
 import org.california.repository.account.AccountRepository;
 import org.california.util.exceptions.NotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.Date;
 @Transactional
 public class AccountService {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
     public AccountService(AccountRepository accountRepository) {
@@ -32,7 +32,7 @@ public class AccountService {
 
         if(accountRepository.getByEmail(account.getEmail()) != null)
             throw new NotValidException("email.exists");
-        if(accountRepository.getByName(form.name) != null)
+        if (accountRepository.getByName(form.name).isEmpty())
             throw new NotValidException("name.exists");
 
         return accountRepository.save(account);
@@ -40,6 +40,7 @@ public class AccountService {
 
 
     public Account formToEntity(AccountForm form) {
+
         Account account = new Account();
         account.setPassword(form.password1);
         account.setCreatedOn(new Date());

@@ -16,18 +16,9 @@ public class CategoryRepositoryImpl extends AbstractNamedEntityRepositoryImpl<Ca
         setClazz(Category.class);
     }
 
-    public Category getByName(String name) {
-
-        final String HQL = "SELECT I from Category I WHERE I.name = :name";
-        Query<Category> query = getSession().createQuery(HQL);
-        query.setParameter("name", name);
-
-        return query.getSingleResult();
-    }
 
     @Override
     public Collection<Category> getByIds(Collection<Long> ids) {
-
         final String HQL = "SELECT C FROM Category C WHERE C.id in (:ids)";
 
         Query<Category> query = getSession().createQuery(HQL);
@@ -37,11 +28,12 @@ public class CategoryRepositoryImpl extends AbstractNamedEntityRepositoryImpl<Ca
     }
 
     @Override
-    public Collection<Category> getByParent(Category o) {
-        Query query = getSession().createQuery(o != null ?
+    public Collection<Category> getByParent(Category parent) {
+        Query query = getSession().createQuery(parent != null ?
                 "SELECT C FROM Category C WHERE C.parent = :parent" :
                 "SELECT C FROM Category C WHERE C.parent IS NULL");
-        query.setParameter("parent", o);
+        if (parent != null)
+            query.setParameter("parent", parent);
 
         return query.getResultList();
     }

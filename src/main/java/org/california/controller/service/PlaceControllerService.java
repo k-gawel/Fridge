@@ -3,9 +3,9 @@ package org.california.controller.service;
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
-import org.california.model.transfer.request.PlaceForm;
+import org.california.model.transfer.request.forms.PlaceForm;
+import org.california.model.transfer.response.place.PlaceDto;
 import org.california.service.builders.EntityToDtoMapper;
-import org.california.model.transfer.response.PlaceDto;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.PlaceService;
@@ -45,9 +45,9 @@ public class PlaceControllerService {
 
     public Collection<PlaceDto> get(String token, String placeIdsString) {
         Account account = getterService.accounts.getByToken(token);
-        Collection<Long> placeIds = Utils.collectionOf(placeIdsString);
+        Collection<Number> placeIds = Utils.collectionOf(placeIdsString);
 
-        Collection<Place> places = getterService.places.getByIds(placeIds);
+        Collection<Place> places = getterService.places.getByKeys(placeIds);
 
         return places.stream()
                             .filter(p -> accountPermissionsService.hasAccessToPlace(account, p))
@@ -59,8 +59,8 @@ public class PlaceControllerService {
     public Boolean removeUserFromPlace(String token, Long placeId, Long userId) {
 
         Account account = getterService.accounts.getByToken(token);
-        Place place = getterService.places.getByKey(placeId);
-        Account user = getterService.accounts.getByKey(userId);
+        Place place = getterService.places.getByKeyOrThrow(placeId);
+        Account user = getterService.accounts.getByKeyOrThrow(userId);
 
         if(!accountPermissionsService.isAdminOfPlace(account, place) && !account.equals(user))
             throw new UnauthorizedException();
@@ -72,8 +72,8 @@ public class PlaceControllerService {
     public Boolean addUserToPlace(String token, Long placeId, Long userId) {
 
         Account account = getterService.accounts.getByToken(token);
-        Place place = getterService.places.getByKey(placeId);
-        Account user = getterService.accounts.getByKey(userId);
+        Place place = getterService.places.getByKeyOrThrow(placeId);
+        Account user = getterService.accounts.getByKeyOrThrow(userId);
 
         if(!accountPermissionsService.isAdminOfPlace(account, place))
             throw new UnauthorizedException();
@@ -85,8 +85,8 @@ public class PlaceControllerService {
     public Boolean changeAdmin(String token, Long placeId, Long newAdminId) {
 
         Account account = getterService.accounts.getByToken(token);
-        Place place = getterService.places.getByKey(placeId);
-        Account newAdmin = getterService.accounts.getByKey(newAdminId);
+        Place place = getterService.places.getByKeyOrThrow(placeId);
+        Account newAdmin = getterService.accounts.getByKeyOrThrow(newAdminId);
 
         if(!accountPermissionsService.isAdminOfPlace(account, place))
             throw new UnauthorizedException();

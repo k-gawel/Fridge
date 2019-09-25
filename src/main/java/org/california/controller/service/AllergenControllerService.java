@@ -3,8 +3,8 @@ package org.california.controller.service;
 import org.apache.commons.lang3.StringUtils;
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.item.Allergen;
-import org.california.service.builders.EntityToDtoMapper;
 import org.california.model.transfer.response.NamedEntityDto;
+import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +28,12 @@ public class AllergenControllerService {
 
 
     public Collection<NamedEntityDto> search(String idsString, String name, String nameStart) {
-        Collection<Long> ids = Utils.collectionOf(idsString);
+        Collection<Number> ids = Utils.collectionOf(idsString);
 
         Collection<Allergen> resultList;
 
         if(!ids.isEmpty())
-            resultList = getter.allergens.getByIds(ids);
+            resultList = getter.allergens.getByKeys(ids);
         else if(StringUtils.isNotBlank(name))
             resultList = getter.allergens.searchByName(name);
         else if(!StringUtils.isNotBlank(nameStart))
@@ -46,7 +46,8 @@ public class AllergenControllerService {
 
 
     public NamedEntityDto get(String name) {
-        return mapper.toDto(getter.allergens.getByName(name));
+        Allergen allergen = getter.allergens.getByName(name).orElse(null);
+        return mapper.toDto(allergen);
     }
 
 }

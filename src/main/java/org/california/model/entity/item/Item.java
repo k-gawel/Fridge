@@ -16,7 +16,8 @@ import java.util.Map;
 import java.util.Set;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class Item extends BaseNamedEntity {
 
     @Column(length = 100000)

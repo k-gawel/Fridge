@@ -11,7 +11,8 @@ import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class InstanceChange extends BaseEntity {
 
     @ManyToOne @JoinColumn

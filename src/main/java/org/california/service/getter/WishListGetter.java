@@ -7,23 +7,18 @@ import org.california.repository.wishlist.WishListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
 @Service
-public class WishListGetter {
+public class WishListGetter extends BaseGetter<WishList> {
 
     private final WishListRepository wishListRepository;
 
     @Autowired
     WishListGetter(WishListRepository wishListRepository) {
+        super(wishListRepository, WishList.class);
         this.wishListRepository = wishListRepository;
-    }
-
-
-    public WishList getByKey(Serializable key) {
-        return wishListRepository.getByKey(key);
     }
 
 

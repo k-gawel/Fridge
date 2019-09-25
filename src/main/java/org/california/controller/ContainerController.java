@@ -1,9 +1,7 @@
 package org.california.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.california.controller.service.ContainerControllerService;
-import org.california.model.transfer.request.ContainerForm;
-import org.json.JSONObject;
+import org.california.model.transfer.request.forms.ContainerForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,103 +10,79 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @RestController("/containers")
+@RequestMapping("/containers")
 @CrossOrigin
-public class ContainerController {
+public class ContainerController extends BaseController {
 
-    private final ContainerControllerService containerControllerService;
-
+    private final ContainerControllerService controllerService;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
 
     @Autowired
-    public ContainerController(ContainerControllerService containerControllerService) {
-        this.containerControllerService = containerControllerService;
+    public ContainerController(ContainerControllerService controllerService) {
+        this.controllerService = controllerService;
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity addNewContainer(
-            @RequestHeader("token") String token,
-            @Valid @RequestBody ContainerForm containerForm)
+    public ResponseEntity addNewContainer(@RequestHeader("token") String token,
+                                          @Valid @RequestBody ContainerForm containerForm)
     {
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = containerControllerService.newContainer(token, containerForm);
-            httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            result = controllerService.newContainer(token, containerForm);
+            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+        return ResponseEntity.status(status).body(result);
     }
 
 
     @GetMapping
-    public ResponseEntity get(
-            @RequestHeader("token") String token,
-            @RequestParam(value = "ids", defaultValue = "") String ids,
-            @RequestParam(value = "placeIds", defaultValue = "") String placeIds
+    public ResponseEntity get(@RequestHeader("token") String token,
+                              @RequestParam(value = "ids", defaultValue = "") String ids,
+                              @RequestParam(value = "placeIds", defaultValue = "") String placeIds
     ) {
-
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = containerControllerService.get(token, ids, placeIds);
-            httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            result = controllerService.get(token, ids, placeIds);
+            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+        return ResponseEntity.status(status).body(result);
     }
 
 
     @GetMapping(value = "/user_stats", consumes = "application/json")
-    public ResponseEntity getUserStats(
-            @RequestHeader("token") String token,
-            @RequestParam(name = "user_ids", defaultValue = "") String userIdsString,
-            @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,
-            @RequestParam(name = "container_ids", defaultValue = "") String containerIdsString
+    public ResponseEntity getUserStats(@RequestHeader("token") String token,
+                                       @RequestParam(name = "user_ids", defaultValue = "") String userIdsString,
+                                       @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,
+                                       @RequestParam(name = "container_ids", defaultValue = "") String containerIdsString
     ) {
-
-        logger.info("getUserStats token: {}, user_ids: {}, place_ids: {}, container_ids: {}",
-                    token, userIdsString, placeIdsString, containerIdsString);
-
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = containerControllerService.getUserStats(token, userIdsString, placeIdsString, containerIdsString);
-            httpStatus = HttpStatus.OK;
+            result = controllerService.getUserStats(token, userIdsString, placeIdsString, containerIdsString);
+            status = HttpStatus.OK;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+        return ResponseEntity.status(status).body(result);
     }
-
-
-
-
-
-
 
 
 }

@@ -1,37 +1,22 @@
 package org.california.service.getter;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.california.model.entity.item.Category;
 import org.california.repository.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 @Service
-public class CategoryGetter {
+public class CategoryGetter extends BaseGetter<Category> {
 
     private final CategoryRepository categoryRepository;
 
     @Autowired
     CategoryGetter(CategoryRepository categoryRepository) {
+        super(categoryRepository, Category.class);
         this.categoryRepository = categoryRepository;
-    }
-
-
-    public Category getByKey(Serializable key) {
-        return categoryRepository.getByKey(key);
-    }
-
-
-    public Collection<Category> getByIds(Collection<Long> ids) {
-        if(CollectionUtils.isEmpty(ids))
-            return Collections.emptySet();
-
-        return categoryRepository.getByIds(ids);
     }
 
 
@@ -56,7 +41,9 @@ public class CategoryGetter {
         return result;
     }
 
+
     public Category getRootCategory() {
         return categoryRepository.getByParent(null).stream().findFirst().orElseThrow(IllegalStateException::new);
     }
+
 }

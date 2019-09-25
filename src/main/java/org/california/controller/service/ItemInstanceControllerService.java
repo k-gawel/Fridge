@@ -5,8 +5,8 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.ItemInstance;
 import org.california.model.entity.item.Item;
-import org.california.model.transfer.request.ItemInstanceForm;
-import org.california.model.transfer.response.ItemInstanceDto;
+import org.california.model.transfer.request.forms.ItemInstanceForm;
+import org.california.model.transfer.response.iteminstance.ItemInstanceDto;
 import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
@@ -44,11 +44,8 @@ public class ItemInstanceControllerService {
     public ItemInstanceDto addItemInstance(String token, @Valid ItemInstanceForm form) {
         Account account = getterService.accounts.getByToken(token);
 
-        Container container = getterService.containers.getById(form.containerId);
-        Item item = getterService.items.getByKey(form.itemId);
-
-        if(!accountPermissionsService.hasAccessToContainer(account, container)
-            || !accountPermissionsService.hasAccessToItem(account, item))
+        if (!accountPermissionsService.hasAccessToContainer(account, form.container)
+                || !accountPermissionsService.hasAccessToItem(account, form.item))
             throw new UnauthorizedException("item.accessdenied|container.accessdenied");
 
         return mapper.toDto(itemInstanceService.create(account, form));
@@ -57,29 +54,32 @@ public class ItemInstanceControllerService {
 
     public Collection<ItemInstanceDto> get(String token, String idsString, String placeIdsString,
                                            String containerIdsString, String itemIdsString, String ownerIdsString,
-                                           String deletedString, String openString, String frozenString, int limit) {
+                                           String deletedString, String openString, String frozenString, int limit, int offset) {
         Account account = getterService.accounts.getByToken(token);
 
-        Collection<Long> ids = Utils.collectionOf(idsString);
-        Collection<Long> placeIds = Utils.collectionOf(placeIdsString);
-        Collection<Long> containerIds = Utils.collectionOf(containerIdsString);
-        Collection<Long> itemIds = Utils.collectionOf(itemIdsString);
-        Collection<Long> ownerIds = Utils.collectionOf(ownerIdsString);
+        Collection<Number> ids = Utils.collectionOf(idsString);
+        Collection<Number> placeIds = Utils.collectionOf(placeIdsString);
+        Collection<Number> containerIds = Utils.collectionOf(containerIdsString);
+        Collection<Number> itemIds = Utils.collectionOf(itemIdsString);
+        Collection<Number> ownerIds = Utils.collectionOf(ownerIdsString);
 
         Boolean deleted = Utils.stringToBoolean(deletedString);
         Boolean open = Utils.stringToBoolean(openString);
         Boolean frozen = Utils.stringToBoolean(frozenString);
 
+
         Collection<ItemInstance> instances;
 
         if (!ids.isEmpty())
-            instances = getterService.itemInstances.getByIds(ids);
+            instances = getterService.itemInstances.getByKeys(ids);
         else {
             Collection<Container> containers = getContainers(containerIds, placeIds, account);
-            Collection<Item> items = getterService.items.getByIds(itemIds);
-            Collection<Account> owners = getterService.accounts.getByIds(ownerIds);
-            instances = getterService.itemInstances.get(items, containers, owners, deleted, open, frozen, limit);
+            Collection<Item> items = getterService.items.getByKeys(itemIds);
+            Collection<Account> owners = getterService.accounts.getByKeys(ownerIds);
+            instances = getterService.itemInstances.get(items, containers, owners, deleted, open, frozen, limit, offset);
         }
+
+        System.out.println("Instances before delete " + instances.size());
 
         return filterInstancesThenMapToDto(instances, account);
     }
@@ -92,20 +92,20 @@ public class ItemInstanceControllerService {
     }
 
 
-    private Collection<Container> getContainers(Collection<Long> containerIds, Collection<Long> placeIds, Account account) {
+    private Collection<Container> getContainers(Collection<Number> containerIds, Collection<Number> placeIds, Account account) {
         if(!containerIds.isEmpty())
-            return getterService.containers.getByIds(containerIds);
+            return getterService.containers.getByKeys(containerIds);
         else if(!placeIds.isEmpty())
-            return getterService.containers.getByPlaces(getterService.places.getByIds(placeIds));
+            return getterService.containers.getByPlaces(getterService.places.getByKeys(placeIds));
         else
             return getterService.containers.getByAccounts(Collections.singleton(account));
     }
 
 
-    public Boolean update(String token, Long instanceId, boolean frozeOrUnfroze, boolean open, boolean delete) {
+    public Boolean update(String token, Number instanceId, boolean frozeOrUnfroze, boolean open, boolean delete) {
 
         Account account = getterService.accounts.getByToken(token);
-        ItemInstance itemInstance = getterService.itemInstances.getByKey(instanceId);
+        ItemInstance itemInstance = getterService.itemInstances.getByKey(instanceId).get();
 
         if(!accountPermissionsService.hasAccessToItemInstance(account, itemInstance))
             return false;

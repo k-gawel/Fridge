@@ -38,8 +38,10 @@ public class ContainerRepositoryImpl extends AbstractRepositoryImpl<Container> i
         if(accounts == null || containers == null || accounts.isEmpty() || containers.isEmpty())
             return Collections.emptyMap();
 
-        final String HQL = "SELECT new org.california.model.util.KeyValue(II.addedBy, COUNT(II.addedBy)) FROM ItemInstance II " +
-                              "WHERE II.addedBy in (:accounts) AND II.container IN (:containers) GROUP BY II.addedBy";
+        final String HQL = "SELECT new org.california.model.util.KeyValue(II.added.account, COUNT(II.added.account)) " +
+                "FROM ItemInstance II " +
+                "WHERE II.added.account in (:accounts) AND II.container IN (:containers) " +
+                "                       GROUP BY II.added.account";
 
 
         Query<KeyValue<Account, Long>> query = getSession().createQuery(HQL);
@@ -55,7 +57,10 @@ public class ContainerRepositoryImpl extends AbstractRepositoryImpl<Container> i
         if(accounts == null || containers == null || accounts.isEmpty() || containers.isEmpty())
             return Collections.emptyMap();
 
-        final String HQL = "SELECT new org.california.model.util.KeyValue(II.openBy, COUNT(II.openBy)) FROM ItemInstance II WHERE II.openBy in (:accounts) AND II.container IN (:containers) GROUP BY II.openBy";
+        final String HQL = "SELECT new org.california.model.util.KeyValue(II.opened.account, COUNT(II.opened.account)) " +
+                "FROM ItemInstance II " +
+                "WHERE II.opened.account IN (:accounts) AND II.container IN (:containers) " +
+                "GROUP BY II.opened.account";
 
         Query<KeyValue<Account, Long>> query = getSession().createQuery(HQL);
         query.setParameterList("accounts", accounts);
@@ -70,8 +75,10 @@ public class ContainerRepositoryImpl extends AbstractRepositoryImpl<Container> i
         if(accounts == null || containers == null || accounts.isEmpty() || containers.isEmpty())
             return Collections.emptyMap();
 
-        final String HQL = "SELECT new org.california.model.util.KeyValue(II.deletedBy, COUNT(II.deletedBy)) FROM ItemInstance II " +
-                "WHERE II.deletedBy in (:accounts) AND II.container IN (:containers) GROUP BY II.deletedBy";
+        final String HQL = "SELECT new org.california.model.util.KeyValue(II.deleted.account, COUNT(II.deleted.account)) " +
+                "FROM ItemInstance II " +
+                "WHERE II.deleted.account in (:accounts) AND II.container IN (:containers) " +
+                "GROUP BY II.deleted.account";
 
         Query<KeyValue<Account, Long>> query = getSession().createQuery(HQL);
         query.setParameterList("accounts", accounts);

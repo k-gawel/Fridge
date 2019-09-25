@@ -1,11 +1,17 @@
 package org.california.service.getter;
 
+import org.california.model.entity.BaseEntity;
 import org.california.service.model.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class GetterService {
+
+    public final static Map<Class<? extends BaseEntity>, BaseGetter<? extends BaseEntity>> GETTER = new HashMap<>();
 
     public final AccountGetter accounts;
     public final PlaceGetter places;
@@ -20,10 +26,11 @@ public class GetterService {
     public final IngredientGetter ingredients;
     public final ProducerGetter producers;
     public final PlaceUserStatsGetter placeUserStats;
+    public final ShopListGetter shopLists;
 
     @Autowired
     public GetterService(AccountGetter accounts, PlaceGetter places, TokenService tokens, ContainerGetter containers, ItemGetter items, ItemInstanceGetter itemInstances, CategoryGetter categories, WishListGetter wishLists,
-                         WishListItemGetter wishListItems, AllergenGetter allergens, IngredientGetter ingredients, ProducerGetter producers, PlaceUserStatsGetter placeUserStats) {
+                         WishListItemGetter wishListItems, AllergenGetter allergens, IngredientGetter ingredients, ProducerGetter producers, PlaceUserStatsGetter placeUserStats, ShopListGetter shopLists) {
         this.accounts = accounts;
         this.places = places;
         this.tokens = tokens;
@@ -37,5 +44,8 @@ public class GetterService {
         this.ingredients = ingredients;
         this.producers = producers;
         this.placeUserStats = placeUserStats;
+        this.shopLists = shopLists;
     }
+
+
 }

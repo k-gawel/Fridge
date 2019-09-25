@@ -1,18 +1,19 @@
 package org.california.service.model;
 
 import org.california.model.entity.WishList;
-import org.california.model.transfer.request.WishListForm;
+import org.california.model.transfer.request.forms.WishListForm;
 import org.california.repository.wishlist.WishListRepository;
 import org.california.service.getter.GetterService;
-import org.california.util.exceptions.NotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 public class WishListService {
 
-    private WishListRepository wishListRepository;
-    private GetterService getterService;
+    private final WishListRepository wishListRepository;
+    private final GetterService getterService;
 
     @Autowired
     public WishListService(WishListRepository wishListRepository, GetterService getterService) {
@@ -29,10 +30,10 @@ public class WishListService {
 
 
     public boolean archive(WishList wishList) {
-        if(!wishList.isStatus())
-            return false;
+        if (!wishList.isStatus()) return false;
 
         wishList.setStatus(false);
+        wishList.setArchivedOn(LocalDate.now());
 
         return save(wishList);
     }
@@ -45,9 +46,10 @@ public class WishListService {
 
     private WishList fromForm(WishListForm form) {
         WishList wishList = new WishList();
+        wishList.setCreatedOn(LocalDate.now());
         wishList.setDescription(form.description);
         wishList.setName(form.name);
-        wishList.setPlace(getterService.places.getByKey(form.place));
+        wishList.setPlace(form.place);
         return wishList;
     }
 

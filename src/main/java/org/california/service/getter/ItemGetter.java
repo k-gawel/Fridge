@@ -1,20 +1,20 @@
 package org.california.service.getter;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.california.model.entity.Place;
 import org.california.model.entity.item.Category;
 import org.california.model.entity.item.Item;
-import org.california.model.entity.Place;
 import org.california.repository.item.ItemRepository;
 import org.california.repository.item.ItemSearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Service
-public class ItemGetter {
+public class ItemGetter extends BaseGetter<Item> {
 
     private final ItemRepository itemRepository;
     private final ItemSearchRepository itemSearchRepository;
@@ -22,20 +22,10 @@ public class ItemGetter {
 
     @Autowired
     ItemGetter(ItemRepository itemRepository, ItemSearchRepository itemSearchRepository, CategoryGetter categoryGetter) {
+        super(itemRepository, Item.class);
         this.itemRepository = itemRepository;
         this.itemSearchRepository = itemSearchRepository;
         this.categoryGetter = categoryGetter;
-    }
-
-
-    public Item getByKey(Serializable itemId) {
-        return itemRepository.getByKey(itemId);
-    }
-
-
-    public Collection<Item> getByIds(Collection<Long> ids) {
-        return CollectionUtils.isEmpty(ids) ?
-            Collections.emptySet() : itemSearchRepository.getByIds(ids);
     }
 
 
@@ -54,6 +44,16 @@ public class ItemGetter {
 
 
         return itemSearchRepository.searchByNameAndPlacesAndCategories(name, places, categories);
+    }
+
+
+    public Collection<Item> searchByPlaceAndCategories(Collection<Place> places, Collection<Category> categories) {
+        Collection<Category> finalCategories = categories.stream()
+                .map(categoryGetter::getFinalCategories)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
+
+        return itemSearchRepository.searchByPlaceAndCategories(places, finalCategories);
     }
 
 

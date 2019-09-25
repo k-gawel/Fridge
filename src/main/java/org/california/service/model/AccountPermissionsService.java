@@ -9,23 +9,29 @@ public class AccountPermissionsService {
 
 
     public boolean hasAccessToAccount(Account account, Account accessingAccount) {
-        return account.equals(accessingAccount);
+        try {
+            return account.equals(accessingAccount);
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
 
     public boolean isAdminOfPlace(Account account, Place place) {
-        if(account == null || place == null)
+        try {
+            return place.getAdmin().equals(account);
+        } catch (NullPointerException e) {
             return false;
-
-        return place.getAdmin().equals(account);
+        }
     }
 
 
     public boolean hasAccessToItemInstance(Account account, ItemInstance itemInstance) {
-        if(account == null || itemInstance == null)
+        try {
+            return hasAccessToContainer(account, itemInstance.getContainer());
+        } catch (NullPointerException e) {
             return false;
-
-        return hasAccessToContainer(account, itemInstance.getContainer());
+        }
     }
 
 
@@ -35,48 +41,58 @@ public class AccountPermissionsService {
 
 
     public boolean hasAccessToPlace(Account account, Place place) {
-        if(account == null || place == null)
+        try {
+            return place.getAccounts().contains(account);
+        } catch (NullPointerException e) {
             return false;
-
-        return place.getAccounts().contains(account);
+        }
     }
 
 
     public boolean hasAccessToItem(Account account, Item item) {
-        if(item.getPlace() == null)
-            return true;
-
-        return hasAccessToPlace(account, item.getPlace());
+        try {
+            return item.getPlace() == null || hasAccessToPlace(account, item.getPlace());
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
 
     public boolean hasAccessToContainer(Account account, Container container) {
-        if(account == null || container == null)
+        try {
+            return hasAccessToPlace(account, container.getPlace());
+        } catch (NullPointerException e) {
             return false;
-
-        return hasAccessToPlace(account, container.getPlace());
+        }
     }
 
 
     public boolean hasAccessToWishList(Account account, WishList wishList) {
-
         try {
             return hasAccessToPlace(account, wishList.getPlace());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             return false;
         }
-
     }
 
 
     public boolean hasAccessToWishListItem(Account account, WishListItem wishListItem) {
-
         try {
             return hasAccessToWishList(account, wishListItem.getWishList());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             return false;
         }
-
     }
+
+
+    public boolean hasAccessToShopList(Account account, ShopList shopList) {
+        try {
+            return hasAccessToPlace(account, shopList.getPlace());
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+
 
 }

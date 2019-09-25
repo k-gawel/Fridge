@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @MappedSuperclass
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class BaseEntity implements Serializable {
 
     @Column
@@ -35,6 +36,8 @@ public class BaseEntity implements Serializable {
         return uuid != null ? uuid.hashCode() : 0;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "[ " + getClass().getSimpleName() + ", ID: " + id + " ]";
+    }
 }

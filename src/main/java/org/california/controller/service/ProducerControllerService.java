@@ -3,8 +3,8 @@ package org.california.controller.service;
 import org.apache.commons.lang3.StringUtils;
 import org.california.controller.service.utils.Utils;
 import org.california.model.entity.item.Producer;
+import org.california.model.transfer.response.item.ProducerDto;
 import org.california.service.builders.EntityToDtoMapper;
-import org.california.model.transfer.response.ProducerDto;
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,12 @@ public class ProducerControllerService {
 
 
     public Collection<ProducerDto> search(String idsString, String name, String nameStart) {
-        Collection<Long> ids = Utils.collectionOf(idsString);
+        Collection<Number> ids = Utils.collectionOf(idsString);
 
         Collection<Producer> resultList;
 
         if(!ids.isEmpty())
-            resultList = getter.producers.getByIds(ids);
+            resultList = getter.producers.getByKeys(ids);
         else if(StringUtils.isNotBlank(name))
             resultList = getter.producers.searchByName(name);
         else if(!StringUtils.isNotBlank(nameStart))

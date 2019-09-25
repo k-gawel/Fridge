@@ -2,7 +2,8 @@ package org.california.util.enums;
 
 public enum RelatedItemsType {
 
-    MOST_POPULAR("most_popular");
+    MOST_POPULAR("most_popular"),
+    ALL("all");
 
     private final String typeString;
 
@@ -21,7 +22,7 @@ public enum RelatedItemsType {
                 return type;
         }
 
-        return null;
+        return ALL;
     }
 
 

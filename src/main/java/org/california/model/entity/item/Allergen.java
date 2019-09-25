@@ -8,7 +8,8 @@ import org.california.model.entity.BaseNamedEntity;
 import javax.persistence.Entity;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class Allergen extends BaseNamedEntity {
 
     public Allergen(String name) {

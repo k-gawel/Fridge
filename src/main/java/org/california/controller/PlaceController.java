@@ -1,9 +1,7 @@
 package org.california.controller;
 
 import org.california.controller.service.PlaceControllerService;
-import org.california.model.transfer.request.PlaceForm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.california.model.transfer.request.forms.PlaceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,142 +10,118 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController("/places")
+@RequestMapping("/places")
 @CrossOrigin
-public class PlaceController {
+public class PlaceController extends BaseController {
 
-    private PlaceControllerService placeControllerService;
+    private PlaceControllerService controllerService;
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public PlaceController(PlaceControllerService placeControllerService) {
-        this.placeControllerService = placeControllerService;
+    public PlaceController(PlaceControllerService controllerService) {
+        this.controllerService = controllerService;
     }
 
 
     @PostMapping
-    public ResponseEntity newPlace(
-            @RequestHeader("token") String token,
-            @Valid @RequestBody PlaceForm placeForm
+    public ResponseEntity newPlace(@RequestHeader("token") String token,
+                                   @Valid @RequestBody PlaceForm placeForm
     ) {
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = placeControllerService.newPlace(token, placeForm);
-            httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            result = controllerService.newPlace(token, placeForm);
+            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
-            result = e;
-            e.printStackTrace();
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+        return ResponseEntity.status(status).body(result);
     }
 
 
     @GetMapping("/{place_ids}")
-    public ResponseEntity get(
-            @RequestHeader("token") String token,
-            @PathVariable(name = "ids") String placeIdsString
+    public ResponseEntity get(@RequestHeader("token") String token,
+                              @PathVariable("place_ids") String placeIdsString
     ) {
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = placeControllerService.get(token, placeIdsString);
-            httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            result = controllerService.get(token, placeIdsString);
+            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                    .status(httpStatus)
-                    .body(result);
+
+        return ResponseEntity.status(status).body(result);
     }
 
 
     @PutMapping("/{place_id}/admin/{new_admin_id}")
-    public ResponseEntity changeAdmin(
-            @RequestHeader("token") String token,
-            @PathVariable(name = "place_id") Long placeId,
-            @PathVariable(name = "new_admin_id") Long newAdminId
+    public ResponseEntity changeAdmin(@RequestHeader("token") String token,
+                                      @PathVariable(name = "place_id") Long placeId,
+                                      @PathVariable(name = "new_admin_id") Long newAdminId
     ) {
-
-        logger.info("%M token: {}, placeId: {}, newAdminId: {}", token, placeId, newAdminId);
-
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = placeControllerService.changeAdmin(token, placeId, newAdminId);
-            httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            result = controllerService.changeAdmin(token, placeId, newAdminId);
+            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
-            logger.error(e.toString());
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+        return ResponseEntity.status(status).body(result);
     }
 
 
     @DeleteMapping("/{place_id}/accounts/{account_id}")
-    public ResponseEntity removeUser(
-            @RequestHeader("token") String token,
-            @PathVariable("place_id") Long placeId,
-            @PathVariable("account_id") Long accountId
+    public ResponseEntity removeUser(@RequestHeader("token") String token,
+                                     @PathVariable("place_id") Long placeId,
+                                     @PathVariable("account_id") Long accountId
     ) {
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = placeControllerService.removeUserFromPlace(token, placeId, accountId);
-            httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            result = controllerService.removeUserFromPlace(token, placeId, accountId);
+            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
-            logger.error(e.toString());
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+        return ResponseEntity.status(status).body(result);
     }
 
 
     @PostMapping("/{place_id}/acounts/{account_id}")
-    public ResponseEntity addUser(
-            @RequestHeader("token") String token,
-            @PathVariable("place_id") Long placeId,
-            @PathVariable("account_id") Long accountId
+    public ResponseEntity addUser(@RequestHeader("token") String token,
+                                  @PathVariable("place_id") Long placeId,
+                                  @PathVariable("account_id") Long accountId
     ) {
-
-        logger.info("%M token: {}, placeId: {}, userId: {}", token, placeId, accountId);
-
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = placeControllerService.addUserToPlace(token, placeId, accountId);
-            httpStatus = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            result = controllerService.addUserToPlace(token, placeId, accountId);
+            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
-            logger.error(e.toString());
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+
+        return ResponseEntity.status(status).body(result);
     }
 
 }

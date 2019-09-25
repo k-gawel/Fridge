@@ -2,7 +2,6 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -13,7 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class Place extends BaseEntity {
 
 
@@ -46,6 +46,5 @@ public class Place extends BaseEntity {
 
 
     private Date createdOn = new Date();
-
 
 }

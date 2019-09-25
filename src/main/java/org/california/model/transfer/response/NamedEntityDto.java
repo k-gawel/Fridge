@@ -3,45 +3,53 @@ package org.california.model.transfer.response;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.california.model.entity.BaseNamedEntity;
-import org.jetbrains.annotations.NotNull;
 
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-@EqualsAndHashCode @ToString
+@EqualsAndHashCode
+@ToString
 @Getter
 public class NamedEntityDto implements Serializable {
 
     private Serializable id;
     private String name;
 
+
     public static class Builder {
-
-        private NamedEntityDto result = new NamedEntityDto();
-
-        public NameSetter setId(@NotNull Serializable id) {
-            Builder.this.result.id = id;
-            return new NameSetter();
+        public IdSetter create() {
+            return new InnerBuilder();
         }
 
-        public NameSetter setId(@NotNull BaseNamedEntity entity) {
-            return setId(entity.getId());
+        public interface FinalBuilder {
+            NamedEntityDto build();
         }
 
-        public class NameSetter {
-            public FinalBuilder setName(@NotEmpty String name) {
-                Builder.this.result.name = name;
-                return new FinalBuilder();
+        public interface IdSetter {
+            NameSetter withId(Serializable id);
+        }
+
+        public interface NameSetter {
+            FinalBuilder withName(String name);
+        }
+
+        public static class InnerBuilder implements FinalBuilder, IdSetter, NameSetter {
+            private NamedEntityDto result = new NamedEntityDto();
+
+            public NameSetter withId(Serializable id) {
+                result.id = id;
+                return this;
             }
-        }
 
-        public class FinalBuilder {
+            public FinalBuilder withName(String name) {
+                result.name = name;
+                return this;
+            }
+
             public NamedEntityDto build() {
-                return Builder.this.result;
+                return result;
             }
         }
-
     }
+
 
 }

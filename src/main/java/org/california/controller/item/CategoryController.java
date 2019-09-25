@@ -1,5 +1,6 @@
 package org.california.controller.item;
 
+import org.california.controller.BaseController;
 import org.california.model.entity.item.Category;
 import org.california.service.getter.GetterService;
 import org.california.service.model.CategoryService;
@@ -7,19 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
 
 @RestController
+@RequestMapping("/categories")
 @CrossOrigin
-public class CategoryController {
+public class CategoryController extends BaseController {
 
-    private GetterService getterService;
-    private CategoryService categoryService;
+    private final GetterService getterService;
+    private final CategoryService categoryService;
 
     @Autowired
     public CategoryController(GetterService getterService, CategoryService categoryService) {
@@ -28,28 +28,24 @@ public class CategoryController {
     }
 
 
-    @GetMapping("/categories")
+    @GetMapping
     public ResponseEntity getAllCategories() {
-
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
             result = getterService.categories.getByKey(2L);
-            httpStatus = HttpStatus.OK;
+            status = HttpStatus.OK;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
+        return ResponseEntity.status(status).body(result);
     }
 
 
-    @GetMapping("/category/createCategories")
+    @PostMapping
     public boolean createCategories() throws IOException {
 
         File rootFile = new ClassPathResource("/IS/Spożywczy").getFile();

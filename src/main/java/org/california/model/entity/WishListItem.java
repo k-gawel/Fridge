@@ -4,15 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.california.model.entity.item.Category;
-import org.california.model.entity.item.Item;
+import org.california.model.entity.utils.AccountDate;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class WishListItem extends BaseEntity {
 
     private Date createdOn;
@@ -23,14 +22,12 @@ public class WishListItem extends BaseEntity {
     @ManyToOne
     private WishList wishList;
 
-
-    private Date addedOn;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    AccountDate added;
 
     @ManyToOne @JoinColumn
     private ItemInstance addedInstance;
-
-    @ManyToOne @JoinColumn
-    private Account addedBy;
 
 
     private String comment;

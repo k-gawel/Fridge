@@ -1,27 +1,27 @@
 package org.california.repository;
 
+import org.california.model.entity.BaseEntity;
 import org.hibernate.query.Query;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Optional;
 
-public abstract class AbstractNamedEntityRepositoryImpl<T extends Serializable> extends AbstractRepositoryImpl<T> implements AbstractNamedEntityRepository<T> {
+public abstract class AbstractNamedEntityRepositoryImpl<T extends BaseEntity> extends AbstractRepositoryImpl<T> implements AbstractNamedEntityRepository<T> {
 
     @Override
-    public T getByName(String name) {
-        if(name == null)
-            return null;
+    public Optional<T> getByName(String name) {
+        if (name == null) return Optional.empty();
 
         String HQL = "SELECT E FROM " + clazz.getName() + " E WHERE E.name = :name";
-
 
         Query<T> query = getSession().createQuery(HQL);
         query.setParameter("name", name);
 
         try {
-            return query.getSingleResult();
+            return Optional.of(query.getSingleResult());
         } catch (Exception e) {
-            return null;
+            return Optional.empty();
         }
     }
 

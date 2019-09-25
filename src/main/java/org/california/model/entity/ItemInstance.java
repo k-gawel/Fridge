@@ -4,45 +4,58 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.california.model.entity.item.Item;
+import org.california.model.entity.utils.AccountDate;
+import org.joda.money.Money;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class ItemInstance extends BaseEntity {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn
     private Item item;
 
-    @ManyToOne @JoinColumn
+    @ManyToOne
     private Container container;
-
-    private String comment;
-
     private LocalDate expireOn;
 
+    private String comment;
+    private Money price;
+
+    @OneToOne
+    @JoinColumn
+    private WishListItem wishListItem;
     @ManyToOne @JoinColumn
-    private Account addedBy;
-    private LocalDate addedOn;
+    private ShopList shopList;
 
 
-    @ManyToOne @JoinColumn
-    private Account openBy;
-    private LocalDate openOn;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private AccountDate added;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private AccountDate opened;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private AccountDate frozened;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private AccountDate deleted;
 
+    public boolean isDeleted() {
+        return this.deleted != null;
+    }
 
-    @ManyToOne @JoinColumn
-    private Account frozenBy;
-    private LocalDate frozenOn;
-    private boolean frozen;
+    public boolean isOpen() {
+        return this.opened != null;
+    }
 
-    @ManyToOne @JoinColumn
-    private Account deletedBy;
-    private LocalDate deletedOn;
+    public boolean isFrozen() {
+        return this.frozened != null;
+    }
 
 }

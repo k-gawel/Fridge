@@ -10,17 +10,18 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController("/logs")
+@RequestMapping("/logs")
 @CrossOrigin
-public class LoggerController {
+public class LoggerController extends BaseController {
 
-    private LoggerControllerService loggerControllerService;
+    private LoggerControllerService controllerService;
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 
     @Autowired
-    public LoggerController(LoggerControllerService loggerControllerService) {
-        this.loggerControllerService = loggerControllerService;
+    public LoggerController(LoggerControllerService controllerService) {
+        this.controllerService = controllerService;
     }
 
     @GetMapping("/instances")
@@ -28,24 +29,19 @@ public class LoggerController {
                                                   @RequestParam(name = "container_ids", defaultValue = "") String containerIdsString,
                                                   @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,
                                                   @RequestParam(name = "limit", defaultValue = "20") int limit) {
-
         Object result;
-        HttpStatus httpStatus;
+        HttpStatus status;
 
         try {
-            result = loggerControllerService.getInstancesChangesByPlace(token, placeIdsString, containerIdsString, limit);
-            httpStatus = HttpStatus.OK;
+            result = controllerService.getInstancesChangesByPlace(token, placeIdsString, containerIdsString, limit);
+            status = HttpStatus.OK;
         } catch (Exception e) {
-            e.printStackTrace();
-            result = e;
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            result = result(e);
+            status = status(e);
         }
 
 
-        return ResponseEntity
-                .status(httpStatus)
-                .body(result);
-
+        return ResponseEntity.status(status).body(result);
     }
 
 

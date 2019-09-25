@@ -3,12 +3,11 @@ package org.california.service.model;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.Place;
-import org.california.model.transfer.request.ContainerForm;
-import org.california.model.transfer.response.PlaceUserStats;
+import org.california.model.transfer.request.forms.ContainerForm;
+import org.california.model.transfer.response.place.PlaceUserStats;
 import org.california.repository.container.ContainerRepository;
 import org.california.service.getter.GetterService;
-import org.california.util.exceptions.ForbiddentException;
-import org.california.util.exceptions.NotValidException;
+import org.california.util.exceptions.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,10 +37,10 @@ public class ContainerService {
 
 
     public Container createNewContainer(Place place, Account account, String newContainerName) {
-        if(place == null || account == null || newContainerName == null) throw new ForbiddentException();
+        if (place == null || account == null || newContainerName == null) throw new ForbiddenException();
 
         if(!place.getAdmin().equals(account))
-            throw new ForbiddentException();
+            throw new ForbiddenException();
 
         Container container = new Container();
         container.setName(newContainerName);
@@ -59,10 +58,7 @@ public class ContainerService {
 
 
     public Container createNewContainer(Account account, ContainerForm form) {
-        long placeId = form.placeId;
-        Place place = getterService.places.getByKey(placeId);
-
-        return createNewContainer(place, account, form.name);
+        return createNewContainer(form.place, account, form.name);
     }
 
 

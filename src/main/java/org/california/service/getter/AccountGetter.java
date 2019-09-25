@@ -14,32 +14,23 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class AccountGetter {
+public class AccountGetter extends BaseGetter<Account> {
 
     private final AccountRepository accountRepository;
     private final TokenRepository tokenRepository;
 
     @Autowired
     AccountGetter(AccountRepository accountRepository, TokenRepository tokenRepository) {
+        super(accountRepository, Account.class);
         this.accountRepository = accountRepository;
         this.tokenRepository = tokenRepository;
     }
 
-
-    public Account getByKey(long id) {
-        return accountRepository.getByKey(id);
-    }
-
-
-    public Collection<Account> getByIds(Collection<Long> userIds) {
-        return CollectionUtils.isEmpty(userIds) ?
-            Collections.emptySet() : accountRepository.getByIds(userIds);
-    }
 
 
     public Account getByToken(String token) {
@@ -117,7 +108,7 @@ public class AccountGetter {
     }
 
 
-    public Account getByName(@NotBlank String username) {
+    public Optional<Account> getByName(@NotBlank String username) {
         return accountRepository.getByName(username);
     }
 
