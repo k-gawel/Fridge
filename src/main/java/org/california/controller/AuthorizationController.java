@@ -23,18 +23,10 @@ public class AuthorizationController extends BaseController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestHeader(name = "token", defaultValue = "") String token,
                                 @RequestHeader(name = "username", defaultValue = "") String username,
-                                @RequestHeader(name = "password", defaultValue = "") String password
-    ) {
-        Object result;
-        HttpStatus status;
+                                @RequestHeader(name = "password", defaultValue = "") String password) {
 
-        try {
-            result = controllerService.login(token, username, password);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = controllerService.login(token, username, password);
+        var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }

@@ -28,17 +28,9 @@ public class ItemInstanceController extends BaseController {
     public ResponseEntity newItemInstance(@RequestHeader("token") final String token,
                                           @Valid @RequestBody final ItemInstanceForm itemInstanceForm
     ) {
-        Object result;
-        HttpStatus status;
 
-        try {
-            result = controllerService.addItemInstance(token, itemInstanceForm);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
-
+        var result = controllerService.addItemInstance(token, itemInstanceForm);
+        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }
@@ -56,17 +48,9 @@ public class ItemInstanceController extends BaseController {
                               @RequestParam(name = "frozen", defaultValue = "") String frozen,
                               @RequestParam(name = "limit", defaultValue = "0") int limit,
                               @RequestParam(name = "offset", defaultValue = "0") int offset) {
-       Object result;
-        HttpStatus status;
 
-       try {
-           result = controllerService.get(token, ids, places, containers, items, owners, deleted, open, frozen, limit, offset);
-           status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-       } catch (Exception e) {
-           result = result(e);
-           status = status(e);
-       }
-
+       var result = controllerService.get(token, ids, places, containers, items, owners, deleted, open, frozen, limit, offset);
+       var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }
@@ -77,19 +61,10 @@ public class ItemInstanceController extends BaseController {
                                  @PathVariable("instance_id") Long instanceId,
                                  @RequestParam(value = "frozeOrUnfroze", defaultValue = "false") boolean frozeOrUnfroze,
                                  @RequestParam(value = "open", defaultValue = "false") boolean open,
-                                 @RequestParam(value = "delete", defaultValue = "false") boolean delete
-    ) {
-        Object result;
-        HttpStatus status;
+                                 @RequestParam(value = "delete", defaultValue = "false") boolean delete) {
 
-        try {
-            result = controllerService.update(token, instanceId, frozeOrUnfroze, open, delete);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
-
+        var result = controllerService.update(token, instanceId, frozeOrUnfroze, open, delete);
+        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }

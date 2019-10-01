@@ -30,16 +30,9 @@ public class CategoryController extends BaseController {
 
     @GetMapping
     public ResponseEntity getAllCategories() {
-        Object result;
-        HttpStatus status;
 
-        try {
-            result = getterService.categories.getByKey(2L);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = getterService.categories.getRootCategory();
+        var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }

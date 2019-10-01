@@ -24,17 +24,9 @@ public class AllergenController extends BaseController {
     public ResponseEntity search(@RequestParam(name = "ids", defaultValue = "") String idsString,
                                  @RequestParam(name = "name", defaultValue = "") String name,
                                  @RequestParam(name = "nameStart", defaultValue = "") String nameStart) {
-        Object result;
-        HttpStatus status;
 
-        try {
-            result = controllerService.search(idsString, name, nameStart);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
-
+        var result = controllerService.search(idsString, name, nameStart);
+        var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }

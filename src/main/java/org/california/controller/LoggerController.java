@@ -29,17 +29,9 @@ public class LoggerController extends BaseController {
                                                   @RequestParam(name = "container_ids", defaultValue = "") String containerIdsString,
                                                   @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,
                                                   @RequestParam(name = "limit", defaultValue = "20") int limit) {
-        Object result;
-        HttpStatus status;
 
-        try {
-            result = controllerService.getInstancesChangesByPlace(token, placeIdsString, containerIdsString, limit);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
-
+        var result = controllerService.getInstancesChangesByPlace(token, placeIdsString, containerIdsString, limit);
+        var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }

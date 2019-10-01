@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/shoplists")
-@RequestMapping("/shoplists")
+@RestController("/shoplists/")
+@RequestMapping("/shoplists/")
 @CrossOrigin
 public class ShopListController extends BaseController {
 
@@ -23,12 +23,23 @@ public class ShopListController extends BaseController {
     @PostMapping
     public ResponseEntity createShopList(@RequestHeader("token") String token,
                                          @RequestBody ShopListForm form) {
+
+        var result = controllerService.createShopList(token, form);
+        var status = HttpStatus.OK;
+
+        return ResponseEntity.status(status).body(result);
+    }
+
+
+    @DeleteMapping("{shop_list_id}")
+    public ResponseEntity archiveShopList(@RequestHeader("token") String token,
+                                          @PathVariable("shop_list_id") Long shopListId) {
         Object result;
         HttpStatus status;
 
         try {
-            result = controllerService.createShopList(token, form);
-            status = HttpStatus.OK;
+            result = controllerService.archiveShopList(token, shopListId);
+            status = (boolean) result ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
             result = result(e);
             status = status(e);
@@ -38,10 +49,10 @@ public class ShopListController extends BaseController {
     }
 
 
-    @PostMapping("/{shop_list_id}/instances/{instance_id}")
+    @PostMapping("{shop_list_id}/instances/{instance_id}")
     public ResponseEntity addItemInstanceToShopList(@RequestHeader("token") String token,
-                                                    @RequestParam("shop_list_id") Long shopListId,
-                                                    @RequestParam("instance_id") Long instanceId) {
+                                                    @PathVariable("shop_list_id") Long shopListId,
+                                                    @PathVariable("instance_id") Long instanceId) {
         Object result;
         HttpStatus status;
 
@@ -58,10 +69,11 @@ public class ShopListController extends BaseController {
     }
 
 
-    @DeleteMapping("/{shop_list_id}/instances/{instance_id}")
+
+    @DeleteMapping("{shop_list_id}/instances/{instance_id}")
     public ResponseEntity deleteItemInstanceFromShopList(@RequestHeader("token") String token,
-                                                         @RequestParam("shop_list_id") Long shopListId,
-                                                         @RequestParam("instance_id") Long instanceId) {
+                                                         @PathVariable("shop_list_id") Long shopListId,
+                                                         @PathVariable("instance_id") Long instanceId) {
         Object result;
         HttpStatus status;
 
@@ -75,5 +87,6 @@ public class ShopListController extends BaseController {
 
         return ResponseEntity.status(status).body(result);
     }
+
 
 }

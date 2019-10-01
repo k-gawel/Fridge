@@ -27,18 +27,10 @@ public class ContainerController extends BaseController {
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity addNewContainer(@RequestHeader("token") String token,
-                                          @Valid @RequestBody ContainerForm containerForm)
-    {
-        Object result;
-        HttpStatus status;
+                                          @Valid @RequestBody ContainerForm containerForm) {
 
-        try {
-            result = controllerService.newContainer(token, containerForm);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = controllerService.newContainer(token, containerForm);
+        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }
@@ -47,18 +39,10 @@ public class ContainerController extends BaseController {
     @GetMapping
     public ResponseEntity get(@RequestHeader("token") String token,
                               @RequestParam(value = "ids", defaultValue = "") String ids,
-                              @RequestParam(value = "placeIds", defaultValue = "") String placeIds
-    ) {
-        Object result;
-        HttpStatus status;
+                              @RequestParam(value = "placeIds", defaultValue = "") String placeIds) {
 
-        try {
-            result = controllerService.get(token, ids, placeIds);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = controllerService.get(token, ids, placeIds);
+        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }
@@ -68,18 +52,10 @@ public class ContainerController extends BaseController {
     public ResponseEntity getUserStats(@RequestHeader("token") String token,
                                        @RequestParam(name = "user_ids", defaultValue = "") String userIdsString,
                                        @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,
-                                       @RequestParam(name = "container_ids", defaultValue = "") String containerIdsString
-    ) {
-        Object result;
-        HttpStatus status;
+                                       @RequestParam(name = "container_ids", defaultValue = "") String containerIdsString) {
 
-        try {
-            result = controllerService.getUserStats(token, userIdsString, placeIdsString, containerIdsString);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = controllerService.getUserStats(token, userIdsString, placeIdsString, containerIdsString);
+        var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }

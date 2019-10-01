@@ -25,16 +25,9 @@ public class AccountController extends BaseController {
 
     @PostMapping
     public ResponseEntity newAccount(@Valid @RequestBody AccountForm form) {
-        Object result;
-        HttpStatus status;
 
-        try {
-            result = controllerService.newAccount(form);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = controllerService.newAccount(form);
+        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }
@@ -44,35 +37,20 @@ public class AccountController extends BaseController {
     public ResponseEntity changeAccountDetails(@RequestHeader("token") String token,
                                                @RequestHeader("password") String password,
                                                @Valid @RequestBody AccountForm accountForm) {
-        Object result;
-        HttpStatus status;
 
-        try {
-            result = controllerService.changeAccountDetails(token, password, accountForm);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = controllerService.changeAccountDetails(token, password, accountForm);
+        var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }
 
 
     @GetMapping
-    public ResponseEntity searchAccountByName(
-            @RequestHeader("token") String token,
-            @RequestParam(name = "name", defaultValue = "") String name) {
-        Object result;
-        HttpStatus status;
+    public ResponseEntity searchAccountByName(@RequestHeader("token") String token,
+                                              @RequestParam(name = "name", defaultValue = "") String name) {
 
-        try {
-            result = controllerService.searchByName(token, name);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = controllerService.searchByName(token, name);
+        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }

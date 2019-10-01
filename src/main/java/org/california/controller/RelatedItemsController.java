@@ -20,21 +20,12 @@ public class RelatedItemsController extends BaseController {
 
     @GetMapping
     public ResponseEntity get(@RequestHeader("token") String token,
-                              @RequestParam(name = "category_id", defaultValue = "0") Long categoryId,
+                              @RequestParam(name = "category_id") Long categoryId,
                               @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,
-                              @RequestParam(name = "params", defaultValue = "most_popular") String params
-    ) {
-        Object result;
-        HttpStatus status;
+                              @RequestParam(name = "params", defaultValue = "most_popular") String params) {
 
-        try {
-            result = controllerService.get(token, placeIdsString, categoryId, params);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
-
+        var result = controllerService.get(token, placeIdsString, categoryId, params);
+        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }

@@ -1,5 +1,7 @@
 package org.california.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.california.controller.service.WishListControllerService;
 import org.california.model.transfer.request.forms.WishListForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +47,12 @@ public class WishListController extends BaseController {
     public ResponseEntity get(@RequestHeader("token") String token,
                               @RequestParam(name = "placeIds", defaultValue = "") String placesIds,
                               @RequestParam(name = "ids", defaultValue = "") String wishListIds,
-                              @RequestParam(name = "active", defaultValue = "true") boolean active) {
-        Object result;
-        HttpStatus status;
+                              @RequestParam(name = "active", defaultValue = "true") boolean active,
+                              @RequestParam(name = "offset") Short offset,
+                              @RequestParam(name = "limit") Short limit) {
 
-        try {
-            result = this.controllerService.get(token, placesIds, wishListIds, active);
-            status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = this.controllerService.get(token, placesIds, wishListIds, active);
+        var status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }
@@ -64,16 +61,9 @@ public class WishListController extends BaseController {
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@RequestHeader("token") String token,
                                  @PathVariable("id") Long wishListid) {
-        Object result;
-        HttpStatus status;
 
-        try {
-            result = this.controllerService.archive(token, wishListid);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = this.controllerService.archive(token, wishListid);
+        var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }

@@ -30,18 +30,10 @@ public class ItemController extends BaseController {
                                       @RequestParam(name = "placeIds", defaultValue = "") String placeIdsString,
                                       @RequestParam(name = "name", defaultValue = "") String name,
                                       @RequestParam(name = "barcode", defaultValue = "0") long barcode,
-                                      @RequestParam(name = "category", defaultValue = "5") long categoryId
-    ) {
-        Object result;
-        HttpStatus status;
+                                      @RequestParam(name = "category", defaultValue = "0") long categoryId) {
 
-        try {
-            result = itemControllerService.searchItem(token, itemIdsString, placeIdsString, name, barcode, categoryId);
-            status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
+        var result = itemControllerService.searchItem(token, itemIdsString, placeIdsString, name, barcode, categoryId);
+        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
     }
