@@ -1,9 +1,9 @@
-package org.california.controller.service.utils;
+package org.california.util;
 
 import java.util.Collection;
 import java.util.HashSet;
 
-public class Utils {
+public class StringUtils {
 
     public static Collection<Number> collectionOf(String ids) {
         Collection<Number> result = new HashSet<>();
