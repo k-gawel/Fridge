@@ -3,7 +3,6 @@ package org.california.repository.authorization;
 import org.california.model.entity.Account;
 import org.california.model.entity.Token;
 import org.california.repository.AbstractRepositoryImpl;
-import org.california.repository.Repositories;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

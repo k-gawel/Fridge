@@ -3,7 +3,6 @@ package org.california.repository;
 import org.california.model.entity.BaseEntity;
 import org.hibernate.query.Query;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Optional;
 

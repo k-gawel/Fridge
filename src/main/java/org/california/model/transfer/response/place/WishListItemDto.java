@@ -8,7 +8,6 @@ import org.california.model.transfer.response.AccountDateDto;
 import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @EqualsAndHashCode
 @ToString

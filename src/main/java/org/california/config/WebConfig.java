@@ -2,7 +2,6 @@ package org.california.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.paranamer.ParanamerModule;
 import org.california.service.serialization.JSONMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

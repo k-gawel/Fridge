@@ -11,6 +11,10 @@ import java.util.Collection;
 @Repository
 public class ShopListRepositoryImpl extends AbstractRepositoryImpl<ShopList> implements ShopListRepository {
 
+    public ShopListRepositoryImpl() {
+        setClazz(ShopList.class);
+    }
+
     @Override
     public Collection<ShopList> get(Collection<Place> places, boolean status) {
 

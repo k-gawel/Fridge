@@ -7,7 +7,6 @@ import org.california.model.entity.ItemInstance;
 import org.california.model.entity.item.Item;
 import org.california.model.transfer.request.queries.ItemInstanceParams;
 import org.california.repository.iteminstance.ItemInstanceRepository;
-import org.california.repository.iteminstance.Parameters;
 import org.california.repository.utils.OffsetLimit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -2,13 +2,10 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.california.model.entity.utils.AccountDate;
 import org.california.model.util.ChangeOnInstance;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.time.LocalDate;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -18,13 +15,10 @@ public class InstanceChange extends BaseEntity {
     @ManyToOne @JoinColumn
     private ItemInstance instance;
 
-    @ManyToOne @JoinColumn
-    private Account account;
-
-    private LocalDate changeDate;
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn
+    private AccountDate changed;
 
     private ChangeOnInstance changeType;
-
 
 }
 

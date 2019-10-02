@@ -2,12 +2,9 @@ package org.california.repository.account;
 
 import org.california.model.entity.Account;
 import org.california.repository.AbstractNamedEntityRepositoryImpl;
-import org.california.repository.Repositories;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Repository
 public class AccountRepositoryImpl extends AbstractNamedEntityRepositoryImpl<Account> implements AccountRepository {

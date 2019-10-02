@@ -1,6 +1,7 @@
 package org.california.repository.item;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.california.model.entity.BaseEntity;
 import org.california.model.entity.Place;
 import org.california.model.entity.item.Category;
 import org.california.model.entity.item.Item;
@@ -11,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 public class ItemSearchRepositoryImpl extends AbstractRepositoryImpl implements ItemSearchRepository {
@@ -69,6 +72,11 @@ public class ItemSearchRepositoryImpl extends AbstractRepositoryImpl implements 
         if (CollectionUtils.isEmpty(places) || CollectionUtils.isEmpty(categories))
             return Collections.emptySet();
 
+        String catIds = categories.stream().map(BaseEntity::getId).map(Objects::toString).collect(Collectors.joining(", "));
+        String placeIds = places.stream().map(BaseEntity::getId).map(Objects::toString).collect(Collectors.joining(", "));
+
+        System.out.println("Searching by place " + placeIds + " and categories: " + catIds);
+
         final String HQL = "SELECT I FROM Item I WHERE I.category in :categories " +
                 "AND (I.place IS NULL OR I.place in :places)";
 
@@ -76,7 +84,10 @@ public class ItemSearchRepositoryImpl extends AbstractRepositoryImpl implements 
         query.setParameterList("categories", categories);
         query.setParameterList("places", places);
 
-        return query.getResultList();
+        var result =  query.getResultList();
+        String itIds = result.stream().map(BaseEntity::getId).map(Objects::toString).collect(Collectors.joining(", "));
+        System.out.println("RESULT " + itIds);
+        return result;
     }
 
 

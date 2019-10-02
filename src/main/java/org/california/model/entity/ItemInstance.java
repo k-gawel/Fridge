@@ -2,7 +2,6 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.california.model.entity.item.Item;
 import org.california.model.entity.utils.AccountDate;
 import org.joda.money.Money;
@@ -26,24 +25,22 @@ public class ItemInstance extends BaseEntity {
     private String comment;
     private Money price;
 
-    @OneToOne
-    @JoinColumn
+    @OneToOne @JoinColumn
     private WishListItem wishListItem;
     @ManyToOne @JoinColumn
     private ShopList shopList;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn
     private AccountDate added;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn
     private AccountDate opened;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn
     private AccountDate frozened;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn
     private AccountDate deleted;
 
     public boolean isDeleted() {

@@ -5,6 +5,7 @@ import org.california.model.entity.Container;
 import org.california.model.entity.InstanceChange;
 import org.california.model.entity.ItemInstance;
 import org.california.repository.AbstractRepositoryImpl;
+import org.california.repository.utils.OffsetLimit;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,30 +22,30 @@ public class InstanceOnChangeRepositoryImpl extends AbstractRepositoryImpl<Insta
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<InstanceChange> getByContainers(Collection<Container> containers, int limit) {
+    public Collection<InstanceChange> getByContainers(Collection<Container> containers, OffsetLimit lo) {
         if(CollectionUtils.isEmpty(containers))
             return Collections.emptySet();
 
-        final String HQL = "SELECT IC FROM InstanceChange IC WHERE IC.instance.container IN (:containers) ORDER BY IC.changeDate DESC";
+        final String HQL = "SELECT IC FROM InstanceChange IC WHERE IC.instance.container IN (:containers) ORDER BY IC.changed DESC";
 
         Query<InstanceChange> query = getSession().createQuery(HQL);
         query.setParameterList("containers", containers);
-        query.setMaxResults(limit);
+        lo.applyToQuery(query);
 
         return query.getResultList();
     }
 
 
     @Override
-    public Collection<InstanceChange> getByInstances(Collection<ItemInstance> instances, int limit) {
+    public Collection<InstanceChange> getByInstances(Collection<ItemInstance> instances, OffsetLimit lo) {
         if(CollectionUtils.isEmpty(instances))
             return Collections.emptySet();
 
-        final String HQL = "SELECT IC FROM InstanceChange IC WHERE IC.instance IN (:instances) ORDER BY IC.changeDate DESC";
+        final String HQL = "SELECT IC FROM InstanceChange IC WHERE IC.instance IN (:instances) ORDER BY IC.changed DESC";
 
         Query<InstanceChange> query = getSession().createQuery(HQL);
         query.setParameterList("instances", instances);
-        query.setMaxResults(limit);
+        lo.applyToQuery(query);
 
         return query.getResultList();
     }

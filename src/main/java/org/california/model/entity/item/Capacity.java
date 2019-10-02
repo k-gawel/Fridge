@@ -2,7 +2,6 @@ package org.california.model.entity.item;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.california.model.entity.BaseEntity;
 

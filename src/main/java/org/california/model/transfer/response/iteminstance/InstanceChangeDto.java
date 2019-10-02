@@ -9,7 +9,6 @@ import org.california.model.transfer.response.BaseDto;
 import org.california.model.util.ChangeOnInstance;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @EqualsAndHashCode
 @ToString

@@ -5,7 +5,6 @@ import org.california.repository.AbstractRepository;
 import org.california.util.exceptions.NoContentException;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
 
 public abstract class BaseGetter<T extends BaseEntity> {

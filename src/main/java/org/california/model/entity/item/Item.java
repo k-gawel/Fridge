@@ -3,7 +3,6 @@ package org.california.model.entity.item;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.california.model.entity.BaseNamedEntity;
 import org.california.model.entity.Place;
 import org.hibernate.annotations.LazyCollection;

@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -75,7 +74,8 @@ public abstract class AbstractRepositoryImpl<T extends BaseEntity> implements Ab
     public T getByKey(Number key) {
         if(key == null)
             return null;
-        return (T) getSession().get(clazz, key);
+
+        return getSession().get(clazz, key);
     }
 
     @Override

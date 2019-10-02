@@ -2,15 +2,11 @@ package org.california.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.california.model.entity.utils.AccountDate;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.time.LocalDate;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -29,9 +25,11 @@ public class WishList extends BaseNamedEntity {
     @OneToMany(mappedBy = "wishList")
     private Collection<WishListItem> items = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn
+    private AccountDate created;
 
-    private LocalDate createdOn;
-    private LocalDate archivedOn;
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn
+    private AccountDate archived;
 
 
     public WishList() { }

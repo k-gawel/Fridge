@@ -4,12 +4,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.california.model.entity.WishList;
-import org.california.model.entity.utils.AccountDate;
 import org.california.model.transfer.response.AccountDateDto;
 import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Collection;
 
 @EqualsAndHashCode
