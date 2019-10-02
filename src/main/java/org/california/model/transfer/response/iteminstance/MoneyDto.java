@@ -4,6 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.california.model.transfer.response.BaseDto;
+import org.joda.money.Money;
 
 import java.io.Serializable;
 

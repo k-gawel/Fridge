@@ -3,14 +3,18 @@ package org.california.model.transfer.response.place;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.Place;
+import org.california.model.transfer.response.BaseDto;
+import org.california.model.transfer.response.iteminstance.InstanceChangeDto;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 @EqualsAndHashCode
 @ToString
 @Getter
-public class PlaceDto implements Serializable {
+public class PlaceDto implements Serializable, BaseDto<Place> {
 
     private Long id;
     private String name;
@@ -22,45 +26,51 @@ public class PlaceDto implements Serializable {
     private Collection<WishListDto> wishLists;
     private Collection<ShopListDto> shopLists;
 
+    private List<InstanceChangeDto> logs;
+
 
     public static class Builder {
         public IdSetter create() {
             return new InnerBuilder();
         }
 
+        public interface UsersSetter {
+            WishListsSetter withUsers(Collection<PlaceUserDto> users);
+        }
+
         public interface FinalBuilder {
             PlaceDto build();
         }
 
-        public interface AdminIdSetter {
-            ContainersSetter withAdminId(Long adminId);
-        }
-
         public interface ShopListsSetter {
-            FinalBuilder withShopLists(Collection<ShopListDto> shopLists);
+            LogsSetter withShopLists(Collection<ShopListDto> shopLists);
         }
 
         public interface NameSetter {
             AdminIdSetter withName(String name);
         }
 
-        public interface UsersSetter {
-            WishListsSetter withUsers(Collection<PlaceUserDto> users);
-        }
-
-        public interface IdSetter {
-            NameSetter withId(Long id);
-        }
-
         public interface ContainersSetter {
             UsersSetter withContainers(Collection<ContainerDto> containers);
+        }
+
+        public interface LogsSetter {
+            FinalBuilder withLogs(List<InstanceChangeDto> logs);
+        }
+
+        public interface AdminIdSetter {
+            ContainersSetter withAdminId(Long adminId);
         }
 
         public interface WishListsSetter {
             ShopListsSetter withWishLists(Collection<WishListDto> wishLists);
         }
 
-        public static class InnerBuilder implements FinalBuilder, AdminIdSetter, ShopListsSetter, NameSetter, UsersSetter, IdSetter, ContainersSetter, WishListsSetter {
+        public interface IdSetter {
+            NameSetter withId(Long id);
+        }
+
+        public static class InnerBuilder implements UsersSetter, FinalBuilder, ShopListsSetter, NameSetter, ContainersSetter, LogsSetter, AdminIdSetter, WishListsSetter, IdSetter {
             private PlaceDto result = new PlaceDto();
 
             public NameSetter withId(Long id) {
@@ -93,8 +103,13 @@ public class PlaceDto implements Serializable {
                 return this;
             }
 
-            public FinalBuilder withShopLists(Collection<ShopListDto> shopLists) {
+            public LogsSetter withShopLists(Collection<ShopListDto> shopLists) {
                 result.shopLists = shopLists;
+                return this;
+            }
+
+            public FinalBuilder withLogs(List<InstanceChangeDto> logs) {
+                result.logs = logs;
                 return this;
             }
 
@@ -103,4 +118,5 @@ public class PlaceDto implements Serializable {
             }
         }
     }
+
 }

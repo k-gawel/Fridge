@@ -4,6 +4,8 @@ package org.california.model.transfer.response.place;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.Container;
+import org.california.model.transfer.response.BaseDto;
 import org.california.model.transfer.response.iteminstance.ItemInstanceDto;
 
 import java.io.Serializable;
@@ -12,7 +14,7 @@ import java.util.Collection;
 @EqualsAndHashCode
 @ToString
 @Getter
-public class ContainerDto implements Serializable {
+public class ContainerDto implements Serializable, BaseDto<Container> {
 
     private Long id;
     private String name;

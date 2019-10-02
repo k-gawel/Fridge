@@ -3,13 +3,15 @@ package org.california.model.transfer.response.item;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.item.Nutrition;
+import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
 
 @EqualsAndHashCode
 @ToString
 @Getter
-public class NutritionDto implements Serializable {
+public class NutritionDto implements Serializable, BaseDto<Nutrition> {
 
     private long id;
     private Double energyKj;

@@ -3,7 +3,9 @@ package org.california.model.transfer.response.iteminstance;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.ItemInstance;
 import org.california.model.transfer.response.AccountDateDto;
+import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @ToString
 @Getter
-public class ItemInstanceDto implements Serializable {
+public class ItemInstanceDto implements Serializable, BaseDto<ItemInstance> {
 
     private Long id;
     private String comment;

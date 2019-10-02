@@ -3,13 +3,15 @@ package org.california.model.transfer.response.item;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.item.Producer;
+import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
 
 @EqualsAndHashCode
 @ToString
 @Getter
-public class ProducerDto implements Serializable {
+public class ProducerDto implements Serializable, BaseDto<Producer> {
 
     private Long id;
     private String name;

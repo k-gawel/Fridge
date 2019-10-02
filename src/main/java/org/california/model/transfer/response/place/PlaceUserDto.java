@@ -3,13 +3,14 @@ package org.california.model.transfer.response.place;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
 
 @EqualsAndHashCode
 @ToString
 @Getter
-public class PlaceUserDto implements Serializable {
+public class PlaceUserDto implements Serializable, BaseDto {
 
     private Long id;
     private String name;

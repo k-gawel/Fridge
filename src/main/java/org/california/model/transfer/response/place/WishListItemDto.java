@@ -3,20 +3,22 @@ package org.california.model.transfer.response.place;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.WishListItem;
 import org.california.model.transfer.response.AccountDateDto;
+import org.california.model.transfer.response.BaseDto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @EqualsAndHashCode
 @ToString
 @Getter
-public class WishListItemDto {
+public class WishListItemDto implements Serializable, BaseDto<WishListItem> {
 
     private Long id;
-
     private Long wishListId;
-    private Long authorId;
-    private Date createdOn;
+
+    private AccountDateDto created;
 
     private Long categoryId;
     private String comment;
@@ -30,32 +32,16 @@ public class WishListItemDto {
             return new InnerBuilder();
         }
 
-        public interface AuthorIdSetter {
-            CreatedOnSetter withAuthorId(Long authorId);
-        }
-
-        public interface AddedSetter {
-            AddedInstanceIdSetter withAdded(AccountDateDto added);
-        }
-
         public interface FinalBuilder {
             WishListItemDto build();
         }
 
-        public interface WishListIdSetter {
-            AuthorIdSetter withWishListId(Long wishListId);
+        public interface CommentSetter {
+            AddedSetter withComment(String comment);
         }
 
         public interface IdSetter {
             WishListIdSetter withId(Long id);
-        }
-
-        public interface CreatedOnSetter {
-            CategoryIdSetter withCreatedOn(Date createdOn);
-        }
-
-        public interface CommentSetter {
-            AddedSetter withComment(String comment);
         }
 
         public interface AddedInstanceIdSetter {
@@ -66,7 +52,19 @@ public class WishListItemDto {
             CommentSetter withCategoryId(Long categoryId);
         }
 
-        public static class InnerBuilder implements AuthorIdSetter, AddedSetter, FinalBuilder, WishListIdSetter, IdSetter, CreatedOnSetter, CommentSetter, AddedInstanceIdSetter, CategoryIdSetter {
+        public interface WishListIdSetter {
+            CreatedSetter withWishListId(Long wishListId);
+        }
+
+        public interface AddedSetter {
+            AddedInstanceIdSetter withAdded(AccountDateDto added);
+        }
+
+        public interface CreatedSetter {
+            CategoryIdSetter withCreated(AccountDateDto created);
+        }
+
+        public static class InnerBuilder implements FinalBuilder, CommentSetter, IdSetter, AddedInstanceIdSetter, CategoryIdSetter, WishListIdSetter, AddedSetter, CreatedSetter {
             private WishListItemDto result = new WishListItemDto();
 
             public WishListIdSetter withId(Long id) {
@@ -74,18 +72,13 @@ public class WishListItemDto {
                 return this;
             }
 
-            public AuthorIdSetter withWishListId(Long wishListId) {
+            public CreatedSetter withWishListId(Long wishListId) {
                 result.wishListId = wishListId;
                 return this;
             }
 
-            public CreatedOnSetter withAuthorId(Long authorId) {
-                result.authorId = authorId;
-                return this;
-            }
-
-            public CategoryIdSetter withCreatedOn(Date createdOn) {
-                result.createdOn = createdOn;
+            public CategoryIdSetter withCreated(AccountDateDto created) {
+                result.created = created;
                 return this;
             }
 

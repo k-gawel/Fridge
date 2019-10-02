@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class AccountDateDto implements Serializable {
+public class AccountDateDto implements Serializable, BaseDto<AccountDate> {
 
     private Number account;
     private LocalDate date;

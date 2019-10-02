@@ -3,6 +3,10 @@ package org.california.model.transfer.response.place;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.WishList;
+import org.california.model.entity.utils.AccountDate;
+import org.california.model.transfer.response.AccountDateDto;
+import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,14 +15,14 @@ import java.util.Collection;
 @EqualsAndHashCode
 @ToString
 @Getter
-public class WishListDto implements Serializable {
+public class WishListDto implements Serializable, BaseDto<WishList> {
 
     private Long id;
     private Long placeId;
     private boolean status;
 
-    private LocalDate createdOn;
-    private LocalDate archivedOn;
+    private AccountDateDto created;
+    private AccountDateDto archived;
 
     private String name;
     private String description;
@@ -35,39 +39,39 @@ public class WishListDto implements Serializable {
             WishListDto build();
         }
 
-        public interface PlaceIdSetter {
-            StatusSetter withPlaceId(Long placeId);
-        }
-
-        public interface ArchivedOnSetter {
-            NameSetter withArchivedOn(LocalDate archivedOn);
-        }
-
-        public interface DescriptionSetter {
-            ItemsSetter withDescription(String description);
-        }
-
-        public interface NameSetter {
-            DescriptionSetter withName(String name);
-        }
-
         public interface ItemsSetter {
             FinalBuilder withItems(Collection<WishListItemDto> items);
-        }
-
-        public interface CreatedOnSetter {
-            ArchivedOnSetter withCreatedOn(LocalDate createdOn);
-        }
-
-        public interface StatusSetter {
-            CreatedOnSetter withStatus(boolean status);
         }
 
         public interface IdSetter {
             PlaceIdSetter withId(Long id);
         }
 
-        public static class InnerBuilder implements FinalBuilder, PlaceIdSetter, ArchivedOnSetter, DescriptionSetter, NameSetter, ItemsSetter, CreatedOnSetter, StatusSetter, IdSetter {
+        public interface DescriptionSetter {
+            ItemsSetter withDescription(String description);
+        }
+
+        public interface StatusSetter {
+            CreatedSetter withStatus(boolean status);
+        }
+
+        public interface ArchivedSetter {
+            NameSetter withArchived(AccountDateDto archived);
+        }
+
+        public interface PlaceIdSetter {
+            StatusSetter withPlaceId(Long placeId);
+        }
+
+        public interface CreatedSetter {
+            ArchivedSetter withCreated(AccountDateDto created);
+        }
+
+        public interface NameSetter {
+            DescriptionSetter withName(String name);
+        }
+
+        public static class InnerBuilder implements FinalBuilder, ItemsSetter, IdSetter, DescriptionSetter, StatusSetter, ArchivedSetter, PlaceIdSetter, CreatedSetter, NameSetter {
             private WishListDto result = new WishListDto();
 
             public PlaceIdSetter withId(Long id) {
@@ -80,18 +84,18 @@ public class WishListDto implements Serializable {
                 return this;
             }
 
-            public CreatedOnSetter withStatus(boolean status) {
+            public CreatedSetter withStatus(boolean status) {
                 result.status = status;
                 return this;
             }
 
-            public ArchivedOnSetter withCreatedOn(LocalDate createdOn) {
-                result.createdOn = createdOn;
+            public ArchivedSetter withCreated(AccountDateDto created) {
+                result.created = created;
                 return this;
             }
 
-            public NameSetter withArchivedOn(LocalDate archivedOn) {
-                result.archivedOn = archivedOn;
+            public NameSetter withArchived(AccountDateDto archived) {
+                result.archived = archived;
                 return this;
             }
 

@@ -3,6 +3,8 @@ package org.california.model.transfer.response.item;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.item.Item;
+import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -10,7 +12,7 @@ import java.util.Collection;
 @EqualsAndHashCode
 @ToString
 @Getter
-public class ItemDto implements Serializable {
+public class ItemDto implements Serializable, BaseDto<Item> {
 
     private Long id;
     private String name;

@@ -3,6 +3,9 @@ package org.california.model.transfer.response.iteminstance;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.InstanceChange;
+import org.california.model.transfer.response.AccountDateDto;
+import org.california.model.transfer.response.BaseDto;
 import org.california.model.util.ChangeOnInstance;
 
 import java.io.Serializable;
@@ -11,12 +14,11 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @ToString
 @Getter
-public class InstanceChangeDto implements Serializable {
+public class InstanceChangeDto implements Serializable, BaseDto<InstanceChange> {
 
     private Long id;
     private ItemInstanceDto instance;
-    private Long accountId;
-    private LocalDate changeDate;
+    private AccountDateDto changed;
     private ChangeOnInstance changeType;
 
 
@@ -29,27 +31,23 @@ public class InstanceChangeDto implements Serializable {
             InstanceChangeDto build();
         }
 
-        public interface ChangeTypeSetter {
-            FinalBuilder withChangeType(ChangeOnInstance changeType);
-        }
-
         public interface InstanceSetter {
-            AccountIdSetter withInstance(ItemInstanceDto instance);
+            ChangedSetter withInstance(ItemInstanceDto instance);
         }
 
         public interface IdSetter {
             InstanceSetter withId(Long id);
         }
 
-        public interface AccountIdSetter {
-            ChangeDateSetter withAccountId(Long accountId);
+        public interface ChangedSetter {
+            ChangeTypeSetter withChanged(AccountDateDto changed);
         }
 
-        public interface ChangeDateSetter {
-            ChangeTypeSetter withChangeDate(LocalDate changeDate);
+        public interface ChangeTypeSetter {
+            FinalBuilder withChangeType(ChangeOnInstance changeType);
         }
 
-        public static class InnerBuilder implements FinalBuilder, ChangeTypeSetter, InstanceSetter, IdSetter, AccountIdSetter, ChangeDateSetter {
+        public static class InnerBuilder implements FinalBuilder, InstanceSetter, IdSetter, ChangedSetter, ChangeTypeSetter {
             private InstanceChangeDto result = new InstanceChangeDto();
 
             public InstanceSetter withId(Long id) {
@@ -57,18 +55,13 @@ public class InstanceChangeDto implements Serializable {
                 return this;
             }
 
-            public AccountIdSetter withInstance(ItemInstanceDto instance) {
+            public ChangedSetter withInstance(ItemInstanceDto instance) {
                 result.instance = instance;
                 return this;
             }
 
-            public ChangeDateSetter withAccountId(Long accountId) {
-                result.accountId = accountId;
-                return this;
-            }
-
-            public ChangeTypeSetter withChangeDate(LocalDate changeDate) {
-                result.changeDate = changeDate;
+            public ChangeTypeSetter withChanged(AccountDateDto changed) {
+                result.changed = changed;
                 return this;
             }
 

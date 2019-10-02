@@ -3,11 +3,13 @@ package org.california.model.transfer.response.item;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.item.Allergen;
+import org.california.model.transfer.response.BaseDto;
 
 @EqualsAndHashCode
 @ToString
 @Getter
-public class AllergenDto {
+public class AllergenDto implements BaseDto<Allergen> {
 
     private long id;
     private String name;

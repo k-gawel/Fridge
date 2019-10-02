@@ -3,7 +3,9 @@ package org.california.model.transfer.response.place;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.california.model.entity.ShopList;
 import org.california.model.transfer.response.AccountDateDto;
+import org.california.model.transfer.response.BaseDto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,7 +14,7 @@ import java.util.Collection;
 @EqualsAndHashCode
 @ToString
 @Getter
-public class ShopListDto implements Serializable {
+public class ShopListDto implements Serializable, BaseDto<ShopList> {
 
     private Long id;
 
