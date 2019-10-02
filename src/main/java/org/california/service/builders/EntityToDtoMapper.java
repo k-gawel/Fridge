@@ -4,6 +4,7 @@ import org.california.model.entity.*;
 import org.california.model.entity.item.*;
 import org.california.model.entity.utils.AccountDate;
 import org.california.model.transfer.response.AccountDateDto;
+import org.california.model.transfer.response.BaseDto;
 import org.california.model.transfer.response.NamedEntityDto;
 import org.california.model.transfer.response.item.*;
 import org.california.model.transfer.response.iteminstance.InstanceChangeDto;
@@ -16,10 +17,10 @@ import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,14 +46,15 @@ public class EntityToDtoMapper {
     public PlaceDto toDto(Place place) {
         Collection<WishList> wishLists = getter.wishLists.get(Collections.singleton(place), true);
         Collection<ShopList> shopLists = getter.shopLists.get(Collections.singleton(place), true);
-        Collection<ItemInstanceDto> deletedInstancesFromWishLists = getDeletedInstancesDtoFromWishLists(wishLists);
+        var deletedInstancesFromWishLists = getDeletedInstancesDtoFromWishLists(wishLists);
+        var deletedInstancesFromShopLists = getDeletedInstanceDtosFromShopLists(shopLists);
 
         Collection<ContainerDto> containerDtos = place.getContainers().stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
 
         addInstancesDtosToContainersDtos(containerDtos, deletedInstancesFromWishLists);
-
+        addInstancesDtosToContainersDtos(containerDtos, deletedInstancesFromShopLists);
 
         Collection<PlaceUserDto> placeUsers = placeUsersToDto(place);
         var wishListDtos = wishLists.stream().map(this::toDto).collect(Collectors.toSet());
@@ -66,7 +68,14 @@ public class EntityToDtoMapper {
                 .withUsers(placeUsers)
                 .withWishLists(wishListDtos)
                 .withShopLists(shopListDtos)
+                .withLogs(getLogs(place))
                 .build();
+    }
+
+
+    private List<InstanceChangeDto> getLogs(Place place) {
+        return getter.instanceLogs.get(Collections.singleton(place), 20, 0)
+                                  .stream().map(this::toDto).collect(Collectors.toList());
     }
 
 
@@ -83,6 +92,15 @@ public class EntityToDtoMapper {
                 .flatMap(w -> w.getItems().stream())
                 .map(WishListItem::getAddedInstance)
                 .filter(Objects::nonNull)
+                .filter(ItemInstance::isDeleted)
+                .map(this::toDto)
+                .collect(Collectors.toSet());
+    }
+
+
+    private Collection<ItemInstanceDto> getDeletedInstanceDtosFromShopLists(Collection<ShopList> shopLists) {
+        return shopLists.stream()
+                .flatMap(s -> s.getInstances().stream())
                 .filter(ItemInstance::isDeleted)
                 .map(this::toDto)
                 .collect(Collectors.toSet());
@@ -151,8 +169,7 @@ public class EntityToDtoMapper {
         return new InstanceChangeDto.Builder().create()
                 .withId(ic.getId())
                 .withInstance(toDto(ic.getInstance()))
-                .withAccountId(ic.getAccount().getId())
-                .withChangeDate(ic.getChangeDate())
+                .withChanged(toDto(ic.getChanged()))
                 .withChangeType(ic.getChangeType())
                 .build();
     }
@@ -163,8 +180,8 @@ public class EntityToDtoMapper {
                 .withId(WL.getId())
                 .withPlaceId(WL.getPlace().getId())
                 .withStatus(WL.isStatus())
-                .withCreatedOn(WL.getCreatedOn())
-                .withArchivedOn(WL.getArchivedOn())
+                .withCreated(toDto(WL.getCreated()))
+                .withArchived(toDto(WL.getArchived()))
                 .withName(WL.getName())
                 .withDescription(WL.getDescription())
                 .withItems(WL.getItems().stream().map(this::toDto).collect(Collectors.toList()))
@@ -176,15 +193,16 @@ public class EntityToDtoMapper {
     public WishListItemDto toDto(WishListItem WLI) {
         if (WLI == null) return null;
 
+        Long addedInstanceId = nullable(() -> WLI.getAddedInstance().getId());
+
         return new WishListItemDto.Builder().create()
                 .withId(WLI.getId())
                 .withWishListId(WLI.getWishList().getId())
-                .withAuthorId(WLI.getAuthor().getId())
-                .withCreatedOn(WLI.getCreatedOn())
+                .withCreated(toDto(WLI.getCreated()))
                 .withCategoryId(WLI.getCategory().getId())
                 .withComment(WLI.getComment())
                 .withAdded(toDto(WLI.getAdded()))
-                .withAddedInstanceId(WLI.getAddedInstance().getId())
+                .withAddedInstanceId(addedInstanceId)
                 .build();
     }
 
@@ -300,6 +318,30 @@ public class EntityToDtoMapper {
                 .withShopName(sl.getShopName())
                 .withInstances(sl.getInstances().stream().map(BaseEntity::getId).collect(Collectors.toList()))
                 .build();
+    }
+
+
+    private static <T> T nullable(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+
+    public <T extends BaseEntity> BaseDto<T> toDto(T t) {
+        Method mapperMethod = Arrays.stream(getClass().getDeclaredMethods())
+                                    .filter(m -> m.getName().equals("toDto"))
+                                    .filter(m -> m.getParameterCount() == 1)
+                                    .filter(m -> m.getParameterTypes()[0].equals(t.getClass()))
+                                    .findFirst().orElseThrow(() -> new IllegalArgumentException("Cannot find mapper method for " + t.getClass()));
+
+        try {
+            return (BaseDto<T>) mapperMethod.invoke(this, t);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalStateException("Cannot invoke  mapper method for " + t.getClass(), e);
+        }
     }
 
 
