@@ -8,6 +8,7 @@ import org.california.model.transfer.response.InitialResponse;
 import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.util.exceptions.NotValidException;
+import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,7 @@ public class AuthorizationService {
 
     public InitialResponse login(String username, String password) {
         if(StringUtils.isAnyBlank(username, password))
-            throw new NullPointerException("username.blank|password.blank");
+            throw new UnauthorizedException("datas.wrong");
 
         Account account = getAccount(username, password);
 
@@ -64,6 +65,9 @@ public class AuthorizationService {
     private InitialResponse getInitialResponse(Account account) {
         if(account == null)
             throw new NotValidException("account.null");
+
+        System.out.println("InitialResponse getter: " + this.getterService);
+        System.out.println("InitialResponse getter.tokens: " + this.getterService.tokens);
 
         return new InitialResponse.Builder()
                 .setId(account)

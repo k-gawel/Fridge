@@ -7,12 +7,9 @@ import org.california.model.entity.WishListItem;
 import org.california.model.entity.utils.AccountDate;
 import org.california.model.transfer.request.forms.WishListItemForm;
 import org.california.repository.wishlist.WishListItemRepository;
-import org.california.util.exceptions.NotValidException;
 import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class WishListItemService {
@@ -35,6 +32,7 @@ public class WishListItemService {
 
         wishListItem.setAddedInstance(instance);
         wishListItem.setAdded(new AccountDate(account));
+        instance.setWishListItem(wishListItem);
 
         instance.setWishListItem(wishListItem);
         return wishListItemRepository.save(wishListItem) != null;
@@ -43,7 +41,7 @@ public class WishListItemService {
 
     public boolean deleteFromList(Account account, WishListItem wishListItem) {
 
-        if(!accountPermissionsService.hasAccessToWishListItem(account, wishListItem))
+        if(!accountPermissionsService.hasAccess(account, wishListItem))
             throw new UnauthorizedException();
 
 
@@ -55,51 +53,21 @@ public class WishListItemService {
     }
 
 
-    public WishListItem newWishListItem(WishListItemForm wishListItemForm) {
-
-        WishListItem result = fromForm(wishListItemForm);
-        wishListItemRepository.save(result);
-        return result;
-
-    }
-
-
-    // Creates object from DTO for a new created WishList
-    public WishListItem fromForm(Account author, WishList currentWishList, WishListItemForm form) {
-        if(author == null || currentWishList == null) {
-            throw new NotValidException("Wyjebalem sie w krewoaniu z dto");
-        }
-
+    public WishListItem newWishListItem(WishListItemForm form) {
         WishListItem result = fromForm(form);
-        result.setAuthor(author);
-        result.setWishList(currentWishList);
-
         wishListItemRepository.save(result);
-
-        return result;
-    }
-
-
-    // Creates object from DTO with not null WishList field in
-    public WishListItem fromForm(Account author, WishListItemForm form) {
-
-        WishListItem result = fromForm(form);
-
-        wishListItemRepository.save(result);
-
         return result;
     }
 
 
     // Creates from DTO object with author as null and nullable wishlist fields
-    WishListItem fromForm(WishListItemForm form) {
+    private WishListItem fromForm(WishListItemForm form) {
         WishListItem result = new WishListItem();
 
-        result.setCreatedOn(new Date());
+        result.setCreated(new AccountDate(form.author));
         result.setComment(form.comment);
         result.setWishList(form.wishList);
         result.setCategory(form.category);
-        result.setAuthor(form.author);
 
         return result;
 

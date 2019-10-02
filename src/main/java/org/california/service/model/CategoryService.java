@@ -8,25 +8,16 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 
 @Service
-public class CategoryService {
-
+public class CategoryService extends BaseService<Category> {
 
     private final CategoryRepository categoryRepository;
 
     @Autowired
     public CategoryService(CategoryRepository categoryRepository) {
+        super(categoryRepository);
         this.categoryRepository = categoryRepository;
     }
 
-
-    public Category save(Category category) {
-        try {
-            return categoryRepository.save(category);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 
     public Category addNewCategory(Category parent, String name) {

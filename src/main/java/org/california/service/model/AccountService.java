@@ -22,11 +22,6 @@ public class AccountService {
     }
 
 
-    public boolean save(Account account) {
-        return accountRepository.save(account) == null;
-    }
-
-
     public Account addNewAccount(AccountForm form) {
         Account account = formToEntity(form);
 

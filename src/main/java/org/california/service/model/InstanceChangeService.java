@@ -4,54 +4,50 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.InstanceChange;
 import org.california.model.entity.ItemInstance;
+import org.california.model.entity.utils.AccountDate;
 import org.california.model.util.ChangeOnInstance;
 import org.california.repository.iteminstance.InstanceOnChangeRepository;
+import org.california.repository.utils.OffsetLimit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 
 @Service
-public class InstanceOnChangeService {
+public class InstanceChangeService extends BaseService<InstanceChange> {
 
     private final InstanceOnChangeRepository instanceOnChangeRepository;
 
 
     @Autowired
-    InstanceOnChangeService(InstanceOnChangeRepository instanceOnChangeRepository) {
+    InstanceChangeService(InstanceOnChangeRepository instanceOnChangeRepository) {
+        super(instanceOnChangeRepository);
         this.instanceOnChangeRepository = instanceOnChangeRepository;
     }
 
 
-    public InstanceChange save(InstanceChange instanceChange) {
-            return instanceOnChangeRepository.save(instanceChange);
-    }
-
-
-    public Collection<InstanceChange> getByContainers(Collection<Container> containers, int limit) {
+    public Collection<InstanceChange> getByContainers(Collection<Container> containers, int limit, int offset) {
         if(containers == null || containers.isEmpty())
             return Collections.emptySet();
 
-        return instanceOnChangeRepository.getByContainers(containers, limit);
+        return instanceOnChangeRepository.getByContainers(containers, new OffsetLimit(offset, limit));
     }
 
 
-    public Collection<InstanceChange> getByInstances(Collection<ItemInstance> instances, int limit) {
+    public Collection<InstanceChange> getByInstances(Collection<ItemInstance> instances, int limit, int offset) {
         return CollectionUtils.isEmpty(instances) ?
-            Collections.emptySet() : instanceOnChangeRepository.getByInstances(instances, limit);
+            Collections.emptySet() : instanceOnChangeRepository.getByInstances(instances, new OffsetLimit(offset, limit));
     }
 
 
     public InstanceChange newChange(Account account, ItemInstance itemInstance, ChangeOnInstance changeOnInstance) {
         InstanceChange instanceChange = new InstanceChange();
-        instanceChange.setAccount(account);
-        instanceChange.setChangeType(changeOnInstance);
-        instanceChange.setChangeDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
         instanceChange.setInstance(itemInstance);
+        instanceChange.setChanged(new AccountDate(account));
+        instanceChange.setChangeType(changeOnInstance);
 
         save(instanceChange);
 

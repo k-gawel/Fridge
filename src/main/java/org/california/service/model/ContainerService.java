@@ -24,13 +24,11 @@ import java.util.stream.Collectors;
 public class ContainerService {
 
 
-    private final GetterService getterService;
     private final ContainerRepository containerRepository;
     private final PlaceService placeService;
 
     @Autowired
     public ContainerService(GetterService getterService, ContainerRepository containerRepository, PlaceService placeService) {
-        this.getterService = getterService;
         this.containerRepository = containerRepository;
         this.placeService = placeService;
     }

@@ -6,6 +6,7 @@ import org.california.model.entity.utils.AccountDate;
 import org.california.model.transfer.request.forms.ItemInstanceForm;
 import org.california.model.transfer.request.forms.MoneyForm;
 import org.california.repository.iteminstance.ItemInstanceRepository;
+import org.jetbrains.annotations.Contract;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,15 @@ public class ItemInstanceService {
 
     private final ItemInstanceRepository itemInstanceRepository;
     private final ShopListService shopListService;
-    private final InstanceOnChangeService instanceOnChangeService;
+    private final InstanceChangeService instanceChangeService;
     private final WishListItemService wishListItemService;
 
 
     @Autowired
-    public ItemInstanceService(ItemInstanceRepository itemInstanceRepository, ShopListService shopListService, InstanceOnChangeService instanceOnChangeService, WishListItemService wishListItemService) {
+    public ItemInstanceService(ItemInstanceRepository itemInstanceRepository, ShopListService shopListService, InstanceChangeService instanceChangeService, WishListItemService wishListItemService) {
         this.itemInstanceRepository = itemInstanceRepository;
         this.shopListService = shopListService;
-        this.instanceOnChangeService = instanceOnChangeService;
+        this.instanceChangeService = instanceChangeService;
         this.wishListItemService = wishListItemService;
     }
 
@@ -36,7 +37,13 @@ public class ItemInstanceService {
     public ItemInstance create(Account account, ItemInstanceForm form) {
         ItemInstance result = fromForm(form);
         result.setAdded(new AccountDate(account));
-        return itemInstanceRepository.save(result);
+
+        if(itemInstanceRepository.save(result) != null) {
+            instanceChangeService.add(account, result);
+            return result;
+        } else {
+            return null;
+        }
     }
 
 
@@ -46,12 +53,12 @@ public class ItemInstanceService {
 
         itemInstance.setOpened(new AccountDate(account));
 
-        boolean result = itemInstanceRepository.save(itemInstance) != null;
-
-        if(result)
-            instanceOnChangeService.open(account, itemInstance);
-
-        return result;
+        if(itemInstanceRepository.save(itemInstance) != null) {
+            instanceChangeService.open(account, itemInstance);
+            return true;
+        } else {
+            return false;
+        }
      }
 
 
@@ -61,12 +68,12 @@ public class ItemInstanceService {
 
         itemInstance.setDeleted(new AccountDate(account));
 
-        boolean result = itemInstanceRepository.save(itemInstance) != null;
-
-        if(result)
-            instanceOnChangeService.delete(account, itemInstance);
-
-        return result;
+        if(itemInstanceRepository.save(itemInstance) != null) {
+            instanceChangeService.delete(account, itemInstance);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -95,9 +102,12 @@ public class ItemInstanceService {
     }
 
 
+    @Contract("null -> null")
     private Money moneyFromForm(MoneyForm moneyForm) {
-        CurrencyUnit currencyUnit = CurrencyUnit.of(moneyForm.currency);
-        double amount = moneyForm.amount.doubleValue();
+        if(moneyForm == null) return null;
+
+        var currencyUnit = CurrencyUnit.of(moneyForm.currency);
+        var amount       = moneyForm.amount.doubleValue();
 
         return Money.of(currencyUnit, amount);
     }
