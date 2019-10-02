@@ -1,12 +1,14 @@
 package org.california.service.getter;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.ItemInstance;
 import org.california.model.entity.item.Item;
+import org.california.model.transfer.request.queries.ItemInstanceParams;
 import org.california.repository.iteminstance.ItemInstanceRepository;
 import org.california.repository.iteminstance.Parameters;
-import org.california.repository.utils.LimitAndOffset;
+import org.california.repository.utils.OffsetLimit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,40 +29,42 @@ public class ItemInstanceGetter extends BaseGetter<ItemInstance> {
 
 
     @SuppressWarnings("ConstantConditions")
-    public Collection<ItemInstance> get(Collection<Item> items, Collection<Container> containers, Collection<Account> owners,
-                                        Boolean deleted, Boolean open, Boolean frozen, int limit, int start) {
+    public Collection<ItemInstance> get(Collection<Item> items, Collection<Container> containers, Collection<Account> owners, ItemInstanceParams params, OffsetLimit offsetLimit) {
 
-        LimitAndOffset limitAndOffset = new LimitAndOffset(limit, start);
-        Parameters parameters = new Parameters(deleted, open, frozen);
-        
-        if(items.isEmpty() && containers.isEmpty() && owners.isEmpty())
+        boolean i = CollectionUtils.isNotEmpty(items);
+        boolean c = CollectionUtils.isNotEmpty(containers);
+        boolean o = CollectionUtils.isNotEmpty(owners);
+
+        // items ; containers ; owners
+        if(!i && !c && !o)
             return Collections.emptySet();
 
         // items ; containers : OWNERS
-        if(items.isEmpty() && containers.isEmpty() && !owners.isEmpty())
-            return itemInstanceRepository.getByOwners(owners, parameters, limitAndOffset);
+        if(!i && !c &&  o)
+            return itemInstanceRepository.getByOwners(owners, params, offsetLimit);
 
         //  items ; CONTAINERS ; OWNERS
-        if(items.isEmpty() && !containers.isEmpty() && !owners.isEmpty())
-            return itemInstanceRepository.getByContainersAndOwners(containers, owners, parameters, limitAndOffset);
+        if(!i &&  c &&  o)
+            return itemInstanceRepository.getByContainersAndOwners(containers, owners, params, offsetLimit);
 
         //  items ; CONTAINERS ; owners
-        if(items.isEmpty() && !containers.isEmpty() && owners.isEmpty())
-            return itemInstanceRepository.getByContainers(containers, parameters, limitAndOffset);
+        if(!i &&  c && !o)
+            return itemInstanceRepository.getByContainers(containers, params, offsetLimit);
 
         //  ITEMS ; containers ; OWNERS
-        if(!items.isEmpty() && containers.isEmpty() && !owners.isEmpty())
-            return itemInstanceRepository.getByItemsAndOwners(items, owners, parameters, limitAndOffset);
+        if(i  && !c &&  o)
+            return itemInstanceRepository.getByItemsAndOwners(items, owners, params, offsetLimit);
 
         // ITEMS ; CONTAINERS ; owners
-        if(!items.isEmpty() && !containers.isEmpty() && owners.isEmpty())
-            return itemInstanceRepository.getByItemsAndContainers(items, containers, parameters, limitAndOffset);
+        if(i  &&  c &&  !o)
+            return itemInstanceRepository.getByItemsAndContainers(items, containers, params, offsetLimit);
 
         // ITEMS ; CONTAINERS ; OWNERS
-        if(!items.isEmpty() && !containers.isEmpty() && !owners.isEmpty())
-            return itemInstanceRepository.getByItemsAndContainersAndOwners(items, containers, owners, parameters, limitAndOffset);
+        if(i  &&  c &&  o)
+            return itemInstanceRepository.getByItemsAndContainersAndOwners(items, containers, owners, params, offsetLimit);
 
         return Collections.emptySet();
     }
+
 
 }

@@ -22,6 +22,7 @@ public class WishListGetter extends BaseGetter<WishList> {
     }
 
 
+
     public <T> Collection<WishList> get(Collection<T> collection, boolean active) {
         if(CollectionUtils.isEmpty(collection))
             return Collections.emptySet();
@@ -33,5 +34,6 @@ public class WishListGetter extends BaseGetter<WishList> {
 
         return Collections.emptySet();
     }
+
 
 }

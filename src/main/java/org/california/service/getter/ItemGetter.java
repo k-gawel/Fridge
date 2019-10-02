@@ -16,14 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class ItemGetter extends BaseGetter<Item> {
 
-    private final ItemRepository itemRepository;
     private final ItemSearchRepository itemSearchRepository;
     private final CategoryGetter categoryGetter;
 
     @Autowired
     ItemGetter(ItemRepository itemRepository, ItemSearchRepository itemSearchRepository, CategoryGetter categoryGetter) {
         super(itemRepository, Item.class);
-        this.itemRepository = itemRepository;
         this.itemSearchRepository = itemSearchRepository;
         this.categoryGetter = categoryGetter;
     }
@@ -49,9 +47,9 @@ public class ItemGetter extends BaseGetter<Item> {
 
     public Collection<Item> searchByPlaceAndCategories(Collection<Place> places, Collection<Category> categories) {
         Collection<Category> finalCategories = categories.stream()
-                .map(categoryGetter::getFinalCategories)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
+                                                         .map(categoryGetter::getFinalCategories)
+                                                         .flatMap(Collection::stream)
+                                                         .collect(Collectors.toSet());
 
         return itemSearchRepository.searchByPlaceAndCategories(places, finalCategories);
     }

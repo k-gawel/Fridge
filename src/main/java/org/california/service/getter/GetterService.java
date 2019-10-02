@@ -27,10 +27,11 @@ public class GetterService {
     public final ProducerGetter producers;
     public final PlaceUserStatsGetter placeUserStats;
     public final ShopListGetter shopLists;
+    public final InstanceChangeGetter instanceLogs;
 
     @Autowired
     public GetterService(AccountGetter accounts, PlaceGetter places, TokenService tokens, ContainerGetter containers, ItemGetter items, ItemInstanceGetter itemInstances, CategoryGetter categories, WishListGetter wishLists,
-                         WishListItemGetter wishListItems, AllergenGetter allergens, IngredientGetter ingredients, ProducerGetter producers, PlaceUserStatsGetter placeUserStats, ShopListGetter shopLists) {
+                         WishListItemGetter wishListItems, AllergenGetter allergens, IngredientGetter ingredients, ProducerGetter producers, PlaceUserStatsGetter placeUserStats, ShopListGetter shopLists, InstanceChangeGetter instanceLogs) {
         this.accounts = accounts;
         this.places = places;
         this.tokens = tokens;
@@ -45,6 +46,7 @@ public class GetterService {
         this.producers = producers;
         this.placeUserStats = placeUserStats;
         this.shopLists = shopLists;
+        this.instanceLogs = instanceLogs;
     }
 
 
