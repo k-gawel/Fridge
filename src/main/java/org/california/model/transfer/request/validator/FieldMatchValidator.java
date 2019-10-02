@@ -1,4 +1,4 @@
-package org.california.model.transfer.request.utils.validator;
+package org.california.model.transfer.request.validator;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Component;

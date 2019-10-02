@@ -1,4 +1,4 @@
-package org.california.model.transfer.request.utils.validator;
+package org.california.model.transfer.request.validator;
 
 import org.california.service.getter.GetterService;
 import org.springframework.beans.factory.annotation.Autowired;
