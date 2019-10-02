@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.california.model.transfer.request.forms.Form;
-import org.california.service.getter.BaseGetter;
-import org.california.service.getter.GetterService;
 import org.california.util.exceptions.NotValidException;
 
 import java.io.IOException;
@@ -19,26 +17,23 @@ import java.lang.reflect.InvocationTargetException;
 public class RequestDeserializer<T> extends StdDeserializer<T> {
 
     private ObjectMapper formMapper = JSONMapper.MAPPER;
-    private ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper     = new ObjectMapper();
 
-    private JsonNode node;
-    private final Class<T> valueClass;
-    private final ConstructorGetter<T> constructorGetter;
+    private Class<T> valueClass;
 
 
     public RequestDeserializer(Class<T> vc) {
         super(vc);
         this.valueClass = vc;
-        this.constructorGetter = new ConstructorGetter(_valueClass);
     }
 
 
     @Override
     public T deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        this.node = jsonParser.getCodec().readTree(jsonParser);
+        JsonNode node = jsonParser.getCodec().readTree(jsonParser);
 
-        Object[] parameters = getParametersArray();
-        Constructor<T> constructor = constructorGetter.getConstructor();
+        Object[] parameters = getParametersArray(node);
+        Constructor<T> constructor = new ConstructorGetter(_valueClass).getConstructor();
 
         try {
             return constructor.newInstance(parameters);
@@ -48,12 +43,12 @@ public class RequestDeserializer<T> extends StdDeserializer<T> {
     }
 
 
-    private Object[] getParametersArray() {
+    private Object[] getParametersArray(JsonNode node) {
         Field[] fields = valueClass.getDeclaredFields();
         Object[] result = new Object[fields.length];
 
         for (int i = 0; i < fields.length; i++) {
-            Object value = getValue(fields[i]);
+            Object value = getValue(node, fields[i]);
             result[i] = value;
         }
 
@@ -61,24 +56,20 @@ public class RequestDeserializer<T> extends StdDeserializer<T> {
     }
 
 
-    private Object getValue(Field field) {
-        BaseGetter getter = getGetter(field);
-        String nodeName = getNodeName(field, getter != null);
-        JsonNode value = this.node.get(nodeName);
+    private Object getValue(JsonNode node, Field field) {
+        String nodeName = getNodeName(field);
+        JsonNode value = node.get(nodeName);
 
-        return getter == null ? getValue(value, field) : getValue(value, getter);
+        if(field.isAnnotationPresent(ById.class))
+            return new ByIdProcessor(value, field).getValue();
+        else if(field.isAnnotationPresent(ByIds.class))
+            return new ByIdsProcessor(value, field).getValues();
+        else
+            return getPrimitiveValue(value, field);
     }
 
 
-    private Object getValue(JsonNode value, BaseGetter getter) {
-        if (value == null) return null;
-
-        long id = value.longValue();
-        return getter.getByKey(id).orElse(null);
-    }
-
-
-    private Object getValue(JsonNode value, Field field) {
+    private Object getPrimitiveValue(JsonNode value, Field field) {
         if (value == null) return null;
 
         Class<?> fieldClass = field.getType();
@@ -87,40 +78,21 @@ public class RequestDeserializer<T> extends StdDeserializer<T> {
         try {
             return mapper.readValue(value.toString(), fieldClass);
         } catch (IOException e) {
-            throw new NotValidException("Cannot cast " + node.toString() + " to " + field.getType());
+            throw new NotValidException("Cannot cast " + value.toString() + " to " + field.getType());
         }
     }
 
 
-    private String getNodeName(Field field, boolean entity) {
-        String name = field.getName().toLowerCase() + (entity ? "id" : "");
-        var iterator = node.fieldNames();
+    private String getNodeName(Field field) {
+        String fieldName = field.getName();
 
-        String fieldName = null;
-
-        while (iterator.hasNext()) {
-            String nodeName = iterator.next();
-            if (nodeName.toLowerCase().equals(name))
-                if (fieldName == null)
-                    fieldName = nodeName;
-                else
-                    throw new IllegalStateException("Duplicate node name " + fieldName + " in JSON.");
-        }
-
-        return fieldName;
+        if(field.isAnnotationPresent(ById.class))
+            return fieldName + "Id";
+        else if(field.isAnnotationPresent(ByIds.class))
+            return fieldName + "Ids";
+        else
+            return fieldName;
     }
 
-
-    private BaseGetter<?> getGetter(Field field) {
-        EntityById annotation = field.getAnnotation(EntityById.class);
-        if (annotation == null) return null;
-
-        Class<?> fieldType = field.getType();
-        BaseGetter<?> getter = GetterService.GETTER.get(fieldType);
-        if (getter == null)
-            throw new IllegalStateException("There is no available getter for " + fieldType);
-
-        return getter;
-    }
 
 }
