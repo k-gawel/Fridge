@@ -1,9 +1,8 @@
 package org.california.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.california.controller.service.WishListControllerService;
 import org.california.model.transfer.request.forms.WishListForm;
+import org.california.model.transfer.request.queries.WishListGetQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +44,9 @@ public class WishListController extends BaseController {
 
     @GetMapping
     public ResponseEntity get(@RequestHeader("token") String token,
-                              @RequestParam(name = "placeIds", defaultValue = "") String placesIds,
-                              @RequestParam(name = "ids", defaultValue = "") String wishListIds,
-                              @RequestParam(name = "active", defaultValue = "true") boolean active,
-                              @RequestParam(name = "offset") Short offset,
-                              @RequestParam(name = "limit") Short limit) {
+                              @RequestBody WishListGetQuery query) {
 
-        var result = this.controllerService.get(token, placesIds, wishListIds, active);
+        var result = this.controllerService.get(token, query);
         var status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);

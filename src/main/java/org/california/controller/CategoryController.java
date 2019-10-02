@@ -1,6 +1,5 @@
-package org.california.controller.item;
+package org.california.controller;
 
-import org.california.controller.BaseController;
 import org.california.model.entity.item.Category;
 import org.california.service.getter.GetterService;
 import org.california.service.model.CategoryService;

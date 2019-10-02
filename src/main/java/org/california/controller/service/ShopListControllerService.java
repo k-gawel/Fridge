@@ -32,7 +32,7 @@ public class ShopListControllerService {
     public ShopListDto createShopList(String token, ShopListForm form) {
         var account = getter.accounts.getByToken(token);
 
-        if (!permissionsService.hasAccessToPlace(account, form.place))
+        if (!permissionsService.hasAccess(account, form.place))
             throw new UnauthorizedException(account, form.place);
 
         ShopList shopList = shopListService.createShopList(form);
@@ -41,13 +41,13 @@ public class ShopListControllerService {
 
 
     public boolean addItemInstanceToShopList(String token, Long shopListId, Long instanceId) {
-        var account = getter.accounts.getByToken(token);
+        var account  = getter.accounts.getByToken(token);
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
         var instance = getter.itemInstances.getByKeyOrThrow(instanceId);
 
-        if (!permissionsService.hasAccessToShopList(account, shopList))
+        if (!permissionsService.hasAccess(account, shopList))
             throw new UnauthorizedException(account, shopList);
-        if (!permissionsService.hasAccessToItemInstance(account, instance))
+        if (!permissionsService.hasAccess(account, instance))
             throw new UnauthorizedException(account, instance);
 
         return shopListService.addInstance(shopList, instance);
@@ -58,7 +58,7 @@ public class ShopListControllerService {
         var account = getter.accounts.getByToken(token);
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
 
-        if (!permissionsService.hasAccessToShopList(account, shopList))
+        if (!permissionsService.hasAccess(account, shopList))
             throw new UnauthorizedException(account, shopList);
 
         return shopListService.archive(shopList);
@@ -70,9 +70,9 @@ public class ShopListControllerService {
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
         var instance = getter.itemInstances.getByKeyOrThrow(instanceId);
 
-        if (!permissionsService.hasAccessToShopList(account, shopList))
+        if (!permissionsService.hasAccess(account, shopList))
             throw new UnauthorizedException(account, shopList);
-        if (!permissionsService.hasAccessToItemInstance(account, instance))
+        if (!permissionsService.hasAccess(account, instance))
             throw new UnauthorizedException(account, instance);
 
         return shopListService.removeInstance(shopList, instance);

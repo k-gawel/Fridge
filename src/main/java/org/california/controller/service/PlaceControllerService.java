@@ -1,6 +1,5 @@
 package org.california.controller.service;
 
-import org.california.controller.service.utils.Utils;
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
 import org.california.model.transfer.request.forms.PlaceForm;
@@ -9,6 +8,7 @@ import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.PlaceService;
+import org.california.util.StringUtils;
 import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,12 +45,12 @@ public class PlaceControllerService {
 
     public Collection<PlaceDto> get(String token, String placeIdsString) {
         Account account = getterService.accounts.getByToken(token);
-        Collection<Number> placeIds = Utils.collectionOf(placeIdsString);
+        Collection<Number> placeIds = StringUtils.collectionOf(placeIdsString);
 
         Collection<Place> places = getterService.places.getByKeys(placeIds);
 
         return places.stream()
-                            .filter(p -> accountPermissionsService.hasAccessToPlace(account, p))
+                            .filter(p -> accountPermissionsService.hasAccess(account, p))
                             .map(mapper::toDto)
                             .collect(Collectors.toList());
     }

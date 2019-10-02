@@ -1,21 +1,20 @@
-package org.california.controller.item;
+package org.california.controller;
 
-import org.california.controller.BaseController;
-import org.california.controller.service.ProducerControllerService;
+import org.california.controller.service.IngredientControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/producers")
+@RequestMapping("ingredients")
 @CrossOrigin
-public class ProducerController extends BaseController {
+public class IngredientController extends BaseController {
 
-    private ProducerControllerService controllerService;
+    private final IngredientControllerService controllerService;
 
     @Autowired
-    public ProducerController(ProducerControllerService controllerService) {
+    public IngredientController(IngredientControllerService controllerService) {
         this.controllerService = controllerService;
     }
 
