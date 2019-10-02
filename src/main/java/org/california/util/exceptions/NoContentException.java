@@ -13,7 +13,13 @@ public class NoContentException extends SendableException {
     }
 
     public NoContentException(Class<? extends BaseEntity> entityClass, Object identifer) {
-        super(entityClass.getName() + " of " + identifer + " doesn't exists.");
+        super(messageName(entityClass, identifer));
+    }
+
+    private static String messageName(Class<? extends BaseEntity> c, Object i) {
+        var className = c.getSimpleName().toLowerCase();
+        var identifer = i == null ? "null" : i.toString();
+        return className + "." + identifer;
     }
 
 }
