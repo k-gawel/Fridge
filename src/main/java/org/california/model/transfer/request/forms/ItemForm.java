@@ -1,15 +1,13 @@
 package org.california.model.transfer.request.forms;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.california.model.entity.Place;
 import org.california.model.entity.item.Category;
-import org.california.service.serialization.EntityById;
-import org.california.service.serialization.RequestDeserializer;
+import org.california.service.serialization.ById;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
@@ -17,19 +15,20 @@ import java.util.Map;
 @Validated
 public class ItemForm extends Form implements Serializable {
 
-    @NotBlank(message = "item_name.blank")
+    @Size(min = 5, max = 255, message = "name.length")
     public final String name;
 
-    @EntityById
-    @NotNull
+    @ById
+    @NotNull(message = "category.null")
     public final Category category;
 
-    @EntityById
-    @NotNull
+    @ById
+    @NotNull(message = "place.null")
     public final Place place;
 
     public final Long barcode;
 
+    @Size(min = 5, message = "description.length")
     public final String description;
     public final String storage;
 
@@ -39,7 +38,7 @@ public class ItemForm extends Form implements Serializable {
 
     public final String producer;
 
-    @Pattern(regexp = "(\\d+.?\\d*(G|KG|L|ML|DAG))|", message = "capacity.wrong_format")
+    @Pattern(regexp = "(\\d+.?\\d*(G|KG|L|ML|DAG))|", message = "capacity.wrongFormat")
     public final String capacity;
 
     public ItemForm(String name, Category category, Place place, Long barcode, String description, String storage, Map<String, Boolean> allergens, Collection<String> ingredients, NutritionForm nutrition, String producer, String capacity) {

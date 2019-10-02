@@ -1,8 +1,7 @@
 package org.california.model.transfer.request.forms;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.california.model.transfer.request.utils.validator.FieldMatch;
-import org.california.model.transfer.request.utils.validator.UniqueField;
+import org.california.model.transfer.request.validator.FieldMatch;
+import org.california.model.transfer.request.validator.UniqueField;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
@@ -11,17 +10,17 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Validated
-@FieldMatch(first = "password1", second = "password2", message = "passwords.not_equal")
+@FieldMatch(first = "password1", second = "password2", message = "passwords.notEqual")
 public class AccountForm extends Form implements Serializable {
 
     @NotBlank
     @Size(min = 5, max = 30, message = "name.length")
-    @UniqueField(fieldType = UniqueField.FieldType.NAME, message = "name.already_in_use")
+    @UniqueField(fieldType = UniqueField.FieldType.NAME, message = "name.alreadyInUse")
     public final String name;
 
     @NotBlank
-    @Email(message = "email.wrong_format")
-    @UniqueField(fieldType = UniqueField.FieldType.EMAIL, message = "emaio.already_in_use")
+    @Email(message = "email.wrongFormat")
+    @UniqueField(fieldType = UniqueField.FieldType.EMAIL, message = "email.alreadyInUse")
     public final String email;
 
     @NotBlank

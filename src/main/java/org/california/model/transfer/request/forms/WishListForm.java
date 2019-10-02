@@ -1,32 +1,28 @@
 package org.california.model.transfer.request.forms;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
-import org.california.service.serialization.EntityById;
-import org.california.service.serialization.RequestDeserializer;
+import org.california.service.serialization.ById;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Validated
 public class WishListForm extends Form implements Serializable {
 
-    @NotBlank(message = "name.blank")
+    @Size(min = 5, max = 30, message = "name.length")
     public final String name;
 
-    @NotNull
-    @EntityById
+    @ById
+    @NotNull(message = "place.null")
     public final Place place;
 
-    @NotNull(message = "description.null")
     public final String description;
 
-    @EntityById
-    @NotNull
+    @ById
+    @NotNull(message = "user.null")
     public final Account author;
 
     public WishListForm(String name, Place place, String description, Account author) {

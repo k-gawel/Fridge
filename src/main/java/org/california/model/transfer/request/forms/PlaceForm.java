@@ -1,15 +1,14 @@
 package org.california.model.transfer.request.forms;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Validated
 public class PlaceForm extends Form implements Serializable {
 
-    @NotBlank(message = "name.blank")
+    @Size(min = 5, max = 30, message = "name.length")
     public final String name;
 
     public PlaceForm(String name) {

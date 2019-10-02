@@ -1,6 +1,5 @@
 package org.california.model.transfer.request.forms;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;

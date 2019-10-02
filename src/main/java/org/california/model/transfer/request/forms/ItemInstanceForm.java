@@ -1,14 +1,11 @@
 package org.california.model.transfer.request.forms;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.ShopList;
 import org.california.model.entity.WishListItem;
 import org.california.model.entity.item.Item;
-import org.california.service.serialization.EntityById;
-import org.california.service.serialization.RequestDeserializer;
+import org.california.service.serialization.ById;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.FutureOrPresent;
@@ -19,24 +16,25 @@ import java.util.Date;
 @Validated
 public class ItemInstanceForm extends Form implements Serializable {
 
-    @EntityById
+    @ById
     @NotNull(message = "user.null")
     public final Account user;
 
-    @EntityById
+    @ById
     @NotNull(message = "item.null")
     public final Item item;
 
-    @EntityById
+    @ById
     @NotNull(message = "container.null")
     public final Container container;
 
-    @EntityById
+    @ById
     public final ShopList shopList;
 
+    @ById
     public final WishListItem wishListItem;
 
-    @FutureOrPresent(message = "expire_date.past")
+    @FutureOrPresent(message = "expireDate.past")
     public final Date expireDate;
 
     public final MoneyForm price;

@@ -2,7 +2,7 @@ package org.california.model.transfer.request.forms;
 
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
-import org.california.service.serialization.EntityById;
+import org.california.service.serialization.ById;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
@@ -11,11 +11,12 @@ import java.io.Serializable;
 @Validated
 public class ShopListForm extends Form implements Serializable {
 
-    @EntityById
+    @ById
     @NotNull(message = "place.null")
     public final Place place;
-    @EntityById
-    @NotNull(message = "author.null")
+
+    @ById
+    @NotNull(message = "user.null")
     public final Account author;
 
     public final String shopName;

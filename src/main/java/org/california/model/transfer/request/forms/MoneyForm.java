@@ -1,6 +1,5 @@
 package org.california.model.transfer.request.forms;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.ToString;
 import org.springframework.validation.annotation.Validated;
 
@@ -11,7 +10,7 @@ import java.io.Serializable;
 @ToString
 public class MoneyForm extends Form implements Serializable {
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "price.negative")
     public final Number amount;
     public final String currency;
 
