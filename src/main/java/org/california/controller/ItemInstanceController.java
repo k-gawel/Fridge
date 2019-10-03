@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 
-@RestController("/item_instances")
-@RequestMapping("/item_instances")
+@RestController("/itemInstances")
+@RequestMapping("/itemInstances")
 @CrossOrigin
 public class ItemInstanceController extends BaseController {
 
