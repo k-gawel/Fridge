@@ -35,4 +35,12 @@ public class BaseControllerService<T extends BaseEntity> {
                        .collect(Collectors.toList());
     }
 
+
+    protected Collection<BaseDto<T>> map(Collection<T> entities) {
+        return entities.stream()
+                       .map(mapper::toDto)
+                       .collect(Collectors.toList());
+    }
+
+
 }

@@ -25,9 +25,7 @@ public class WishListItemControllerService extends BaseControllerService<WishLis
     }
 
 
-    public WishListItemDto newWishListItem(String token, WishListItemForm form) {
-        Account account = getter.accounts.getByToken(token);
-
+    public WishListItemDto newWishListItem(Account account, WishListItemForm form) {
         if (!permissions.hasAccess(account, form.wishList))
             throw new UnauthorizedException();
 
@@ -37,8 +35,7 @@ public class WishListItemControllerService extends BaseControllerService<WishLis
     }
 
 
-    public boolean addInstanceToWishListItem(String token, Long wishListItemId, Number instanceId) {
-        var account = getter.accounts.getByToken(token);
+    public boolean addInstanceToWishListItem(Account account, Long wishListItemId, Number instanceId) {
         var wishListItem = getter.wishListItems.getByKeyOrThrow(wishListItemId);
         var instance = getter.itemInstances.getByKeyOrThrow(instanceId);
 

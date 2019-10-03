@@ -1,5 +1,7 @@
 package org.california.controller.service;
 
+import org.california.model.entity.Account;
+import org.california.model.entity.Place;
 import org.california.model.entity.item.Category;
 import org.california.model.entity.item.Item;
 import org.california.model.transfer.response.item.ItemDto;
@@ -7,14 +9,12 @@ import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.RelatedItemsService;
-import org.california.util.StringUtils;
 import org.california.util.enums.RelatedItemsType;
 import org.california.util.exceptions.NotValidException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 @Service
 public class RelatedItemsControllerService extends BaseControllerService {
@@ -27,12 +27,7 @@ public class RelatedItemsControllerService extends BaseControllerService {
     }
 
     @SuppressWarnings("unchecked")
-    public Collection<ItemDto> get(String token, String placeIdsString, Long categoryId, String param) {
-        var account = getter.accounts.getByToken(token);
-        var places = StringUtils.collectionOf(placeIdsString).stream()
-                                                       .map(getter.places::getByKeyOrThrow)
-                                                       .collect(Collectors.toSet());
-        Category category = getter.categories.getByKeyOrThrow(categoryId);
+    public Collection<ItemDto> get(Account account, Collection<Place> places, Category category, String param) {
         RelatedItemsType type = RelatedItemsType.of(param);
 
         Collection<Item> result;

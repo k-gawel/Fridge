@@ -4,15 +4,18 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.github.classgraph.ClassGraph;
+import org.california.service.serialization.deserializer.RequestDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class JSONMapper extends ObjectMapper {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private static Collection<Class<?>> deserializableClasses;
     public static JSONMapper MAPPER;
 
@@ -26,14 +29,19 @@ public class JSONMapper extends ObjectMapper {
 
     private void setDeserializers(SimpleModule simpleModule) {
         for (Class clazz : getDeserializableClasses()) {
+            System.out.println("---- SETTING DESERIALIZER FOR: " + clazz);
             simpleModule.addDeserializer(clazz, new RequestDeserializer(clazz));
         }
     }
 
 
     private Collection<Class<?>> getDeserializableClasses() {
-        if (deserializableClasses == null)
-            deserializableClasses = getAllPackageClasses("org.california.model.transfer.request.forms");
+        if (deserializableClasses == null) {
+            Collection<Class<?>> dClasses = new HashSet<>();
+            dClasses.addAll(getAllPackageClasses("org.california.model.transfer.request.forms"));
+            dClasses.addAll(getAllPackageClasses("org.california.model.transfer.request.queries"));
+            deserializableClasses = dClasses;
+        }
 
         return deserializableClasses;
     }

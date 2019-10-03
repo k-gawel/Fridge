@@ -41,9 +41,7 @@ public class AccountControllerService {
     }
 
 
-    public boolean changeAccountDetails(String token, String password, AccountForm form) {
-        Account account = getterService.accounts.getByToken(token);
-
+    public boolean changeAccountDetails(Account account, String password, AccountForm form) {
         if(!account.getPassword().equals(password))
             throw new UnauthorizedException();
         else if(!form.password1.equals("password"))
@@ -57,8 +55,7 @@ public class AccountControllerService {
     }
 
 
-    public Collection<NamedEntityDto> searchByName(String token, String name) {
-        Account account = getterService.accounts.getByToken(token);
+    public Collection<NamedEntityDto> searchByName(Account account, String name) {
         if(account == null)
             throw new UnauthorizedException();
         if(name == null)

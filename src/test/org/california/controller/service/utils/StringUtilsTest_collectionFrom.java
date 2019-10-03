@@ -1,5 +1,6 @@
 package org.california.controller.service.utils;
 
+import org.california.util.StringUtils;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -7,7 +8,7 @@ import java.util.Collection;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-public class UtilsTest_collectionFrom {
+public class StringUtilsTest_collectionFrom {
 
     @Test
     public void stringIsEmpty() {
@@ -16,11 +17,11 @@ public class UtilsTest_collectionFrom {
         Collection<Number> result;
 
         string = null;
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertTrue(result.isEmpty());
 
         string = "";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertTrue(result.isEmpty());
 
     }
@@ -32,19 +33,19 @@ public class UtilsTest_collectionFrom {
         Collection<Number> result;
 
         string = "1";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(1, result.size());
 
         string = "1,";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(1, result.size());
 
         string = ",1";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(1, result.size());
 
         string = ",1,";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(1, result.size());
 
     }
@@ -56,27 +57,27 @@ public class UtilsTest_collectionFrom {
         Collection<Number> result;
 
         string = "a";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertTrue(result.isEmpty());
 
         string = "a,";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertTrue(result.isEmpty());
 
         string = ",a";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertTrue(result.isEmpty());
 
         string = "a,a";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertTrue(result.isEmpty());
 
         string = ",a,b,c,";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertTrue(result.isEmpty());
 
         string = ",a,";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertTrue(result.isEmpty());
 
     }
@@ -88,19 +89,19 @@ public class UtilsTest_collectionFrom {
         Collection<Number> result;
 
         string = "1,2";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(result.size(), 2);
 
         string = ",1,2";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(result.size(), 2);
 
         string = ",1,2,";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(result.size(), 2);
 
         string = "1,2,";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(result.size(), 2);
 
     }
@@ -112,19 +113,19 @@ public class UtilsTest_collectionFrom {
         Collection<Number> result;
 
         string = "1,a,2";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(result.size(), 2);
 
         string = "1,2,a";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(result.size(), 2);
 
         string = "a,1,2";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(result.size(), 2);
 
         string = "1,a,a,2,";
-        result = Utils.collectionOf(string);
+        result = StringUtils.collectionOf(string);
         assertEquals(result.size(), 2);
 
     }

@@ -3,12 +3,12 @@ package org.california.model.transfer.request.queries;
 import org.california.model.entity.Place;
 import org.california.model.entity.item.Category;
 import org.california.model.entity.item.Item;
-import org.california.service.serialization.ById;
-import org.california.service.serialization.ByIds;
+import org.california.service.serialization.annotations.ById;
+import org.california.service.serialization.annotations.ByIds;
 
 import java.util.Collection;
 
-public class ItemGetQuery {
+public class ItemGetQuery extends GetQuery {
 
     @ByIds(entity = Item.class)
     public final Collection<Item> items;
@@ -20,10 +20,10 @@ public class ItemGetQuery {
     public final Category category;
 
     public final String name;
-    public final long barcode;
+    public final Long barcode;
 
 
-    public ItemGetQuery(Collection<Item> items, Collection<Place> places, Category category, String name, long barcode) {
+    public ItemGetQuery(Collection<Item> items, Collection<Place> places, Category category, String name, Long barcode) {
         this.items = items;
         this.places = places;
         this.category = category;

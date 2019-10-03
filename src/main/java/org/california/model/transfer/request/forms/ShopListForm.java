@@ -2,7 +2,7 @@ package org.california.model.transfer.request.forms;
 
 import org.california.model.entity.Account;
 import org.california.model.entity.Place;
-import org.california.service.serialization.ById;
+import org.california.service.serialization.annotations.ById;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;

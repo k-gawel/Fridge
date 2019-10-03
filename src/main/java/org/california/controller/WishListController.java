@@ -1,8 +1,10 @@
 package org.california.controller;
 
 import org.california.controller.service.WishListControllerService;
+import org.california.model.entity.Account;
 import org.california.model.transfer.request.forms.WishListForm;
 import org.california.model.transfer.request.queries.WishListGetQuery;
+import org.california.service.serialization.annotations.ByToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,29 +26,21 @@ public class WishListController extends BaseController {
     }
 
     @PostMapping
-    public ResponseEntity newWishList(@RequestHeader("token") String token,
+    public ResponseEntity newWishList(@ByToken Account account,
                                       @Valid @RequestBody WishListForm wishListForm) {
-        Object result;
-        HttpStatus status;
 
-        try {
-            result = this.controllerService.newWishList(token, wishListForm);
-            status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
-        } catch (Exception e) {
-            result = result(e);
-            status = status(e);
-        }
-
+        var result = this.controllerService.newWishList(account, wishListForm);
+        var status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
     }
 
 
     @GetMapping
-    public ResponseEntity get(@RequestHeader("token") String token,
+    public ResponseEntity get(@ByToken Account account,
                               @RequestBody WishListGetQuery query) {
 
-        var result = this.controllerService.get(token, query);
+        var result = this.controllerService.get(account, query);
         var status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
@@ -54,10 +48,10 @@ public class WishListController extends BaseController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@RequestHeader("token") String token,
+    public ResponseEntity delete(@ByToken Account account,
                                  @PathVariable("id") Long wishListid) {
 
-        var result = this.controllerService.archive(token, wishListid);
+        var result = this.controllerService.archive(account, wishListid);
         var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);

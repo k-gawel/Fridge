@@ -1,7 +1,9 @@
 package org.california.controller;
 
 import org.california.controller.service.ShopListControllerService;
+import org.california.model.entity.Account;
 import org.california.model.transfer.request.forms.ShopListForm;
+import org.california.service.serialization.annotations.ByToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,10 @@ public class ShopListController extends BaseController {
 
 
     @PostMapping
-    public ResponseEntity createShopList(@RequestHeader("token") String token,
+    public ResponseEntity createShopList(@ByToken Account account,
                                          @RequestBody ShopListForm form) {
 
-        var result = controllerService.createShopList(token, form);
+        var result = controllerService.createShopList(account, form);
         var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);
@@ -32,13 +34,13 @@ public class ShopListController extends BaseController {
 
 
     @DeleteMapping("{shop_list_id}")
-    public ResponseEntity archiveShopList(@RequestHeader("token") String token,
+    public ResponseEntity archiveShopList(@ByToken Account account,
                                           @PathVariable("shop_list_id") Long shopListId) {
         Object result;
         HttpStatus status;
 
         try {
-            result = controllerService.archiveShopList(token, shopListId);
+            result = controllerService.archiveShopList(account, shopListId);
             status = (boolean) result ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
             result = result(e);
@@ -50,14 +52,14 @@ public class ShopListController extends BaseController {
 
 
     @PostMapping("{shop_list_id}/instances/{instance_id}")
-    public ResponseEntity addItemInstanceToShopList(@RequestHeader("token") String token,
+    public ResponseEntity addItemInstanceToShopList(@ByToken Account account,
                                                     @PathVariable("shop_list_id") Long shopListId,
                                                     @PathVariable("instance_id") Long instanceId) {
         Object result;
         HttpStatus status;
 
         try {
-            result = controllerService.addItemInstanceToShopList(token, shopListId, instanceId);
+            result = controllerService.addItemInstanceToShopList(account, shopListId, instanceId);
             status = HttpStatus.OK;
         } catch (Exception e) {
             result = result(e);
@@ -71,14 +73,14 @@ public class ShopListController extends BaseController {
 
 
     @DeleteMapping("{shop_list_id}/instances/{instance_id}")
-    public ResponseEntity deleteItemInstanceFromShopList(@RequestHeader("token") String token,
+    public ResponseEntity deleteItemInstanceFromShopList(@ByToken Account account,
                                                          @PathVariable("shop_list_id") Long shopListId,
                                                          @PathVariable("instance_id") Long instanceId) {
         Object result;
         HttpStatus status;
 
         try {
-            result = controllerService.deleteInstanceFromShopList(token, shopListId, instanceId);
+            result = controllerService.deleteInstanceFromShopList(account, shopListId, instanceId);
             status = HttpStatus.OK;
         } catch (Exception e) {
             result = result(e);

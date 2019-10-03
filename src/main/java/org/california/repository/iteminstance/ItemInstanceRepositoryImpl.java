@@ -5,6 +5,7 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Container;
 import org.california.model.entity.ItemInstance;
 import org.california.model.entity.item.Item;
+import org.california.model.transfer.request.queries.ItemInstanceParams;
 import org.california.repository.AbstractRepositoryImpl;
 import org.california.repository.utils.OffsetLimit;
 import org.hibernate.query.Query;
@@ -41,7 +42,7 @@ public class ItemInstanceRepositoryImpl extends AbstractRepositoryImpl<ItemInsta
 
 
     @Override
-    public Collection<ItemInstance> getByContainers(Collection<Container> containers, Parameters parameters, OffsetLimit lo) {
+    public Collection<ItemInstance> getByContainers(Collection<Container> containers, ItemInstanceParams parameters, OffsetLimit lo) {
         if(CollectionUtils.isEmpty(containers))
             return Collections.emptySet();
 
@@ -57,7 +58,7 @@ public class ItemInstanceRepositoryImpl extends AbstractRepositoryImpl<ItemInsta
 
 
     @Override
-    public Collection<ItemInstance> getByOwners(Collection<Account> owners, Parameters parameters, OffsetLimit lo) {
+    public Collection<ItemInstance> getByOwners(Collection<Account> owners, ItemInstanceParams parameters, OffsetLimit lo) {
         if(CollectionUtils.isEmpty(owners))
             return Collections.emptySet();
 
@@ -73,7 +74,7 @@ public class ItemInstanceRepositoryImpl extends AbstractRepositoryImpl<ItemInsta
 
 
     @Override
-    public Collection<ItemInstance> getByContainersAndOwners(Collection<Container> containers, Collection<Account> owners, Parameters parameters, OffsetLimit lo) {
+    public Collection<ItemInstance> getByContainersAndOwners(Collection<Container> containers, Collection<Account> owners, ItemInstanceParams parameters, OffsetLimit lo) {
         if(CollectionUtils.isEmpty(containers) || CollectionUtils.isEmpty(owners))
             return Collections.emptySet();
 
@@ -92,7 +93,7 @@ public class ItemInstanceRepositoryImpl extends AbstractRepositoryImpl<ItemInsta
 
 
     @Override
-    public Collection<ItemInstance> getByItemsAndOwners(Collection<Item> items, Collection<Account> owners, Parameters parameters, OffsetLimit lo) {
+    public Collection<ItemInstance> getByItemsAndOwners(Collection<Item> items, Collection<Account> owners, ItemInstanceParams parameters, OffsetLimit lo) {
         if(CollectionUtils.isEmpty(items) || CollectionUtils.isEmpty(owners))
             return Collections.emptySet();
 
@@ -112,7 +113,7 @@ public class ItemInstanceRepositoryImpl extends AbstractRepositoryImpl<ItemInsta
 
 
     @Override
-    public Collection<ItemInstance> getByItemsAndContainers(Collection<Item> items, Collection<Container> containers, Parameters parameters, OffsetLimit lo) {
+    public Collection<ItemInstance> getByItemsAndContainers(Collection<Item> items, Collection<Container> containers, ItemInstanceParams parameters, OffsetLimit lo) {
         if(CollectionUtils.isEmpty(items) || CollectionUtils.isEmpty(containers))
             return Collections.emptySet();
 
@@ -131,7 +132,7 @@ public class ItemInstanceRepositoryImpl extends AbstractRepositoryImpl<ItemInsta
 
 
     @Override
-    public Collection<ItemInstance> getByItemsAndContainersAndOwners(Collection<Item> items, Collection<Container> containers, Collection<Account> owners, Parameters parameters, OffsetLimit lo) {
+    public Collection<ItemInstance> getByItemsAndContainersAndOwners(Collection<Item> items, Collection<Container> containers, Collection<Account> owners, ItemInstanceParams parameters, OffsetLimit lo) {
         if(CollectionUtils.isEmpty(items) || CollectionUtils.isEmpty(containers) || CollectionUtils.isEmpty(owners))
             return Collections.emptySet();
 
@@ -150,7 +151,7 @@ public class ItemInstanceRepositoryImpl extends AbstractRepositoryImpl<ItemInsta
     }
 
 
-    private String booleanConditions(Parameters parameters) {
+    private String booleanConditions(ItemInstanceParams parameters) {
         StringBuilder HQLBuilder = new StringBuilder();
 
         final String NOT_NULL = "NOT NULL";

@@ -12,6 +12,7 @@ import java.util.Map;
 public class GetterService {
 
     public final static Map<Class<? extends BaseEntity>, BaseGetter<? extends BaseEntity>> GETTER = new HashMap<>();
+    private static GetterService getter;
 
     public final AccountGetter accounts;
     public final PlaceGetter places;
@@ -47,7 +48,10 @@ public class GetterService {
         this.placeUserStats = placeUserStats;
         this.shopLists = shopLists;
         this.instanceLogs = instanceLogs;
+        getter = this;
     }
 
-
+    public static GetterService GETTER() {
+        return getter;
+    }
 }

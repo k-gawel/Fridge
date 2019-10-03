@@ -1,6 +1,7 @@
 package org.california.controller.service;
 
 
+import org.california.model.entity.Account;
 import org.california.model.entity.ShopList;
 import org.california.model.transfer.request.forms.ShopListForm;
 import org.california.model.transfer.response.place.ShopListDto;
@@ -29,9 +30,7 @@ public class ShopListControllerService {
     }
 
 
-    public ShopListDto createShopList(String token, ShopListForm form) {
-        var account = getter.accounts.getByToken(token);
-
+    public ShopListDto createShopList(Account account, ShopListForm form) {
         if (!permissionsService.hasAccess(account, form.place))
             throw new UnauthorizedException(account, form.place);
 
@@ -40,8 +39,7 @@ public class ShopListControllerService {
     }
 
 
-    public boolean addItemInstanceToShopList(String token, Long shopListId, Long instanceId) {
-        var account  = getter.accounts.getByToken(token);
+    public boolean addItemInstanceToShopList(Account account, Long shopListId, Long instanceId) {
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
         var instance = getter.itemInstances.getByKeyOrThrow(instanceId);
 
@@ -54,8 +52,7 @@ public class ShopListControllerService {
     }
 
 
-    public boolean archiveShopList(String token, Long shopListId) {
-        var account = getter.accounts.getByToken(token);
+    public boolean archiveShopList(Account account, Long shopListId) {
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
 
         if (!permissionsService.hasAccess(account, shopList))
@@ -65,8 +62,7 @@ public class ShopListControllerService {
     }
 
 
-    public boolean deleteInstanceFromShopList(String token, Long shopListId, Long instanceId) {
-        var account = getter.accounts.getByToken(token);
+    public boolean deleteInstanceFromShopList(Account account, Long shopListId, Long instanceId) {
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
         var instance = getter.itemInstances.getByKeyOrThrow(instanceId);
 

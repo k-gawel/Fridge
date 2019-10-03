@@ -4,7 +4,7 @@ import lombok.ToString;
 import org.california.model.entity.Account;
 import org.california.model.entity.WishList;
 import org.california.model.entity.item.Category;
-import org.california.service.serialization.ById;
+import org.california.service.serialization.annotations.ById;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.validation.annotation.Validated;
 

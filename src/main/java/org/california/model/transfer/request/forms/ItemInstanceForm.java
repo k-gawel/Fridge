@@ -5,7 +5,7 @@ import org.california.model.entity.Container;
 import org.california.model.entity.ShopList;
 import org.california.model.entity.WishListItem;
 import org.california.model.entity.item.Item;
-import org.california.service.serialization.ById;
+import org.california.service.serialization.annotations.ById;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.FutureOrPresent;

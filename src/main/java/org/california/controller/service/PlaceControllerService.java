@@ -69,9 +69,7 @@ public class PlaceControllerService {
     }
 
 
-    public Boolean addUserToPlace(String token, Long placeId, Long userId) {
-
-        Account account = getterService.accounts.getByToken(token);
+    public Boolean addUserToPlace(Account account, Long placeId, Long userId) {
         Place place = getterService.places.getByKeyOrThrow(placeId);
         Account user = getterService.accounts.getByKeyOrThrow(userId);
 

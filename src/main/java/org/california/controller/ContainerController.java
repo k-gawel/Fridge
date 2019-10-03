@@ -1,7 +1,12 @@
 package org.california.controller;
 
 import org.california.controller.service.ContainerControllerService;
+import org.california.model.entity.Account;
+import org.california.model.entity.Container;
+import org.california.model.entity.Place;
 import org.california.model.transfer.request.forms.ContainerForm;
+import org.california.service.serialization.annotations.ByIds;
+import org.california.service.serialization.annotations.ByToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @RestController("/containers")
 @RequestMapping("/containers")
@@ -26,10 +32,10 @@ public class ContainerController extends BaseController {
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity addNewContainer(@RequestHeader("token") String token,
+    public ResponseEntity addNewContainer(@ByToken Account account,
                                           @Valid @RequestBody ContainerForm containerForm) {
 
-        var result = controllerService.newContainer(token, containerForm);
+        var result = controllerService.newContainer(account, containerForm);
         var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
@@ -37,11 +43,12 @@ public class ContainerController extends BaseController {
 
 
     @GetMapping
-    public ResponseEntity get(@RequestHeader("token") String token,
-                              @RequestParam(value = "ids", defaultValue = "") String ids,
-                              @RequestParam(value = "placeIds", defaultValue = "") String placeIds) {
+    public ResponseEntity get(@ByToken Account account,
+                              @ByIds(entity = Container.class) Collection<Container> containers,
+                              @ByIds(entity = Place.class) Collection<Place> places,
+                              @ByIds(entity = Account.class) Collection<Account> users) {
 
-        var result = controllerService.get(token, ids, placeIds);
+        var result = controllerService.get(account, containers, places, users);
         var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
@@ -49,12 +56,12 @@ public class ContainerController extends BaseController {
 
 
     @GetMapping(value = "/user_stats", consumes = "application/json")
-    public ResponseEntity getUserStats(@RequestHeader("token") String token,
-                                       @RequestParam(name = "user_ids", defaultValue = "") String userIdsString,
-                                       @RequestParam(name = "place_ids", defaultValue = "") String placeIdsString,
-                                       @RequestParam(name = "container_ids", defaultValue = "") String containerIdsString) {
+    public ResponseEntity getUserStats(@ByToken Account account,
+                                       @ByIds(entity = Account.class) Collection<Account> users,
+                                       @ByIds(entity = Place.class) Collection<Place> places,
+                                       @ByIds(entity = Container.class) Collection<Container> containers) {
 
-        var result = controllerService.getUserStats(token, userIdsString, placeIdsString, containerIdsString);
+        var result = controllerService.getUserStats(account, users, places, containers);
         var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);

@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @Service
-public class ProducerGetter extends BaseGetter<Producer> {
+public class ProducerGetter extends BaseNamedGetter<Producer> {
 
     private final ProducerRepository repository;
 
@@ -20,21 +19,9 @@ public class ProducerGetter extends BaseGetter<Producer> {
     }
 
 
-    public Optional<Producer> getByName(String name) {
-        return repository.getByName(name);
-    }
-
-    public Collection<Producer> searchByName(String name) {
-        return repository.searchByName(name);
-    }
-
-
-    public Collection<Producer> getWhereNameStartsWith(String nameStart) {
-        return repository.getWhereNameStartsWith(nameStart);
-    }
-
-
     public Collection<Producer> getAll() {
         return repository.getAll();
     }
+
+
 }

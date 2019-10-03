@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class AccountGetter extends BaseGetter<Account> {
+public class AccountGetter extends BaseNamedGetter<Account> {
 
     private final AccountRepository accountRepository;
     private final TokenRepository tokenRepository;

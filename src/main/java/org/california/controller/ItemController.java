@@ -2,8 +2,10 @@ package org.california.controller;
 
 
 import org.california.controller.service.ItemControllerService;
+import org.california.model.entity.Account;
 import org.california.model.transfer.request.forms.ItemForm;
 import org.california.model.transfer.request.queries.ItemGetQuery;
+import org.california.service.serialization.annotations.ByToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +27,9 @@ public class ItemController extends BaseController {
 
 
     @GetMapping
-    public ResponseEntity searchItems(@RequestHeader(name = "token", defaultValue = "") String token,
-                                      @RequestBody ItemGetQuery query) {
+    public ResponseEntity searchItems(@ByToken Account account, ItemGetQuery query) {
 
-        var result = itemControllerService.searchItem(token, query);
+        var result = itemControllerService.searchItem(account, query);
         var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
@@ -36,13 +37,13 @@ public class ItemController extends BaseController {
 
 
     @PostMapping
-    public ResponseEntity newItem(@RequestHeader("token") String token,
+    public ResponseEntity newItem(@ByToken Account account,
                                   @Valid @RequestBody ItemForm form) {
         Object result;
         HttpStatus status;
 
         try {
-            result = itemControllerService.addItem(token, form);
+            result = itemControllerService.addItem(account, form);
             status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         } catch (Exception e) {
             result = result(e);

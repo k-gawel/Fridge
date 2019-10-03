@@ -1,11 +1,13 @@
 package org.california.repository.utils;
 
+import lombok.ToString;
 import org.hibernate.query.Query;
 
+@ToString
 public class OffsetLimit {
 
-    public final int limit;
     public final int offset;
+    public final int limit;
 
 
     public OffsetLimit(int offset, int limit) {

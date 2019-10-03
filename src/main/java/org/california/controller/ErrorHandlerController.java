@@ -18,10 +18,6 @@ public class ErrorHandlerController {
 
     @ExceptionHandler
     public ResponseEntity handleException(Exception error) {
-        System.out.println("Handling error");
-        System.out.println("MESSAGE " + error.getMessage());
-        System.out.println("LOCALIZED " + error.getLocalizedMessage());
-        error.printStackTrace();;
         if (error instanceof MethodArgumentNotValidException)
             return handleMethodArgumentNotValidException((MethodArgumentNotValidException) error);
         else if (error instanceof SendableException)

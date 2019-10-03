@@ -6,11 +6,11 @@ import org.california.model.entity.ItemInstance;
 import org.california.model.entity.Place;
 import org.california.model.entity.item.Item;
 import org.california.repository.utils.OffsetLimit;
-import org.california.service.serialization.ByIds;
+import org.california.service.serialization.annotations.ByIds;
 
 import java.util.Collection;
 
-public class ItemInstanceGetQuery {
+public class ItemInstanceGetQuery extends GetQuery {
 
     @ByIds(entity = ItemInstance.class)
     public final Collection<ItemInstance> itemInstances;

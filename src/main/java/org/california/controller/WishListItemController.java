@@ -2,7 +2,9 @@ package org.california.controller;
 
 
 import org.california.controller.service.WishListItemControllerService;
+import org.california.model.entity.Account;
 import org.california.model.transfer.request.forms.WishListItemForm;
+import org.california.service.serialization.annotations.ByToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +26,10 @@ public class WishListItemController extends BaseController {
 
 
     @PostMapping
-    public ResponseEntity newItem(@RequestHeader("token") String token,
+    public ResponseEntity newItem(@ByToken Account account,
                                   @RequestBody @Valid WishListItemForm form)
     {
-        var result = controllerService.newWishListItem(token, form);
+        var result = controllerService.newWishListItem(account, form);
         var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
@@ -35,11 +37,11 @@ public class WishListItemController extends BaseController {
 
 
     @PostMapping("/{id}/instances/{instanceId}")
-    public ResponseEntity addInstance(@RequestHeader("token") String token,
+    public ResponseEntity addInstance(@ByToken Account account,
                                       @PathVariable("instanceId") Long instanceId,
                                       @PathVariable("id") Long wishListItemId) {
 
-        var result = controllerService.addInstanceToWishListItem(token, wishListItemId, instanceId);
+        var result = controllerService.addInstanceToWishListItem(account, wishListItemId, instanceId);
         var status = HttpStatus.OK;
 
         return ResponseEntity.status(status).body(result);

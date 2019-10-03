@@ -32,9 +32,7 @@ public class ItemInstanceControllerService extends BaseControllerService {
     }
 
 
-    public ItemInstanceDto addItemInstance(String token, @Valid ItemInstanceForm form) {
-        Account account = getter.accounts.getByToken(token);
-
+    public ItemInstanceDto addItemInstance(Account account, @Valid ItemInstanceForm form) {
         if (!permissions.hasAccess(account, form.container)
                 || !permissions.hasAccess(account, form.item))
             throw new UnauthorizedException("item.accessdenied|container.accessdenied");
@@ -44,17 +42,13 @@ public class ItemInstanceControllerService extends BaseControllerService {
 
 
     @SuppressWarnings("unchecked")
-    public Collection<ItemInstanceDto> get(String token, ItemInstanceGetQuery q) {
-        Account account = getter.accounts.getByToken(token);
-
+    public Collection<ItemInstanceDto> get(Account account, ItemInstanceGetQuery q) {
         Collection<ItemInstance> instances;
 
         if (q.itemInstances != null)
             instances = q.itemInstances;
         else
             instances = getter.itemInstances.get(q.items, q.containers, q.owners, q.params, q.offsetLimit);
-
-        System.out.println("Instances before delete " + instances.size());
 
         return filerAndMap(instances, account);
     }
@@ -70,9 +64,7 @@ public class ItemInstanceControllerService extends BaseControllerService {
     }
 
 
-    public Boolean update(String token, Number instanceId, boolean frozeOrUnfroze, boolean open, boolean delete) {
-
-        Account account = getter.accounts.getByToken(token);
+    public Boolean update(Account account, Number instanceId, boolean frozeOrUnfroze, boolean open, boolean delete) {
         ItemInstance itemInstance = getter.itemInstances.getByKey(instanceId).get();
 
         if(!permissions.hasAccess(account, itemInstance))

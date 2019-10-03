@@ -1,7 +1,10 @@
 package org.california.controller;
 
 import org.california.controller.service.ItemInstanceControllerService;
+import org.california.model.entity.Account;
 import org.california.model.transfer.request.forms.ItemInstanceForm;
+import org.california.model.transfer.request.queries.ItemInstanceGetQuery;
+import org.california.service.serialization.annotations.ByToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +28,11 @@ public class ItemInstanceController extends BaseController {
 
 
     @PostMapping
-    public ResponseEntity newItemInstance(@RequestHeader("token") final String token,
-                                          @Valid @RequestBody final ItemInstanceForm itemInstanceForm
+    public ResponseEntity newItemInstance(@ByToken Account account,
+                                          @Valid @RequestBody ItemInstanceForm itemInstanceForm
     ) {
 
-        var result = controllerService.addItemInstance(token, itemInstanceForm);
+        var result = controllerService.addItemInstance(account, itemInstanceForm);
         var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
@@ -37,19 +40,10 @@ public class ItemInstanceController extends BaseController {
 
 
     @GetMapping
-    public ResponseEntity get(@RequestHeader("token") String token,
-                              @RequestParam(name = "ids", defaultValue = "") String ids,
-                              @RequestParam(name = "items", defaultValue = "") String items,
-                              @RequestParam(name = "places", defaultValue = "") String places,
-                              @RequestParam(name = "containers", defaultValue = "") String containers,
-                              @RequestParam(name = "owners", defaultValue = "") String owners,
-                              @RequestParam(name = "deleted", defaultValue = "") String deleted,
-                              @RequestParam(name = "open", defaultValue = "") String open,
-                              @RequestParam(name = "frozen", defaultValue = "") String frozen,
-                              @RequestParam(name = "limit", defaultValue = "0") int limit,
-                              @RequestParam(name = "offset", defaultValue = "0") int offset) {
+    public ResponseEntity get(@ByToken Account account,
+                              @RequestBody ItemInstanceGetQuery query) {
 
-       var result = controllerService.get(token, ids, places, containers, items, owners, deleted, open, frozen, limit, offset);
+       var result = controllerService.get(account, query);
        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);
@@ -57,13 +51,13 @@ public class ItemInstanceController extends BaseController {
 
 
     @PutMapping("/{instance_id}")
-    public ResponseEntity update(@RequestHeader("token") String token,
+    public ResponseEntity update(@ByToken Account account,
                                  @PathVariable("instance_id") Long instanceId,
                                  @RequestParam(value = "frozeOrUnfroze", defaultValue = "false") boolean frozeOrUnfroze,
                                  @RequestParam(value = "open", defaultValue = "false") boolean open,
                                  @RequestParam(value = "delete", defaultValue = "false") boolean delete) {
 
-        var result = controllerService.update(token, instanceId, frozeOrUnfroze, open, delete);
+        var result = controllerService.update(account, instanceId, frozeOrUnfroze, open, delete);
         var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);

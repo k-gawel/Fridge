@@ -66,9 +66,6 @@ public class AuthorizationService {
         if(account == null)
             throw new NotValidException("account.null");
 
-        System.out.println("InitialResponse getter: " + this.getterService);
-        System.out.println("InitialResponse getter.tokens: " + this.getterService.tokens);
-
         return new InitialResponse.Builder()
                 .setId(account)
                 .setName(account)

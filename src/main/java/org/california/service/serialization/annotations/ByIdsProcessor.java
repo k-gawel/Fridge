@@ -1,6 +1,5 @@
-package org.california.service.serialization;
+package org.california.service.serialization.annotations;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.california.model.entity.BaseEntity;
 import org.california.service.getter.BaseGetter;
 import org.california.service.getter.GetterService;
@@ -11,31 +10,45 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.util.*;
 
 public class ByIdsProcessor {
 
-    private Field field;
     private ByIds annotation;
     private Class<? extends Collection> collectionType;
     private Class<? extends BaseEntity> entityType;
     private Collection<Number> ids;
 
-    public ByIdsProcessor(@Nullable JsonNode node, @NotNull Field field) {
+    public ByIdsProcessor(@Nullable Collection<Number> ids, @NotNull Field field) {
         if(!field.isAnnotationPresent(ByIds.class))
             throw new IllegalArgumentException("Field must be annotated with @ByIds.");
         if(!Collection.class.isAssignableFrom(field.getType()))
             throw new IllegalArgumentException("Field must be type of Collection.");
 
-        this.field = field;
-        this.ids   = getIds(node);
+        this.ids   = ids;
         this.annotation     = field.getAnnotation(ByIds.class);
         this.entityType     = annotation.entity();
         this.collectionType = getCollectionType((Class<? extends Collection>) field.getType());
-
     }
 
+
+    public ByIdsProcessor(@Nullable Collection<Number> ids, @NotNull Parameter parameter) {
+        if(!parameter.isAnnotationPresent(ByIds.class))
+            throw new IllegalArgumentException("Parameter must be annotated with @ByIds.");
+        if(!Collection.class.isAssignableFrom(parameter.getType()))
+            throw new IllegalArgumentException("Parameter must be type of Collection.");
+
+        this.ids   = ids;
+        this.annotation     = parameter.getAnnotation(ByIds.class);
+        this.entityType     = annotation.entity();
+        this.collectionType = getCollectionType((Class<? extends Collection>) parameter.getType());
+    }
+
+
     public Collection<? extends BaseEntity> getValues() {
+        if(ids == null) return null;
+
         BaseGetter<? extends BaseEntity> getter = getGetter();
         Collection result = createCollection();
 
@@ -66,9 +79,7 @@ public class ByIdsProcessor {
 
 
     private Class<? extends Collection> getCollectionType(Class<? extends Collection> fieldType) {
-        if(fieldType.equals(Collection.class))
-            return Collection.class;
-        else if(!Modifier.isAbstract(fieldType.getModifiers()) && !fieldType.isInterface())
+        if(!Modifier.isAbstract(fieldType.getModifiers()) && !fieldType.isInterface())
             return fieldType;
         else if(SortedSet.class.isAssignableFrom(fieldType))
             return TreeSet.class;
@@ -81,37 +92,10 @@ public class ByIdsProcessor {
         else if(Queue.class.isAssignableFrom(fieldType))
             return PriorityQueue.class;
         else
-            throw new IllegalStateException("Wrong collection type: " + fieldType.getName());
+            return ArrayList.class;
 
     }
 
-
-    private Collection<Number> getIds(JsonNode node) {
-        if(node == null) {
-            return null;
-        } else if(node.isArray()) {
-            return getIdsFromNode(node);
-        } else if(node.isNumber()) {
-            return Collections.singletonList(node.numberValue());
-        } else {
-            throw new IllegalStateException("Ids must be presented as array of number, number or null.");
-        }
-    }
-
-
-    private Collection<Number> getIdsFromNode(@NotNull JsonNode node) {
-        boolean fail = annotation.failOnNull();
-
-        Collection<Number> result = new ArrayList<>();
-        for(final JsonNode number : node) {
-            if((number == null || !number.isNumber()) && fail)
-                throw new IllegalStateException("Id is must be number.");
-            else
-                result.add(number.numberValue());
-        }
-
-        return Collections.unmodifiableCollection(result);
-    }
 
 
 }

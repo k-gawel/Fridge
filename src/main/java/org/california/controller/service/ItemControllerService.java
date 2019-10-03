@@ -29,9 +29,7 @@ public class ItemControllerService extends BaseControllerService {
 
 
     @SuppressWarnings("unchecked")
-    public Collection<ItemDto> searchItem(String token, ItemGetQuery q) {
-        var account  = getter.accounts.getByToken(token);
-
+    public Collection<ItemDto> searchItem(Account account, ItemGetQuery q) {
         Collection<Item> items;
 
         if(q.items != null)
@@ -44,9 +42,7 @@ public class ItemControllerService extends BaseControllerService {
     }
 
 
-    public ItemDto addItem(String token, ItemForm itemForm) {
-        Account account = getter.accounts.getByToken(token);
-
+    public ItemDto addItem(Account account, ItemForm itemForm) {
         if (!permissions.hasAccess(account, itemForm.place))
             throw new UnauthorizedException(account, itemForm.place);
 

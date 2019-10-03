@@ -4,13 +4,12 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Place;
 import org.california.model.entity.WishList;
 import org.california.repository.utils.OffsetLimit;
-import org.california.service.serialization.ById;
-import org.california.service.serialization.ByIds;
+import org.california.service.serialization.annotations.ById;
+import org.california.service.serialization.annotations.ByIds;
 
-import java.io.Serializable;
 import java.util.Collection;
 
-public class WishListGetQuery implements Serializable {
+public class WishListGetQuery extends GetQuery {
 
     @ById
     public final Collection<Account> users;

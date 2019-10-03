@@ -1,7 +1,9 @@
 package org.california.controller;
 
 import org.california.controller.service.PlaceControllerService;
+import org.california.model.entity.Account;
 import org.california.model.transfer.request.forms.PlaceForm;
+import org.california.service.serialization.annotations.ByToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,11 +73,11 @@ public class PlaceController extends BaseController {
 
 
     @PostMapping("/{place_id}/acounts/{account_id}")
-    public ResponseEntity addUser(@RequestHeader("token") String token,
+    public ResponseEntity addUser(@ByToken Account account,
                                   @PathVariable("place_id") Long placeId,
-                                  @PathVariable("account_id") Long accountId) {
+                                  @PathVariable("account_id") Long userId) {
 
-        var result = controllerService.addUserToPlace(token, placeId, accountId);
+        var result = controllerService.addUserToPlace(account, placeId, userId);
         var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
         return ResponseEntity.status(status).body(result);

@@ -1,4 +1,4 @@
-package org.california.service.serialization;
+package org.california.service.serialization.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -6,12 +6,21 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.california.model.transfer.request.forms.Form;
+import org.california.service.serialization.ConstructorGetter;
+import org.california.service.serialization.JSONMapper;
+import org.california.service.serialization.annotations.ById;
+import org.california.service.serialization.annotations.ByIdProcessor;
+import org.california.service.serialization.annotations.ByIds;
+import org.california.service.serialization.annotations.ByIdsProcessor;
 import org.california.util.exceptions.NotValidException;
+import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class RequestDeserializer<T> extends StdDeserializer<T> {
@@ -44,7 +53,7 @@ public class RequestDeserializer<T> extends StdDeserializer<T> {
 
 
     private Object[] getParametersArray(JsonNode node) {
-        Field[] fields = valueClass.getDeclaredFields();
+        Field[]  fields = valueClass.getDeclaredFields();
         Object[] result = new Object[fields.length];
 
         for (int i = 0; i < fields.length; i++) {
@@ -57,18 +66,21 @@ public class RequestDeserializer<T> extends StdDeserializer<T> {
 
 
     private Object getValue(JsonNode node, Field field) {
-        String nodeName = getNodeName(field);
-        JsonNode value = node.get(nodeName);
+        String nodeName = field.getName();
+        JsonNode value  = node.get(nodeName);
 
+        if(value == null)
+            return null;
         if(field.isAnnotationPresent(ById.class))
-            return new ByIdProcessor(value, field).getValue();
+            return new ByIdProcessor(value.asLong(), field).getValue();
         else if(field.isAnnotationPresent(ByIds.class))
-            return new ByIdsProcessor(value, field).getValues();
+            return new ByIdsProcessor(getIds(value), field).getValues();
         else
             return getPrimitiveValue(value, field);
     }
 
 
+    @Contract("_, null -> null")
     private Object getPrimitiveValue(JsonNode value, Field field) {
         if (value == null) return null;
 
@@ -83,16 +95,20 @@ public class RequestDeserializer<T> extends StdDeserializer<T> {
     }
 
 
-    private String getNodeName(Field field) {
-        String fieldName = field.getName();
+    @Contract("null -> null")
+    private Collection<Number> getIds(JsonNode node) {
+        if(node == null) return null;
 
-        if(field.isAnnotationPresent(ById.class))
-            return fieldName + "Id";
-        else if(field.isAnnotationPresent(ByIds.class))
-            return fieldName + "Ids";
-        else
-            return fieldName;
+        Collection<Number> result = new ArrayList<>();
+
+        for(final JsonNode number : node) {
+            if(number.canConvertToLong())
+                result.add(number.asLong());
+            else
+                result.add(null);
+        }
+
+        return result;
     }
-
 
 }

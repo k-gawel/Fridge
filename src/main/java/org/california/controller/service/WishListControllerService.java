@@ -28,9 +28,7 @@ public class WishListControllerService extends BaseControllerService {
     }
 
 
-    public WishListDto newWishList(String token, WishListForm form) {
-        Account account = getter.accounts.getByToken(token);
-
+    public WishListDto newWishList(Account account, WishListForm form) {
         if (!permissions.hasAccess(account, form.place))
             throw new UnauthorizedException();
 
@@ -40,9 +38,7 @@ public class WishListControllerService extends BaseControllerService {
 
 
     @SuppressWarnings("unchecked")
-    public Collection<WishListDto> get(String token, WishListGetQuery query) {
-        Account account = getter.accounts.getByToken(token);
-
+    public Collection<WishListDto> get(Account account, WishListGetQuery query) {
         Collection<WishList> result;
 
         if(query.wishLists != null)
@@ -59,8 +55,7 @@ public class WishListControllerService extends BaseControllerService {
     }
 
 
-    public boolean archive(String token, Long wishListId) {
-        var account = getter.accounts.getByToken(token);
+    public boolean archive(Account account, Long wishListId) {
         var wishList = getter.wishLists.getByKey(wishListId).get();
 
 
