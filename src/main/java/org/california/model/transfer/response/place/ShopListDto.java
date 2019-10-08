@@ -16,14 +16,14 @@ import java.util.Collection;
 public class ShopListDto implements Serializable, BaseDto<ShopList> {
 
     private Long id;
-
     private Long placeId;
+
     private AccountDateDto created;
-
     private boolean status;
-    private String description;
 
+    private String description;
     private String shopName;
+
     private Collection<Number> instances;
 
 
@@ -40,12 +40,20 @@ public class ShopListDto implements Serializable, BaseDto<ShopList> {
             ShopListDto build();
         }
 
-        public interface IdSetter {
-            PlaceIdSetter withId(Long id);
+        public interface StatusSetter {
+            DescriptionSetter withStatus(boolean status);
         }
 
         public interface DescriptionSetter {
             ShopNameSetter withDescription(String description);
+        }
+
+        public interface CreatedSetter {
+            StatusSetter withCreated(AccountDateDto created);
+        }
+
+        public interface IdSetter {
+            PlaceIdSetter withId(Long id);
         }
 
         public interface InstancesSetter {
@@ -56,15 +64,7 @@ public class ShopListDto implements Serializable, BaseDto<ShopList> {
             CreatedSetter withPlaceId(Long placeId);
         }
 
-        public interface CreatedSetter {
-            StatusSetter withCreated(AccountDateDto created);
-        }
-
-        public interface StatusSetter {
-            DescriptionSetter withStatus(boolean status);
-        }
-
-        public static class InnerBuilder implements ShopNameSetter, FinalBuilder, IdSetter, DescriptionSetter, InstancesSetter, PlaceIdSetter, CreatedSetter, StatusSetter {
+        public static class InnerBuilder implements ShopNameSetter, FinalBuilder, StatusSetter, DescriptionSetter, CreatedSetter, IdSetter, InstancesSetter, PlaceIdSetter {
             private ShopListDto result = new ShopListDto();
 
             public PlaceIdSetter withId(Long id) {

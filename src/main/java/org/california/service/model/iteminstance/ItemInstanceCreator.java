@@ -1,4 +1,4 @@
-package org.california.service.model;
+package org.california.service.model.iteminstance;
 
 import org.california.model.entity.Account;
 import org.california.model.entity.ItemInstance;
@@ -6,6 +6,10 @@ import org.california.model.entity.utils.AccountDate;
 import org.california.model.transfer.request.forms.ItemInstanceForm;
 import org.california.model.transfer.request.forms.MoneyForm;
 import org.california.repository.iteminstance.ItemInstanceRepository;
+import org.california.service.model.InstanceChangeService;
+import org.california.service.model.ShopListService;
+import org.california.service.model.WishListItemService;
+import org.california.util.exceptions.NotValidException;
 import org.jetbrains.annotations.Contract;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
@@ -17,16 +21,15 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 @Service
-public class ItemInstanceService {
+public class ItemInstanceCreator {
 
     private final ItemInstanceRepository itemInstanceRepository;
     private final ShopListService shopListService;
     private final InstanceChangeService instanceChangeService;
     private final WishListItemService wishListItemService;
 
-
     @Autowired
-    public ItemInstanceService(ItemInstanceRepository itemInstanceRepository, ShopListService shopListService, InstanceChangeService instanceChangeService, WishListItemService wishListItemService) {
+    public ItemInstanceCreator(ItemInstanceRepository itemInstanceRepository, ShopListService shopListService, InstanceChangeService instanceChangeService, WishListItemService wishListItemService) {
         this.itemInstanceRepository = itemInstanceRepository;
         this.shopListService = shopListService;
         this.instanceChangeService = instanceChangeService;
@@ -44,42 +47,6 @@ public class ItemInstanceService {
         } else {
             return null;
         }
-    }
-
-
-    public boolean open(Account account, ItemInstance itemInstance) {
-        if (account == null || itemInstance == null || itemInstance.isOpen())
-            return false;
-
-        itemInstance.setOpened(new AccountDate(account));
-
-        if(itemInstanceRepository.save(itemInstance) != null) {
-            instanceChangeService.open(account, itemInstance);
-            return true;
-        } else {
-            return false;
-        }
-     }
-
-
-    public boolean delete(Account account, ItemInstance itemInstance) {
-        if (account == null && itemInstance == null || itemInstance.isDeleted())
-            return false;
-
-        itemInstance.setDeleted(new AccountDate(account));
-
-        if(itemInstanceRepository.save(itemInstance) != null) {
-            instanceChangeService.delete(account, itemInstance);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public boolean frozeOrUnfroze(Account account, ItemInstance itemInstance) {
-        //TODO frozeOr Unfroze instance;
-        return true;
     }
 
 
@@ -106,10 +73,14 @@ public class ItemInstanceService {
     private Money moneyFromForm(MoneyForm moneyForm) {
         if(moneyForm == null) return null;
 
-        var currencyUnit = CurrencyUnit.of(moneyForm.currency);
-        var amount       = moneyForm.amount.doubleValue();
-
-        return Money.of(currencyUnit, amount);
+        try {
+            var currencyUnit = CurrencyUnit.of(moneyForm.currency);
+            var amount = moneyForm.amount.doubleValue();
+            return Money.of(currencyUnit, amount);
+        } catch (Exception e) {
+            throw new NotValidException("price.notValid");
+        }
+        
     }
 
 }

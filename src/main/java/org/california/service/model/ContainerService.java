@@ -35,7 +35,8 @@ public class ContainerService {
 
 
     public Container createNewContainer(Place place, Account account, String newContainerName) {
-        if (place == null || account == null || newContainerName == null) throw new ForbiddenException();
+        if (place == null || account == null || newContainerName == null)
+            throw new ForbiddenException();
 
         if(!place.getAdmin().equals(account))
             throw new ForbiddenException();
@@ -58,6 +59,7 @@ public class ContainerService {
     public Container createNewContainer(Account account, ContainerForm form) {
         return createNewContainer(form.place, account, form.name);
     }
+
 
 
     public Collection<PlaceUserStats> getUsersStats(Collection<Account> accounts, Collection<Container> containers) {

@@ -44,7 +44,6 @@ public class HibernateUtil {
 
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         Properties settings = Environment.getProperties();
-        settings.setProperty("show_sql", "true");
 
         factoryBean.setHibernateProperties(settings);
         factoryBean.setDataSource(getDataSource());

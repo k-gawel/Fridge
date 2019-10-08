@@ -29,15 +29,12 @@ public class PlaceService {
 
     public Place newPlace(Account account, PlaceForm placeForm) {
         Place place = new Place();
+
         place.getAccounts().add(account);
         place.setAdmin(account);
         place.setName(placeForm.name);
         place.setCreatedOn(new Date());
-
-        Container firstContainer = new Container();
-        firstContainer.setName("Common items");
-        firstContainer.setPlace(place);
-        place.getContainers().add(firstContainer);
+        createFirstContainer(place);
 
         place = placeRepository.save(place);
 
@@ -45,6 +42,14 @@ public class PlaceService {
             account.getPlaces().add(place);
 
         return place;
+    }
+
+    private Container createFirstContainer(Place place) {
+        Container firstContainer = new Container();
+        firstContainer.setName("Common items");
+        firstContainer.setPlace(place);
+        place.getContainers().add(firstContainer);
+        return firstContainer;
     }
 
 
@@ -71,7 +76,7 @@ public class PlaceService {
             return false;
 
         place.getAccounts().remove(user);
-        place.getUnaactiveAccounts().add(user);
+        place.getUnactiveAccounts().add(user);
 
         return placeRepository.save(place) != null;
     }
@@ -84,7 +89,8 @@ public class PlaceService {
         if(place.getAccounts().contains(newUser))
             return false;
 
-        place.getUnaactiveAccounts().remove(newUser);
+        newUser.getPlaces().add(place);
+        place.getUnactiveAccounts().remove(newUser);
         place.getAccounts().add(newUser);
 
         return placeRepository.save(place) != null;

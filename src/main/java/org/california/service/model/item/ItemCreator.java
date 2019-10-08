@@ -1,4 +1,4 @@
-package org.california.service.model;
+package org.california.service.model.item;
 
 import org.california.model.entity.builder.ItemBuilder;
 import org.california.model.entity.builder.NutritionBuilder;
@@ -18,14 +18,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ItemService {
+public class ItemCreator {
 
     private final ItemRepository itemRepository;
     private final AllergenRepository allergenRepository;
     private final GetterService getterService;
 
     @Autowired
-    public ItemService(ItemRepository itemRepository, GetterService getterService, AllergenRepository allergenRepository) {
+    public ItemCreator(ItemRepository itemRepository, GetterService getterService, AllergenRepository allergenRepository) {
         this.itemRepository = itemRepository;
         this.getterService = getterService;
         this.allergenRepository = allergenRepository;

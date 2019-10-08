@@ -46,12 +46,15 @@ public class EntityToDtoMapper {
     public PlaceDto toDto(Place place) {
         Collection<WishList> wishLists = getter.wishLists.get(Collections.singleton(place), true);
         Collection<ShopList> shopLists = getter.shopLists.get(Collections.singleton(place), true);
+
         var deletedInstancesFromWishLists = getDeletedInstancesDtoFromWishLists(wishLists);
         var deletedInstancesFromShopLists = getDeletedInstanceDtosFromShopLists(shopLists);
 
         Collection<ContainerDto> containerDtos = place.getContainers().stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
+                                                                      .map(this::toDto)
+                                                                      .collect(Collectors.toList());
+
+
 
         addInstancesDtosToContainersDtos(containerDtos, deletedInstancesFromWishLists);
         addInstancesDtosToContainersDtos(containerDtos, deletedInstancesFromShopLists);
@@ -59,11 +62,13 @@ public class EntityToDtoMapper {
         Collection<PlaceUserDto> placeUsers = placeUsersToDto(place);
         var wishListDtos = wishLists.stream().map(this::toDto).collect(Collectors.toSet());
         var shopListDtos = shopLists.stream().map(this::toDto).collect(Collectors.toSet());
+        var itemDtos     = getItemDtos(containerDtos);
 
         return new PlaceDto.Builder().create()
                 .withId(place.getId())
                 .withName(place.getName())
                 .withAdminId(place.getAdmin().getId())
+                .withItems(itemDtos)
                 .withContainers(containerDtos)
                 .withUsers(placeUsers)
                 .withWishLists(wishListDtos)
@@ -86,6 +91,15 @@ public class EntityToDtoMapper {
         }
     }
 
+    private Collection<ItemDto> getItemDtos(Collection<ContainerDto> containerDtos) {
+        Collection<ItemInstanceDto> instanceDtos = containerDtos.stream().map(ContainerDto::getInstances)
+                                                                         .flatMap(Collection::stream)
+                                                                         .collect(Collectors.toSet());
+
+        Collection<Long> itemIds = instanceDtos.stream().map(ItemInstanceDto::getItemId).collect(Collectors.toSet());
+
+        return getter.items.getByKeys(itemIds).stream().map(this::toDto).collect(Collectors.toSet());
+    }
 
     private Collection<ItemInstanceDto> getDeletedInstancesDtoFromWishLists(Collection<WishList> wishLists) {
         return wishLists.stream()
@@ -111,7 +125,7 @@ public class EntityToDtoMapper {
         Collection<PlaceUserDto> activeDto = p.getAccounts().stream()
                 .map(a -> this.placeUserToDto(a, p, true))
                 .collect(Collectors.toList());;
-        Collection<PlaceUserDto> unactiveDto = p.getUnaactiveAccounts().stream()
+        Collection<PlaceUserDto> unactiveDto = p.getUnactiveAccounts().stream()
                 .map(a -> this.placeUserToDto(a, p, false))
                 .collect(Collectors.toList());
 
@@ -328,7 +342,6 @@ public class EntityToDtoMapper {
             return null;
         }
     }
-
 
     public <T extends BaseEntity> BaseDto<T> toDto(T t) {
         Method mapperMethod = Arrays.stream(getClass().getDeclaredMethods())

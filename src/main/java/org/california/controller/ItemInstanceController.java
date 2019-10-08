@@ -21,6 +21,7 @@ public class ItemInstanceController extends BaseController {
 
     private final ItemInstanceControllerService controllerService;
 
+
     @Autowired
     public ItemInstanceController(ItemInstanceControllerService controllerService) {
         this.controllerService = controllerService;
@@ -41,7 +42,7 @@ public class ItemInstanceController extends BaseController {
 
     @GetMapping
     public ResponseEntity get(@ByToken Account account,
-                              @RequestBody ItemInstanceGetQuery query) {
+                              ItemInstanceGetQuery query) {
 
        var result = controllerService.get(account, query);
        var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;

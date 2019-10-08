@@ -66,13 +66,13 @@ public class AuthorizationService {
         if(account == null)
             throw new NotValidException("account.null");
 
-        return new InitialResponse.Builder()
-                .setId(account)
-                .setName(account)
-                .setToken(getterService.tokens.getByAccount(account))
-                .setPlaces(account.getPlaces().stream().collect(Collectors.toMap(Place::getId, Place::getName)))
-                .setProducers(getterService.producers.getAll().stream().map(mapper::toDto).collect(Collectors.toList()))
-                .setRootCategory(getterService.categories.getRootCategory())
+        return new InitialResponse.Builder().create()
+                .withId(account.getId())
+                .withName(account.getName())
+                .withToken(getterService.tokens.getByAccount(account).getToken())
+                .withPlaces(account.getPlaces().stream().collect(Collectors.toMap(Place::getId, Place::getName)))
+                .withProducers(getterService.producers.getAll().stream().map(mapper::toDto).collect(Collectors.toList()))
+                .withRootCategory(getterService.categories.getRootCategory())
                 .build();
     }
 

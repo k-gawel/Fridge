@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 @Service
 public class AccountControllerService {
 
-    private AccountService accountService;
-    private GetterService getterService;
-    private AccountManagementService accountManagementService;
-    private EntityToDtoMapper mapper;
+    private final AccountService accountService;
+    private final GetterService getterService;
+    private final AccountManagementService accountManagementService;
+    private final EntityToDtoMapper mapper;
 
 
     @Autowired

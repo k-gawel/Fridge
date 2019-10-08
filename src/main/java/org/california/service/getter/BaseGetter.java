@@ -13,7 +13,7 @@ public abstract class BaseGetter<T extends BaseEntity> {
 
     final Class<T> getterClass;
 
-    BaseGetter(AbstractRepository<T> baseRepository, Class<T> getterClass) {
+    public BaseGetter(AbstractRepository<T> baseRepository, Class<T> getterClass) {
         this.getterClass = getterClass;
         this.baseRepository = baseRepository;
         GetterService.GETTER.put(getterClass, this);

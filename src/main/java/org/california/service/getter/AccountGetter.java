@@ -43,7 +43,7 @@ public class AccountGetter extends BaseNamedGetter<Account> {
 
 
     public Collection<Account> getAllByPlace(Place place) {
-        return CollectionUtils.union(place.getAccounts(), place.getUnaactiveAccounts());
+        return CollectionUtils.union(place.getAccounts(), place.getUnactiveAccounts());
     }
     
 
@@ -57,7 +57,7 @@ public class AccountGetter extends BaseNamedGetter<Account> {
 
     public Collection<Account> getUnactiveByPlaces(Collection<Place> places) {
         return places.stream()
-                .map(Place::getUnaactiveAccounts)
+                .map(Place::getUnactiveAccounts)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toSet());
     }
@@ -93,7 +93,7 @@ public class AccountGetter extends BaseNamedGetter<Account> {
     public Collection<Account> getUnactiveByContainers(Collection<Container> containers) {
         return containers.stream()
                 .map(Container::getPlace)
-                .map(Place::getUnaactiveAccounts)
+                .map(Place::getUnactiveAccounts)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toSet());
     }

@@ -8,7 +8,7 @@ import org.california.model.transfer.response.item.ItemDto;
 import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
-import org.california.service.model.ItemService;
+import org.california.service.model.item.ItemCreator;
 import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,13 @@ import java.util.Collection;
 @Service
 public class ItemControllerService extends BaseControllerService {
 
-    private final ItemService itemService;
+    private final ItemCreator itemCreator;
 
 
     @Autowired
-    public ItemControllerService(GetterService getterService, AccountPermissionsService accountPermissionsService, ItemService itemService, EntityToDtoMapper mapper) {
+    public ItemControllerService(GetterService getterService, AccountPermissionsService accountPermissionsService, ItemCreator itemCreator, EntityToDtoMapper mapper) {
         super(getterService, mapper, accountPermissionsService);
-        this.itemService = itemService;
+        this.itemCreator = itemCreator;
     }
 
 
@@ -38,6 +38,7 @@ public class ItemControllerService extends BaseControllerService {
             items = q.name == null  ? getter.items.searchByBarcode(q.places, q.barcode)
                                     : getter.items.searchByName(q.places, q.name, q.category);
 
+
         return filerAndMap(items, account);
     }
 
@@ -46,7 +47,7 @@ public class ItemControllerService extends BaseControllerService {
         if (!permissions.hasAccess(account, itemForm.place))
             throw new UnauthorizedException(account, itemForm.place);
 
-        return mapper.toDto(itemService.create(itemForm));
+        return mapper.toDto(itemCreator.create(itemForm));
     }
 
 }

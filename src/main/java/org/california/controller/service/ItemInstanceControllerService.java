@@ -9,7 +9,8 @@ import org.california.model.transfer.response.iteminstance.ItemInstanceDto;
 import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
-import org.california.service.model.ItemInstanceService;
+import org.california.service.model.iteminstance.ItemInstanceCreator;
+import org.california.service.model.iteminstance.ItemInstanceModifer;
 import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,14 @@ import java.util.Collections;
 public class ItemInstanceControllerService extends BaseControllerService {
 
 
-    private final ItemInstanceService itemInstanceService;
+    private final ItemInstanceCreator creator;
+    private final ItemInstanceModifer modifer;
 
     @Autowired
-    public ItemInstanceControllerService(ItemInstanceService itemInstanceService, AccountPermissionsService permissions, GetterService getter, EntityToDtoMapper mapper) {
+    public ItemInstanceControllerService(ItemInstanceCreator creator, AccountPermissionsService permissions, GetterService getter, EntityToDtoMapper mapper, ItemInstanceModifer modifer) {
         super(getter, mapper, permissions);
-        this.itemInstanceService = itemInstanceService;
+        this.creator = creator;
+        this.modifer = modifer;
     }
 
 
@@ -37,7 +40,7 @@ public class ItemInstanceControllerService extends BaseControllerService {
                 || !permissions.hasAccess(account, form.item))
             throw new UnauthorizedException("item.accessdenied|container.accessdenied");
 
-        return mapper.toDto(itemInstanceService.create(account, form));
+        return mapper.toDto(creator.create(account, form));
     }
 
 
@@ -70,13 +73,14 @@ public class ItemInstanceControllerService extends BaseControllerService {
         if(!permissions.hasAccess(account, itemInstance))
             return false;
         else if(frozeOrUnfroze)
-            return itemInstanceService.frozeOrUnfroze(account, itemInstance);
+            return modifer.frozeOrUnfroze(account, itemInstance);
         else if(delete)
-            return itemInstanceService.delete(account, itemInstance);
+            return modifer.delete(account, itemInstance, creator);
         else if(open)
-            return itemInstanceService.open(account, itemInstance);
+            return modifer.open(account, itemInstance);
         else
             return false;
     }
+
 
 }

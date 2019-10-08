@@ -1,5 +1,7 @@
 package org.california.util.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum RelatedItemsType {
 
     MOST_POPULAR("most_popular"),
@@ -15,6 +17,7 @@ public enum RelatedItemsType {
         return typeString;
     }
 
+    @JsonCreator
     public static RelatedItemsType of(String value) {
 
         for(RelatedItemsType type: RelatedItemsType.values()) {
@@ -24,7 +27,6 @@ public enum RelatedItemsType {
 
         return ALL;
     }
-
 
 
 }

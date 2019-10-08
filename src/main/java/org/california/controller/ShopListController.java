@@ -1,8 +1,9 @@
 package org.california.controller;
 
-import org.california.controller.service.ShopListControllerService;
+import org.california.controller.service.shoplist.ShopListControllerService;
 import org.california.model.entity.Account;
 import org.california.model.transfer.request.forms.ShopListForm;
+import org.california.model.transfer.request.queries.ShopListGetQuery;
 import org.california.service.serialization.annotations.ByToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,16 @@ public class ShopListController extends BaseController {
         this.controllerService = controllerService;
     }
 
+
+    @GetMapping
+    public ResponseEntity get(@ByToken Account account,
+                              ShopListGetQuery query) {
+
+        var result = controllerService.get(account, query);
+        var status = HttpStatus.OK;
+
+        return ResponseEntity.status(status).body(result);
+    }
 
     @PostMapping
     public ResponseEntity createShopList(@ByToken Account account,

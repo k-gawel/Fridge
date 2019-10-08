@@ -1,5 +1,6 @@
-package org.california.controller.service;
+package org.california.controller.service.wishlist;
 
+import org.california.controller.service.BaseControllerService;
 import org.california.model.entity.Account;
 import org.california.model.entity.WishList;
 import org.california.model.transfer.request.forms.WishListForm;
@@ -9,22 +10,25 @@ import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
 import org.california.service.model.AccountPermissionsService;
 import org.california.service.model.WishListService;
+import org.california.util.exceptions.NoContentException;
+import org.california.util.exceptions.NotValidException;
 import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.io.Serializable;
 
 @Service
 public class WishListControllerService extends BaseControllerService {
 
     private final WishListService wishListService;
+    private final WishListGetterControllerService getterControllerService;
 
     @Autowired
-    public WishListControllerService(GetterService getterService, AccountPermissionsService accountPermissionsService, WishListService wishListService, EntityToDtoMapper mapper) {
+    public WishListControllerService(GetterService getterService, AccountPermissionsService accountPermissionsService, WishListService wishListService, EntityToDtoMapper mapper, WishListGetterControllerService getterControllerService) {
         super(getterService, mapper, accountPermissionsService);
         this.wishListService = wishListService;
+        this.getterControllerService = getterControllerService;
     }
 
 
@@ -38,32 +42,20 @@ public class WishListControllerService extends BaseControllerService {
 
 
     @SuppressWarnings("unchecked")
-    public Collection<WishListDto> get(Account account, WishListGetQuery query) {
-        Collection<WishList> result;
-
-        if(query.wishLists != null)
-            result = query.wishLists;
-        else if (query.places != null)
-            result = getter.wishLists.get(query.places, query.active);
-        else if(account != null)
-            result = getter.wishLists.get(query.users, query.active);
-        else
-            return Collections.emptySet();
-
-
-        return filerAndMap(result, account);
+    public Serializable get(Account account, WishListGetQuery query) {
+        return getterControllerService.get(account, query);
     }
 
 
     public boolean archive(Account account, Long wishListId) {
-        var wishList = getter.wishLists.getByKey(wishListId).get();
-
+        var wishList = getter.wishLists.getByKey(wishListId)
+                                       .orElseThrow(() -> new NoContentException(WishList.class, wishListId));
 
         if (!permissions.hasAccess(account, wishList))
-            throw new UnauthorizedException("ACCOUNT has no acces to wishlist");
+            throw new UnauthorizedException(account, wishList);
 
         if (!wishList.isStatus())
-            throw new IllegalStateException("WishList is already archived");
+            throw new NotValidException("wishList.alreadyArchived");
 
         return wishListService.archive(account, wishList);
     }

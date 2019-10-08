@@ -4,14 +4,13 @@ import org.california.model.entity.Account;
 import org.california.model.entity.Place;
 import org.california.model.entity.WishList;
 import org.california.repository.utils.OffsetLimit;
-import org.california.service.serialization.annotations.ById;
 import org.california.service.serialization.annotations.ByIds;
 
 import java.util.Collection;
 
 public class WishListGetQuery extends GetQuery {
 
-    @ById
+    @ByIds(entity = Account.class)
     public final Collection<Account> users;
 
     @ByIds(entity = Place.class)
@@ -22,15 +21,15 @@ public class WishListGetQuery extends GetQuery {
 
     public final Boolean active;
 
-    public final OffsetLimit offsetAndLimit;
+    public final OffsetLimit offsetLimit;
 
 
-    public WishListGetQuery(Collection<Account> users, Collection<Place> places, Collection<WishList> wishLists, Boolean active, OffsetLimit offsetAndLimit) {
+    public WishListGetQuery(Collection<Account> users, Collection<Place> places, Collection<WishList> wishLists, Boolean active, OffsetLimit offsetLimit) {
         this.users = users;
         this.places = places;
         this.wishLists = wishLists;
         this.active = active;
-        this.offsetAndLimit = offsetAndLimit;
+        this.offsetLimit = offsetLimit;
     }
 
 

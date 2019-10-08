@@ -72,7 +72,7 @@ public class PlaceController extends BaseController {
     }
 
 
-    @PostMapping("/{place_id}/acounts/{account_id}")
+    @PostMapping("/{place_id}/accounts/{account_id}")
     public ResponseEntity addUser(@ByToken Account account,
                                   @PathVariable("place_id") Long placeId,
                                   @PathVariable("account_id") Long userId) {

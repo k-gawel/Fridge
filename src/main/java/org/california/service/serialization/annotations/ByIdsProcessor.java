@@ -79,21 +79,26 @@ public class ByIdsProcessor {
 
 
     private Class<? extends Collection> getCollectionType(Class<? extends Collection> fieldType) {
-        if(!Modifier.isAbstract(fieldType.getModifiers()) && !fieldType.isInterface())
-            return fieldType;
-        else if(SortedSet.class.isAssignableFrom(fieldType))
-            return TreeSet.class;
-        else if(Set.class.isAssignableFrom(fieldType))
-            return HashSet.class;
-        else if(List.class.isAssignableFrom(fieldType))
-            return ArrayList.class;
-        else if(Deque.class.isAssignableFrom(fieldType))
-            return LinkedList.class;
-        else if(Queue.class.isAssignableFrom(fieldType))
-            return PriorityQueue.class;
-        else
-            return ArrayList.class;
 
+        Class<? extends Collection> result;
+        if(!Modifier.isAbstract(fieldType.getModifiers()) && !fieldType.isInterface())
+            result =  fieldType;
+        else if(SortedSet.class.isAssignableFrom(fieldType))
+            result =  TreeSet.class;
+        else if(Set.class.isAssignableFrom(fieldType))
+            result =  HashSet.class;
+        else if(List.class.isAssignableFrom(fieldType))
+            result =  ArrayList.class;
+        else if(Deque.class.isAssignableFrom(fieldType))
+            result =  LinkedList.class;
+        else if(Queue.class.isAssignableFrom(fieldType))
+            result =  PriorityQueue.class;
+        else
+            result =  ArrayList.class;
+
+        System.out.println("Getting collection for: " + fieldType + " GOT: " + result);
+
+        return result;
     }
 
 

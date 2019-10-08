@@ -1,5 +1,6 @@
 package org.california.model.transfer.response.item;
 
+import com.google.gson.Gson;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -22,8 +23,8 @@ public class ItemDto implements Serializable, BaseDto<Item> {
     private Long categoryId;
     private ProducerDto producer;
 
-    private String description;
-    private String storage;
+    private String[] description;
+    private String[] storage;
     private String capacity;
 
     private Collection<AllergenDto> allergens;
@@ -49,10 +50,12 @@ public class ItemDto implements Serializable, BaseDto<Item> {
         }
 
         public interface DescriptionSetter {
+            StorageSetter withDescription(String[] description);
             StorageSetter withDescription(String description);
         }
 
         public interface StorageSetter {
+            CapacitySetter withStorage(String[] storage);
             CapacitySetter withStorage(String storage);
         }
 
@@ -121,14 +124,26 @@ public class ItemDto implements Serializable, BaseDto<Item> {
                 return this;
             }
 
-            public StorageSetter withDescription(String description) {
+            public StorageSetter withDescription(String[] description) {
                 result.description = description;
                 return this;
             }
 
-            public CapacitySetter withStorage(String storage) {
+            public StorageSetter withDescription(String description) {
+                Gson gson = new Gson();
+                String[] d = gson.fromJson(description, String[].class);
+                return withDescription(d);
+            }
+
+            public CapacitySetter withStorage(String[] storage) {
                 result.storage = storage;
                 return this;
+            }
+
+            public CapacitySetter withStorage(String storage) {
+                Gson gson = new Gson();
+                String[] s = gson.fromJson(storage, String[].class);
+                return withStorage(s);
             }
 
             public AllergensSetter withCapacity(String capacity) {

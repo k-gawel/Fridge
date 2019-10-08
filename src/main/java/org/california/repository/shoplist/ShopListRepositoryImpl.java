@@ -3,6 +3,7 @@ package org.california.repository.shoplist;
 import org.california.model.entity.Place;
 import org.california.model.entity.ShopList;
 import org.california.repository.AbstractRepositoryImpl;
+import org.california.repository.utils.OffsetLimit;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,13 +17,15 @@ public class ShopListRepositoryImpl extends AbstractRepositoryImpl<ShopList> imp
     }
 
     @Override
-    public Collection<ShopList> get(Collection<Place> places, boolean status) {
+    public Collection<ShopList> get(Collection<Place> places, boolean status, OffsetLimit offsetLimit) {
 
         final String HQL = "SELECT SL FROM ShopList SL WHERE SL.place IN (:places) AND status = :status";
 
         Query<ShopList> query = getSession().createQuery(HQL);
         query.setParameterList("places", places);
         query.setParameter("status", status);
+        if(offsetLimit != null)
+            offsetLimit.applyToQuery(query);
 
         return query.getResultList();
     }

@@ -2,6 +2,8 @@ package org.california.service.getter;
 
 import org.california.model.entity.BaseEntity;
 import org.california.service.model.TokenService;
+import org.california.service.model.item.ItemGetter;
+import org.california.service.model.iteminstance.ItemInstanceGetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -6,9 +6,11 @@ import org.hibernate.query.Query;
 @ToString
 public class OffsetLimit {
 
-    public final int offset;
-    public final int limit;
+    public int offset;
+    public int limit;
 
+    public OffsetLimit() {
+    }
 
     public OffsetLimit(int offset, int limit) {
         this.limit = limit;

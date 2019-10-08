@@ -4,6 +4,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.california.model.entity.Place;
 import org.california.model.entity.ShopList;
 import org.california.repository.shoplist.ShopListRepository;
+import org.california.repository.utils.OffsetLimit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,15 @@ public class ShopListGetter extends BaseGetter<ShopList> {
 
 
     public Collection<ShopList> get(Collection<Place> places, boolean status) {
+        return get(places, status, null);
+    }
+
+
+    public Collection<ShopList> get(Collection<Place> places, boolean status, OffsetLimit offsetLimit) {
         if (CollectionUtils.isEmpty(places))
             return Collections.emptyList();
 
-        return repository.get(places, status);
+        return repository.get(places, status, offsetLimit);
     }
 
 

@@ -1,6 +1,6 @@
 package org.california.controller;
 
-import org.california.controller.service.WishListControllerService;
+import org.california.controller.service.wishlist.WishListControllerService;
 import org.california.model.entity.Account;
 import org.california.model.transfer.request.forms.WishListForm;
 import org.california.model.transfer.request.queries.WishListGetQuery;
@@ -38,7 +38,7 @@ public class WishListController extends BaseController {
 
     @GetMapping
     public ResponseEntity get(@ByToken Account account,
-                              @RequestBody WishListGetQuery query) {
+                              WishListGetQuery query) {
 
         var result = this.controllerService.get(account, query);
         var status = result == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK;

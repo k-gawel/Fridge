@@ -1,4 +1,4 @@
-package org.california.service.getter;
+package org.california.service.model.item;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.california.model.entity.Place;
@@ -6,11 +6,12 @@ import org.california.model.entity.item.Category;
 import org.california.model.entity.item.Item;
 import org.california.repository.item.ItemRepository;
 import org.california.repository.item.ItemSearchRepository;
+import org.california.service.getter.BaseGetter;
+import org.california.service.getter.CategoryGetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,9 +29,6 @@ public class ItemGetter extends BaseGetter<Item> {
 
 
     public Collection<Item> searchByName(Collection<Place> places, String name, Category category) {
-        if(places == null || name == null || category == null)
-            return Collections.emptySet();
-
         Collection<Category> categories = categoryGetter.getFinalCategories(category);
 
         if(places.isEmpty() && categories.isEmpty())
@@ -39,7 +37,6 @@ public class ItemGetter extends BaseGetter<Item> {
             return itemSearchRepository.searchByNameAndCategories(name, categories);
         if(categories.isEmpty())
             return itemSearchRepository.searchByNameAndPlaces(name, places);
-
 
         return itemSearchRepository.searchByNameAndPlacesAndCategories(name, places, categories);
     }

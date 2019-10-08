@@ -23,16 +23,11 @@ public class WishListGetter extends BaseGetter<WishList> {
 
 
 
-    public <T> Collection<WishList> get(Collection<T> collection, boolean active) {
+    public <T> Collection<WishList> get(Collection<Place> collection, boolean active) {
         if(CollectionUtils.isEmpty(collection))
             return Collections.emptySet();
 
-        if(collection.stream().allMatch(Long.class::isInstance))
-            return wishListRepository.getByIds((Collection<Long>) collection, active);
-        if(collection.stream().allMatch(Place.class::isInstance))
-            return wishListRepository.getByPlaces((Collection<Place>) collection, active);
-
-        return Collections.emptySet();
+        return wishListRepository.getByPlaces(collection, active);
     }
 
 

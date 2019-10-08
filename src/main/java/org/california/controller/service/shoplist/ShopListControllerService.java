@@ -1,9 +1,11 @@
-package org.california.controller.service;
+package org.california.controller.service.shoplist;
 
 
+import org.california.controller.service.BaseControllerService;
 import org.california.model.entity.Account;
 import org.california.model.entity.ShopList;
 import org.california.model.transfer.request.forms.ShopListForm;
+import org.california.model.transfer.request.queries.ShopListGetQuery;
 import org.california.model.transfer.response.place.ShopListDto;
 import org.california.service.builders.EntityToDtoMapper;
 import org.california.service.getter.GetterService;
@@ -13,25 +15,28 @@ import org.california.util.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
+
 @Service
-public class ShopListControllerService {
+public class ShopListControllerService extends BaseControllerService {
 
     private final ShopListService shopListService;
-    private final GetterService getter;
-    private final AccountPermissionsService permissionsService;
-    private final EntityToDtoMapper mapper;
+    private final ShopListGetterControllerService getterController;
 
     @Autowired
-    public ShopListControllerService(ShopListService shopListService, GetterService getter, AccountPermissionsService permissionsService, EntityToDtoMapper mapper) {
+    public ShopListControllerService(ShopListService shopListService, GetterService getter, AccountPermissionsService permissions, EntityToDtoMapper mapper, ShopListGetterControllerService getterController) {
+        super(getter, mapper, permissions);
         this.shopListService = shopListService;
-        this.getter = getter;
-        this.permissionsService = permissionsService;
-        this.mapper = mapper;
+        this.getterController = getterController;
+    }
+
+    public Serializable get(Account account, ShopListGetQuery query) {
+        return getterController.get(account, query);
     }
 
 
     public ShopListDto createShopList(Account account, ShopListForm form) {
-        if (!permissionsService.hasAccess(account, form.place))
+        if (!permissions.hasAccess(account, form.place))
             throw new UnauthorizedException(account, form.place);
 
         ShopList shopList = shopListService.createShopList(form);
@@ -43,9 +48,9 @@ public class ShopListControllerService {
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
         var instance = getter.itemInstances.getByKeyOrThrow(instanceId);
 
-        if (!permissionsService.hasAccess(account, shopList))
+        if (!permissions.hasAccess(account, shopList))
             throw new UnauthorizedException(account, shopList);
-        if (!permissionsService.hasAccess(account, instance))
+        if (!permissions.hasAccess(account, instance))
             throw new UnauthorizedException(account, instance);
 
         return shopListService.addInstance(shopList, instance);
@@ -55,7 +60,7 @@ public class ShopListControllerService {
     public boolean archiveShopList(Account account, Long shopListId) {
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
 
-        if (!permissionsService.hasAccess(account, shopList))
+        if (!permissions.hasAccess(account, shopList))
             throw new UnauthorizedException(account, shopList);
 
         return shopListService.archive(shopList);
@@ -66,11 +71,13 @@ public class ShopListControllerService {
         var shopList = getter.shopLists.getByKeyOrThrow(shopListId);
         var instance = getter.itemInstances.getByKeyOrThrow(instanceId);
 
-        if (!permissionsService.hasAccess(account, shopList))
+        if (!permissions.hasAccess(account, shopList))
             throw new UnauthorizedException(account, shopList);
-        if (!permissionsService.hasAccess(account, instance))
+        if (!permissions.hasAccess(account, instance))
             throw new UnauthorizedException(account, instance);
 
         return shopListService.removeInstance(shopList, instance);
     }
+
+
 }

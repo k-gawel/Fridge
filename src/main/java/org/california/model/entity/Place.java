@@ -31,8 +31,8 @@ public class Place extends BaseEntity {
     private Account admin;
 
 
-    @LazyCollection(value = LazyCollectionOption.FALSE)
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @LazyCollection(value         = LazyCollectionOption.FALSE)
+    @ManyToMany(cascade           = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(joinColumns        = @JoinColumn(name = "place_id"),
                inverseJoinColumns = @JoinColumn(name = "account_id"))
     private Set<Account> accounts = new HashSet<>();
@@ -40,9 +40,10 @@ public class Place extends BaseEntity {
 
     @LazyCollection(value              = LazyCollectionOption.FALSE)
     @ManyToMany(    cascade            = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(     joinColumns        = @JoinColumn(name = "place_id"),
+    @JoinTable(     name = "Place_UnactiveAccount",
+                    joinColumns        = @JoinColumn(name = "place_id"),
                     inverseJoinColumns = @JoinColumn(name = "account_id"))
-    private Set<Account> unaactiveAccounts = new HashSet<>();
+    private Set<Account> unactiveAccounts = new HashSet<>();
 
 
     private Date createdOn = new Date();

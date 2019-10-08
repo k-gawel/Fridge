@@ -2,16 +2,14 @@ package org.california.repository;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.california.model.entity.BaseEntity;
+import org.california.repository.utils.OffsetLimit;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.UUID;
+import java.util.*;
 
 @Transactional
 public abstract class AbstractRepositoryImpl<T extends BaseEntity> implements AbstractRepository<T> {
@@ -107,6 +105,44 @@ public abstract class AbstractRepositoryImpl<T extends BaseEntity> implements Ab
         }
 
         return resultBuilder.toString();
+
+    }
+
+
+    protected abstract class Builder {
+
+        protected Map<String, Collection> lists = new HashMap<>();
+        protected Map<String, Object> parameters = new HashMap<>();
+        protected OffsetLimit offsetLimit;
+        protected String query;
+
+        protected Builder(String startQuery) {
+            query = startQuery;
+        }
+
+        public Builder offsetLimit(OffsetLimit offsetLimit) {
+            this.offsetLimit = offsetLimit;
+            return this;
+        }
+
+        public Builder and() {
+            query += " AND ";
+            return this;
+        }
+
+        public Builder or() {
+            query += " OR ";
+            return this;
+        }
+
+        public Query<T> build() {
+            Query<T> query = getSession().createQuery(this.query);
+            lists.forEach(query::setParameterList);
+            parameters.forEach(query::setParameter);
+            if(offsetLimit != null)
+                offsetLimit.applyToQuery(query);
+            return query;
+        }
 
     }
 

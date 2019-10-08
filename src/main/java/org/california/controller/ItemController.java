@@ -28,7 +28,6 @@ public class ItemController extends BaseController {
 
     @GetMapping
     public ResponseEntity searchItems(@ByToken Account account, ItemGetQuery query) {
-
         var result = itemControllerService.searchItem(account, query);
         var status = result != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 
