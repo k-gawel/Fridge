@@ -59,7 +59,7 @@
     <properties>
         <mysql.connector.ver>8.0.12</mysql.connector.ver>
         <hibernate.ver>5.3.5.Final</hibernate.ver>
-        <org.springframework>5.0.8.RELEASE</org.springframework>
+        <org.springframework>6.0.0</org.springframework>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <logger.ver>1.7.25</logger.ver>
